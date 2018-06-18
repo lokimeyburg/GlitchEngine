@@ -6,6 +6,10 @@ using Glitch.Objects;
 
 namespace Glitch
 {
+
+    /// <summary>
+    /// The SceneContext contains all of the device buffers and frame buffers for the current scene
+    /// </summary>
     public class SceneContext
     {
         public DeviceBuffer ProjectionMatrixBuffer { get; private set; }

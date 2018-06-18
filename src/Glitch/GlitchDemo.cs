@@ -47,7 +47,7 @@ namespace Glitch
                 WindowWidth = 960,
                 WindowHeight = 540,
                 WindowInitialState = WindowState.Normal,
-                WindowTitle = "Veldrid Glitch"
+                WindowTitle = "Glitch Demo"
             };
             GraphicsDeviceOptions gdOptions = new GraphicsDeviceOptions(false, null, false, ResourceBindingModel.Improved, true);
 #if DEBUG
@@ -65,11 +65,12 @@ namespace Glitch
                 out _gd);
             _window.Resized += () => _windowResized = true;
 
-
+            // Create a new scene and set it as the current Scene Context
             _scene = new Scene(_gd, _window.Width, _window.Height);
-
+            // sets the SceneContext.Camera to the scene's camera (scene.camera)
             _sc.SetCurrentScene(_scene);
 
+            // Create the ImGui menu bar and add it to the scene
             _igRenderable = new ImGuiRenderable(_window.Width, _window.Height);
             _resizeHandled += (w, h) => _igRenderable.WindowResized(w, h);
             _scene.AddRenderable(_igRenderable);
