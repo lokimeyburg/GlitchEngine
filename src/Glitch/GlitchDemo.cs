@@ -59,7 +59,7 @@ namespace Glitch
                 gdOptions,
                 //GraphicsBackend.Metal,
                 //GraphicsBackend.Vulkan,
-                GraphicsBackend.OpenGL,
+                //GraphicsBackend.OpenGL,
                 //GraphicsBackend.OpenGLES,
                 out _window,
                 out _gd);
@@ -83,6 +83,26 @@ namespace Glitch
             _sc.Camera.Position = new Vector3(-80, 25, -4.3f);
             _sc.Camera.Yaw = -MathF.PI / 2;
             _sc.Camera.Pitch = -MathF.PI / 9;
+
+            ShadowmapDrawer texDrawIndexeder = new ShadowmapDrawer(() => _window, () => _sc.NearShadowMapView);
+            _resizeHandled += (w, h) => texDrawIndexeder.OnWindowResized();
+            texDrawIndexeder.Position = new Vector2(10, 25);
+            _scene.AddRenderable(texDrawIndexeder);
+
+            ShadowmapDrawer texDrawIndexeder2 = new ShadowmapDrawer(() => _window, () => _sc.MidShadowMapView);
+            _resizeHandled += (w, h) => texDrawIndexeder2.OnWindowResized();
+            texDrawIndexeder2.Position = new Vector2(20 + texDrawIndexeder2.Size.X, 25);
+            _scene.AddRenderable(texDrawIndexeder2);
+
+            ShadowmapDrawer texDrawIndexeder3 = new ShadowmapDrawer(() => _window, () => _sc.FarShadowMapView);
+            _resizeHandled += (w, h) => texDrawIndexeder3.OnWindowResized();
+            texDrawIndexeder3.Position = new Vector2(30 + (texDrawIndexeder3.Size.X * 2), 25);
+            _scene.AddRenderable(texDrawIndexeder3);
+
+            ShadowmapDrawer reflectionTexDrawer = new ShadowmapDrawer(() => _window, () => _sc.ReflectionColorView);
+            _resizeHandled += (w, h) => reflectionTexDrawer.OnWindowResized();
+            reflectionTexDrawer.Position = new Vector2(40 + (reflectionTexDrawer.Size.X * 3), 25);
+            _scene.AddRenderable(reflectionTexDrawer);
 
             ScreenDuplicator duplicator = new ScreenDuplicator();
             _scene.AddRenderable(duplicator);

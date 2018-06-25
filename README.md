@@ -7,7 +7,7 @@ This is the home of _Glitch_, my small and simple game engine. Glitch is written
 
 ## Quick Start
 
-Before  you start, make sure you have [.NET Core v2](https://www.microsoft.com/net/learn/get-started/macos) installed. Then you 
+Before  you start, make sure you have [.NET Core v2](https://www.microsoft.com/net/learn/get-started/macos) installed. You may also need to install SDL2 (`brew install sdl2`).
 
 ```
 $ git clone git@github.com:lokimeyburg/GlitchEngine.git
