@@ -1,4 +1,14 @@
-## Notes
+# Notes
+
+My scratchpad of notes, ideas and tasks.
+
+## Tasks
+
+- [ ] Demo with a sphere, floor and one light
+- [ ] Split demo into Glitch, Launcher and Editor.
+- [ ] Create a seperate Game repository that uses the GlitchEngine
+
+## DotNET Terminal Commands Cheat Sheet
 
 Creating a new library:
 
