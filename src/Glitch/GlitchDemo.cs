@@ -76,12 +76,13 @@ namespace Glitch
             _scene.AddRenderable(_igRenderable);
             _scene.AddUpdateable(_igRenderable);
 
+            // Add the Skybox
             Skybox skybox = Skybox.LoadDefaultSkybox();
             _scene.AddRenderable(skybox);
+            
+            AddSphere();
 
             // AddSponzaAtriumObjects();
-
-
             _sc.Camera.Position = new Vector3(-80, 25, -4.3f);
             _sc.Camera.Yaw = -MathF.PI / 2;
             _sc.Camera.Pitch = -MathF.PI / 9;
@@ -115,7 +116,95 @@ namespace Glitch
             CreateAllObjects();
         }
 
-        private void AddSponzaAtriumObjects()
+        private void AddSphere()
+        {
+            ObjParser parser = new ObjParser();
+            using (FileStream objStream = File.OpenRead(AssetHelper.GetPath("Models/sphere.obj")))
+            {
+                ObjFile atriumFile = parser.Parse(objStream);
+                foreach (ObjFile.MeshGroup group in atriumFile.MeshGroups)
+                {
+                    Vector3 scale = new Vector3(0.1f);
+                    ConstructedMeshInfo mesh = atriumFile.GetMesh(group);
+                    
+                    MaterialPropsAndBuffer materialProps = CommonMaterials.Brick;
+
+                    ImageSharpTexture overrideTextureData = null;
+                    ImageSharpTexture alphaTexture = null;
+
+
+                    overrideTextureData = LoadTexture(AssetHelper.GetPath("Models/rust.jpg"), false);
+
+                    MirrorMesh.Plane = Plane.CreateFromVertices(
+                        atriumFile.Positions[group.Faces[0].Vertex0.PositionIndex] * scale.X,
+                        atriumFile.Positions[group.Faces[0].Vertex1.PositionIndex] * scale.Y,
+                        atriumFile.Positions[group.Faces[0].Vertex2.PositionIndex] * scale.Z);
+                    
+                    materialProps = CommonMaterials.Brick;
+
+                    AddTexturedMesh(
+                        mesh,
+                        overrideTextureData,
+                        alphaTexture,
+                        materialProps,
+                        Vector3.Zero,
+                        Quaternion.Identity,
+                        scale,
+                        group.Name);
+                }
+                
+                // MtlFile atriumMtls;
+                // using (FileStream mtlStream = File.OpenRead(AssetHelper.GetPath("Models/SponzaAtrium/sponza.mtl")))
+                // {
+                //     atriumMtls = new MtlParser().Parse(mtlStream);
+                // }
+
+                // foreach (ObjFile.MeshGroup group in atriumFile.MeshGroups)
+                // {
+                //     Vector3 scale = new Vector3(0.1f);
+                //     ConstructedMeshInfo mesh = atriumFile.GetMesh(group);
+                //     MaterialDefinition materialDef = atriumMtls.Definitions[mesh.MaterialName];
+                //     ImageSharpTexture overrideTextureData = null;
+                //     ImageSharpTexture alphaTexture = null;
+                //     MaterialPropsAndBuffer materialProps = CommonMaterials.Brick;
+                //     if (materialDef.DiffuseTexture != null)
+                //     {
+                //         string texturePath = AssetHelper.GetPath("Models/SponzaAtrium/" + materialDef.DiffuseTexture);
+                //         overrideTextureData = LoadTexture(texturePath, true);
+                //     }
+                //     if (materialDef.AlphaMap != null)
+                //     {
+                //         string texturePath = AssetHelper.GetPath("Models/SponzaAtrium/" + materialDef.AlphaMap);
+                //         alphaTexture = LoadTexture(texturePath, false);
+                //     }
+                //     if (materialDef.Name.Contains("vase"))
+                //     {
+                //         materialProps = CommonMaterials.Vase;
+                //     }
+                //     if (group.Name == "sponza_117")
+                //     {
+                //         MirrorMesh.Plane = Plane.CreateFromVertices(
+                //             atriumFile.Positions[group.Faces[0].Vertex0.PositionIndex] * scale.X,
+                //             atriumFile.Positions[group.Faces[0].Vertex1.PositionIndex] * scale.Y,
+                //             atriumFile.Positions[group.Faces[0].Vertex2.PositionIndex] * scale.Z);
+                //         materialProps = CommonMaterials.Reflective;
+                //     }
+
+                //     AddTexturedMesh(
+                //         mesh,
+                //         overrideTextureData,
+                //         alphaTexture,
+                //         materialProps,
+                //         Vector3.Zero,
+                //         Quaternion.Identity,
+                //         scale,
+                //         group.Name);
+                // }
+            }
+        }
+
+
+    private void AddSponzaAtriumObjects()
         {
             ObjParser parser = new ObjParser();
             using (FileStream objStream = File.OpenRead(AssetHelper.GetPath("Models/SponzaAtrium/sponza.obj")))
@@ -484,17 +573,9 @@ namespace Glitch
             CreateAllObjects();
         }
 
-        private void DestroyAllObjects()
-        {
-            _gd.WaitForIdle();
-            _frameCommands.Dispose();
-            _sc.DestroyDeviceObjects();
-            _scene.DestroyAllDeviceObjects();
-            CommonMaterials.DestroyAllDeviceObjects();
-            StaticResourceCache.DestroyAllDeviceObjects();
-            _gd.WaitForIdle();
-        }
-
+        /// <summary>
+        /// This method creates all of the other objects of the scene such as the lights, shadow maps etc.
+        /// </summary>
         private void CreateAllObjects()
         {
             _frameCommands = _gd.ResourceFactory.CreateCommandList();
@@ -509,5 +590,18 @@ namespace Glitch
             _gd.SubmitCommands(initCL);
             initCL.Dispose();
         }
+
+        private void DestroyAllObjects()
+        {
+            _gd.WaitForIdle();
+            _frameCommands.Dispose();
+            _sc.DestroyDeviceObjects();
+            _scene.DestroyAllDeviceObjects();
+            CommonMaterials.DestroyAllDeviceObjects();
+            StaticResourceCache.DestroyAllDeviceObjects();
+            _gd.WaitForIdle();
+        }
+
+
     }
 }
