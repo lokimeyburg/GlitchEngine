@@ -59,7 +59,7 @@ namespace Glitch
                 gdOptions,
                 //GraphicsBackend.Metal,
                 //GraphicsBackend.Vulkan,
-                //GraphicsBackend.OpenGL,
+                GraphicsBackend.OpenGL,
                 //GraphicsBackend.OpenGLES,
                 out _window,
                 out _gd);
