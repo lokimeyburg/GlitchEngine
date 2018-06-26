@@ -79,33 +79,16 @@ namespace Glitch
             // Add the Skybox
             Skybox skybox = Skybox.LoadDefaultSkybox();
             _scene.AddRenderable(skybox);
-            
-            AddSphere();
 
-            // AddSponzaAtriumObjects();
+            AddSphere(new Vector3(0f));
+
+            AddSphere(new Vector3(0f, 0f, 25f));
+
+            AddFloor(new Vector3(0f, -12f, 0f));
+
             _sc.Camera.Position = new Vector3(-80, 25, -4.3f);
             _sc.Camera.Yaw = -MathF.PI / 2;
             _sc.Camera.Pitch = -MathF.PI / 9;
-
-            // ShadowmapDrawer texDrawIndexeder = new ShadowmapDrawer(() => _window, () => _sc.NearShadowMapView);
-            // _resizeHandled += (w, h) => texDrawIndexeder.OnWindowResized();
-            // texDrawIndexeder.Position = new Vector2(10, 25);
-            // _scene.AddRenderable(texDrawIndexeder);
-
-            // ShadowmapDrawer texDrawIndexeder2 = new ShadowmapDrawer(() => _window, () => _sc.MidShadowMapView);
-            // _resizeHandled += (w, h) => texDrawIndexeder2.OnWindowResized();
-            // texDrawIndexeder2.Position = new Vector2(20 + texDrawIndexeder2.Size.X, 25);
-            // _scene.AddRenderable(texDrawIndexeder2);
-
-            // ShadowmapDrawer texDrawIndexeder3 = new ShadowmapDrawer(() => _window, () => _sc.FarShadowMapView);
-            // _resizeHandled += (w, h) => texDrawIndexeder3.OnWindowResized();
-            // texDrawIndexeder3.Position = new Vector2(30 + (texDrawIndexeder3.Size.X * 2), 25);
-            // _scene.AddRenderable(texDrawIndexeder3);
-
-            // ShadowmapDrawer reflectionTexDrawer = new ShadowmapDrawer(() => _window, () => _sc.ReflectionColorView);
-            // _resizeHandled += (w, h) => reflectionTexDrawer.OnWindowResized();
-            // reflectionTexDrawer.Position = new Vector2(40 + (reflectionTexDrawer.Size.X * 3), 25);
-            // _scene.AddRenderable(reflectionTexDrawer);
 
             ScreenDuplicator duplicator = new ScreenDuplicator();
             _scene.AddRenderable(duplicator);
@@ -116,7 +99,36 @@ namespace Glitch
             CreateAllObjects();
         }
 
-        private void AddSphere()
+        private void AddFloor(Vector3 offset)
+        {
+            ObjParser parser = new ObjParser();
+            using (FileStream objStream = File.OpenRead(AssetHelper.GetPath("Models/floor.obj")))
+            {
+                ObjFile atriumFile = parser.Parse(objStream);
+                foreach (ObjFile.MeshGroup group in atriumFile.MeshGroups)
+                {
+                    Vector3 scale = new Vector3(30f);
+                    ConstructedMeshInfo mesh = atriumFile.GetMesh(group);
+                    
+                    MaterialPropsAndBuffer materialProps = null;
+                    ImageSharpTexture overrideTextureData = null;
+                    ImageSharpTexture alphaTexture = null;
+
+                    overrideTextureData = LoadTexture(AssetHelper.GetPath("Models/gray.png"), true);
+
+                    AddTexturedMesh(
+                        mesh,
+                        overrideTextureData,
+                        alphaTexture,
+                        materialProps,
+                        offset,
+                        Quaternion.Identity,
+                        scale,
+                        group.Name);
+                }
+            }
+        }
+        private void AddSphere(Vector3 offset)
         {
             ObjParser parser = new ObjParser();
             using (FileStream objStream = File.OpenRead(AssetHelper.GetPath("Models/sphere.obj")))
@@ -124,135 +136,21 @@ namespace Glitch
                 ObjFile atriumFile = parser.Parse(objStream);
                 foreach (ObjFile.MeshGroup group in atriumFile.MeshGroups)
                 {
-                    Vector3 scale = new Vector3(0.1f);
+                    Vector3 scale = new Vector3(0.3f);
                     ConstructedMeshInfo mesh = atriumFile.GetMesh(group);
                     
-                    MaterialPropsAndBuffer materialProps = CommonMaterials.Brick;
-
+                    MaterialPropsAndBuffer materialProps = null;
                     ImageSharpTexture overrideTextureData = null;
                     ImageSharpTexture alphaTexture = null;
 
-
-                    overrideTextureData = LoadTexture(AssetHelper.GetPath("Models/rust.jpg"), false);
-
-                    MirrorMesh.Plane = Plane.CreateFromVertices(
-                        atriumFile.Positions[group.Faces[0].Vertex0.PositionIndex] * scale.X,
-                        atriumFile.Positions[group.Faces[0].Vertex1.PositionIndex] * scale.Y,
-                        atriumFile.Positions[group.Faces[0].Vertex2.PositionIndex] * scale.Z);
-                    
-                    materialProps = CommonMaterials.Brick;
+                    overrideTextureData = LoadTexture(AssetHelper.GetPath("Models/gray.png"), true);
 
                     AddTexturedMesh(
                         mesh,
                         overrideTextureData,
                         alphaTexture,
                         materialProps,
-                        Vector3.Zero,
-                        Quaternion.Identity,
-                        scale,
-                        group.Name);
-                }
-                
-                // MtlFile atriumMtls;
-                // using (FileStream mtlStream = File.OpenRead(AssetHelper.GetPath("Models/SponzaAtrium/sponza.mtl")))
-                // {
-                //     atriumMtls = new MtlParser().Parse(mtlStream);
-                // }
-
-                // foreach (ObjFile.MeshGroup group in atriumFile.MeshGroups)
-                // {
-                //     Vector3 scale = new Vector3(0.1f);
-                //     ConstructedMeshInfo mesh = atriumFile.GetMesh(group);
-                //     MaterialDefinition materialDef = atriumMtls.Definitions[mesh.MaterialName];
-                //     ImageSharpTexture overrideTextureData = null;
-                //     ImageSharpTexture alphaTexture = null;
-                //     MaterialPropsAndBuffer materialProps = CommonMaterials.Brick;
-                //     if (materialDef.DiffuseTexture != null)
-                //     {
-                //         string texturePath = AssetHelper.GetPath("Models/SponzaAtrium/" + materialDef.DiffuseTexture);
-                //         overrideTextureData = LoadTexture(texturePath, true);
-                //     }
-                //     if (materialDef.AlphaMap != null)
-                //     {
-                //         string texturePath = AssetHelper.GetPath("Models/SponzaAtrium/" + materialDef.AlphaMap);
-                //         alphaTexture = LoadTexture(texturePath, false);
-                //     }
-                //     if (materialDef.Name.Contains("vase"))
-                //     {
-                //         materialProps = CommonMaterials.Vase;
-                //     }
-                //     if (group.Name == "sponza_117")
-                //     {
-                //         MirrorMesh.Plane = Plane.CreateFromVertices(
-                //             atriumFile.Positions[group.Faces[0].Vertex0.PositionIndex] * scale.X,
-                //             atriumFile.Positions[group.Faces[0].Vertex1.PositionIndex] * scale.Y,
-                //             atriumFile.Positions[group.Faces[0].Vertex2.PositionIndex] * scale.Z);
-                //         materialProps = CommonMaterials.Reflective;
-                //     }
-
-                //     AddTexturedMesh(
-                //         mesh,
-                //         overrideTextureData,
-                //         alphaTexture,
-                //         materialProps,
-                //         Vector3.Zero,
-                //         Quaternion.Identity,
-                //         scale,
-                //         group.Name);
-                // }
-            }
-        }
-
-
-    private void AddSponzaAtriumObjects()
-        {
-            ObjParser parser = new ObjParser();
-            using (FileStream objStream = File.OpenRead(AssetHelper.GetPath("Models/SponzaAtrium/sponza.obj")))
-            {
-                ObjFile atriumFile = parser.Parse(objStream);
-                MtlFile atriumMtls;
-                using (FileStream mtlStream = File.OpenRead(AssetHelper.GetPath("Models/SponzaAtrium/sponza.mtl")))
-                {
-                    atriumMtls = new MtlParser().Parse(mtlStream);
-                }
-
-                foreach (ObjFile.MeshGroup group in atriumFile.MeshGroups)
-                {
-                    Vector3 scale = new Vector3(0.1f);
-                    ConstructedMeshInfo mesh = atriumFile.GetMesh(group);
-                    MaterialDefinition materialDef = atriumMtls.Definitions[mesh.MaterialName];
-                    ImageSharpTexture overrideTextureData = null;
-                    ImageSharpTexture alphaTexture = null;
-                    MaterialPropsAndBuffer materialProps = CommonMaterials.Brick;
-                    if (materialDef.DiffuseTexture != null)
-                    {
-                        string texturePath = AssetHelper.GetPath("Models/SponzaAtrium/" + materialDef.DiffuseTexture);
-                        overrideTextureData = LoadTexture(texturePath, true);
-                    }
-                    if (materialDef.AlphaMap != null)
-                    {
-                        string texturePath = AssetHelper.GetPath("Models/SponzaAtrium/" + materialDef.AlphaMap);
-                        alphaTexture = LoadTexture(texturePath, false);
-                    }
-                    if (materialDef.Name.Contains("vase"))
-                    {
-                        materialProps = CommonMaterials.Vase;
-                    }
-                    if (group.Name == "sponza_117")
-                    {
-                        MirrorMesh.Plane = Plane.CreateFromVertices(
-                            atriumFile.Positions[group.Faces[0].Vertex0.PositionIndex] * scale.X,
-                            atriumFile.Positions[group.Faces[0].Vertex1.PositionIndex] * scale.Y,
-                            atriumFile.Positions[group.Faces[0].Vertex2.PositionIndex] * scale.Z);
-                        materialProps = CommonMaterials.Reflective;
-                    }
-
-                    AddTexturedMesh(
-                        mesh,
-                        overrideTextureData,
-                        alphaTexture,
-                        materialProps,
-                        Vector3.Zero,
+                        offset,
                         Quaternion.Identity,
                         scale,
                         group.Name);
