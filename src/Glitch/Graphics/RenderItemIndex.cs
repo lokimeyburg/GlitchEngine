@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
 
-namespace Glitch
+namespace Glitch.Graphics
 {
     public struct RenderItemIndex : IComparable<RenderItemIndex>, IComparable
     {

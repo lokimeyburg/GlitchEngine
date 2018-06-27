@@ -9,6 +9,8 @@ using System.Threading.Tasks;
 using Glitch.Objects;
 using Veldrid.Utilities;
 using Veldrid;
+using Glitch.Behaviors;
+using Glitch.Graphics;
 
 namespace Glitch
 {

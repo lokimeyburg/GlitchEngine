@@ -4,7 +4,7 @@ using System.Numerics;
 using Veldrid.Utilities;
 using Veldrid;
 
-namespace Glitch
+namespace Glitch.Graphics
 {
     public static partial class PrimitiveShapes
     {

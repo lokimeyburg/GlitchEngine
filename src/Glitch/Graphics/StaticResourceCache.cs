@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Veldrid.ImageSharp;
 using Veldrid;
 
-namespace Glitch
+namespace Glitch.Graphics
 {
     // Non-thread-safe cache for resources.
     internal static class StaticResourceCache

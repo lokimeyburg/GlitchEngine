@@ -1,7 +1,7 @@
 ﻿using System.Numerics;
 using System.Runtime.InteropServices;
 
-namespace Glitch
+namespace Glitch.Graphics
 {
     [StructLayout(LayoutKind.Sequential)]
     public struct LightInfo

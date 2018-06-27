@@ -3,8 +3,9 @@ using System.Diagnostics;
 using System.Numerics;
 using Veldrid.Sdl2;
 using Veldrid;
+using Glitch.Behaviors;
 
-namespace Glitch
+namespace Glitch.Graphics
 {
     public class ImGuiRenderable : Renderable, IUpdateable
     {

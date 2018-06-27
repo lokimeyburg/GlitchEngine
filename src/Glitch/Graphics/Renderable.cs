@@ -3,7 +3,7 @@ using System.Numerics;
 using Veldrid.Utilities;
 using Veldrid;
 
-namespace Glitch
+namespace Glitch.Graphics
 {
     public abstract class Renderable : IDisposable
     {

@@ -1,4 +1,4 @@
-﻿namespace Glitch
+﻿namespace Glitch.Behaviors
 {
     public interface IUpdateable
     {

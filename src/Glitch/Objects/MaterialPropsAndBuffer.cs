@@ -1,5 +1,6 @@
 ﻿using System.Runtime.CompilerServices;
 using Veldrid;
+using Glitch.Graphics;
 
 namespace Glitch.Objects
 {

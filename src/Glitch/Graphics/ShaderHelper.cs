@@ -4,7 +4,7 @@ using System.IO;
 using Veldrid.SPIRV;
 using Veldrid;
 
-namespace Glitch
+namespace Glitch.Graphics
 {
     public static class ShaderHelper
     {

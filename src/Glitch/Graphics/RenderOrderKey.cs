@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Runtime.CompilerServices;
 
-namespace Glitch
+namespace Glitch.Graphics
 {
     public struct RenderOrderKey : IComparable<RenderOrderKey>, IComparable
     {

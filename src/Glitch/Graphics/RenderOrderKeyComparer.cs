@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Numerics;
 
-namespace Glitch
+namespace Glitch.Graphics
 {
     internal class RenderOrderKeyComparer : IComparer<Renderable>
     {

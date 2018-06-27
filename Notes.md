@@ -5,6 +5,8 @@ My scratchpad of notes, ideas and tasks.
 ## Tasks
 
 - [x] Demo with a sphere, floor and one light
+- [ ] Create game object, system registry & component system
+- [ ]
 - [ ] Split demo into Glitch, Launcher and Editor.
 - [ ] Create a seperate Game repository that uses the GlitchEngine
 

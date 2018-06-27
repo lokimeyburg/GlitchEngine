@@ -1,4 +1,4 @@
-﻿namespace Glitch
+﻿namespace Glitch.Graphics
 {
     public class FrameTimeAverager
     {

@@ -5,6 +5,7 @@ using Veldrid.ImageSharp;
 using Veldrid.Utilities;
 using Veldrid;
 using System.Collections.Generic;
+using Glitch.Graphics;
 
 namespace Glitch.Objects
 {

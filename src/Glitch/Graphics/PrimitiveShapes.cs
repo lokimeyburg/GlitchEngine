@@ -5,7 +5,7 @@ using System.Text;
 using Veldrid;
 using Veldrid.Utilities;
 
-namespace Glitch
+namespace Glitch.Graphics
 {
     public static partial class PrimitiveShapes
     {

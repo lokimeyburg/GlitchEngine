@@ -1,6 +1,6 @@
 ﻿using System.Numerics;
 
-namespace Glitch
+namespace Glitch.Graphics
 {
     public struct ClipPlaneInfo
     {

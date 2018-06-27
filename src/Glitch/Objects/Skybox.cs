@@ -6,6 +6,7 @@ using System.Numerics;
 using System.Runtime.CompilerServices;
 using Veldrid.Utilities;
 using Veldrid;
+using Glitch.Graphics;
 
 namespace Glitch.Objects
 {

@@ -3,7 +3,7 @@ using System.Numerics;
 using System.Runtime.InteropServices;
 using Veldrid;
 
-namespace Glitch
+namespace Glitch.Graphics
 {
     public class DirectionalLight
     {

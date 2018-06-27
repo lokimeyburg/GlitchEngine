@@ -4,6 +4,7 @@ using System.Runtime.CompilerServices;
 using Veldrid.Sdl2;
 using Veldrid.Utilities;
 using Veldrid;
+using Glitch.Graphics;
 
 namespace Glitch.Objects
 {

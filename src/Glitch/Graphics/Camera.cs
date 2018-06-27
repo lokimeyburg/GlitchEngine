@@ -4,8 +4,9 @@ using System.Numerics;
 using System.Runtime.InteropServices;
 using Veldrid.Sdl2;
 using Veldrid;
+using Glitch.Behaviors;
 
-namespace Glitch
+namespace Glitch.Graphics
 {
     public class Camera : IUpdateable
     {

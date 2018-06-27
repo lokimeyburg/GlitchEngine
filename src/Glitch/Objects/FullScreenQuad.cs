@@ -2,6 +2,7 @@
 using System.Numerics;
 using Veldrid.Utilities;
 using Veldrid;
+using Glitch.Graphics;
 
 namespace Glitch.Objects
 {

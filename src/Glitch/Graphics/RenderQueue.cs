@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Numerics;
 
-namespace Glitch
+namespace Glitch.Graphics
 {
     public class RenderQueue : IEnumerable<Renderable>
     {

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Glitch
+namespace Glitch.Graphics
 {
     [Flags]
     public enum RenderPasses : int
