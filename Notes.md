@@ -10,6 +10,10 @@ My scratchpad of notes, ideas and tasks.
 - [ ] Split demo into Glitch, Launcher and Editor.
 - [ ] Create a seperate Game repository that uses the GlitchEngine
 
+## Notes for physics engine
+
+I've removed a bunch of physics code from the Transform component and will have to add them back at some point.
+
 ## DotNET Terminal Commands Cheat Sheet
 
 Creating a new library:

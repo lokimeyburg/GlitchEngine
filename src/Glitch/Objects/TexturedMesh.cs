@@ -59,7 +59,7 @@ namespace Glitch.Objects
             _materialProps = materialProps;
         }
 
-        public override BoundingBox BoundingBox => BoundingBox.Transform(_centeredBounds, _transform.GetTransformMatrix());
+        public override BoundingBox BoundingBox => BoundingBox.Transform(_centeredBounds, _transform.GetWorldMatrix());
 
         public unsafe override void CreateDeviceObjects(GraphicsDevice gd, CommandList cl, SceneContext sc)
         {
@@ -303,7 +303,7 @@ namespace Glitch.Objects
         public override void UpdatePerFrameResources(GraphicsDevice gd, CommandList cl, SceneContext sc)
         {
             WorldAndInverse wai;
-            wai.World = _transform.GetTransformMatrix();
+            wai.World = _transform.GetWorldMatrix();
             wai.InverseWorld = VdUtilities.CalculateInverseTranspose(ref wai.World);
             gd.UpdateBuffer(_worldAndInverseBuffer, 0, ref wai);
         }

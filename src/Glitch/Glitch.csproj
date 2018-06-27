@@ -46,6 +46,8 @@
     <ProjectReference Include="..\..\ext\veldrid\src\Veldrid.ImageSharp\Veldrid.ImageSharp.csproj" />
     <ProjectReference Include="..\..\ext\veldrid\src\Veldrid.Utilities\Veldrid.Utilities.csproj" />
     <ProjectReference Include="..\..\ext\veldrid\src\Veldrid.ImGui\Veldrid.ImGui.csproj" />
+
+    <PackageReference Include="System.Collections.Generic.MultiValueDictionary" Version="0.1.0-e160604-1" />
   </ItemGroup>
 
 

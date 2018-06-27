@@ -93,7 +93,7 @@ namespace Glitch
                 new PointLightInfo { Color = new Vector3(0.75f, 0.75f, 1f), Position = new Vector3(25, 5, 45), Range = 150f },
             };
 
-            cl.UpdateBuffer(PointLightsBuffer, 0, pli.GetBlittable());
+            // cl.UpdateBuffer(PointLightsBuffer, 0, pli.GetBlittable());
 
             TextureSamplerResourceLayout = factory.CreateResourceLayout(new ResourceLayoutDescription(
                 new ResourceLayoutElementDescription("SourceTexture", ResourceKind.TextureReadOnly, ShaderStages.Fragment),
