@@ -102,9 +102,9 @@ namespace Glitch.Graphics
                 new ResourceLayout[] { _layout },
                 sc.MainSceneFramebuffer.OutputDescription);
 
-            _pipeline = factory.CreateGraphicsPipeline(ref pd);
-            pd.Outputs = sc.ReflectionFramebuffer.OutputDescription;
-            _reflectionPipeline = factory.CreateGraphicsPipeline(ref pd);
+            // _pipeline = factory.CreateGraphicsPipeline(ref pd);
+            // pd.Outputs = sc.ReflectionFramebuffer.OutputDescription;
+            // _reflectionPipeline = factory.CreateGraphicsPipeline(ref pd);
 
             _resourceSet = factory.CreateResourceSet(new ResourceSetDescription(
                 _layout,

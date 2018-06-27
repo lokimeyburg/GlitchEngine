@@ -32,12 +32,6 @@ namespace Glitch
         public Framebuffer FarShadowMapFramebuffer => ShadowMaps.FarShadowMapFramebuffer;
         public Texture ShadowMapTexture => ShadowMaps.NearShadowMap; // Only used for size.
 
-        public Texture ReflectionColorTexture { get; private set; }
-        public Texture ReflectionDepthTexture { get; private set; }
-        public TextureView ReflectionColorView { get; private set; }
-        public Framebuffer ReflectionFramebuffer { get; private set; }
-        public DeviceBuffer ReflectionViewProjBuffer { get; private set; }
-
         // MainSceneView and Duplicator resource sets both use this.
         public ResourceLayout TextureSamplerResourceLayout { get; private set; }
 
@@ -59,8 +53,7 @@ namespace Glitch
         public Camera Camera { get; set; }
         public DirectionalLight DirectionalLight { get; } = new DirectionalLight();
         public TextureSampleCount MainSceneSampleCount { get; internal set; }
-        public DeviceBuffer MirrorClipPlaneBuffer { get; private set; }
-        public DeviceBuffer NoClipPlaneBuffer { get; private set; }
+
 
         public virtual void CreateDeviceObjects(GraphicsDevice gd, CommandList cl, SceneContext sc)
         {
@@ -99,17 +92,17 @@ namespace Glitch
                 new ResourceLayoutElementDescription("SourceTexture", ResourceKind.TextureReadOnly, ShaderStages.Fragment),
                 new ResourceLayoutElementDescription("SourceSampler", ResourceKind.Sampler, ShaderStages.Fragment)));
 
-            uint ReflectionMapSize = 2048;
-            ReflectionColorTexture = factory.CreateTexture(TextureDescription.Texture2D(ReflectionMapSize, ReflectionMapSize, 12, 1, PixelFormat.R8_G8_B8_A8_UNorm, TextureUsage.RenderTarget | TextureUsage.Sampled | TextureUsage.GenerateMipmaps));
-            ReflectionDepthTexture = factory.CreateTexture(TextureDescription.Texture2D(ReflectionMapSize, ReflectionMapSize, 1, 1, PixelFormat.R32_Float, TextureUsage.DepthStencil));
-            ReflectionColorView = factory.CreateTextureView(ReflectionColorTexture);
-            ReflectionFramebuffer = factory.CreateFramebuffer(new FramebufferDescription(ReflectionDepthTexture, ReflectionColorTexture));
-            ReflectionViewProjBuffer = factory.CreateBuffer(new BufferDescription(64, BufferUsage.UniformBuffer | BufferUsage.Dynamic));
+            // uint ReflectionMapSize = 2048;
+            // ReflectionColorTexture = factory.CreateTexture(TextureDescription.Texture2D(ReflectionMapSize, ReflectionMapSize, 12, 1, PixelFormat.R8_G8_B8_A8_UNorm, TextureUsage.RenderTarget | TextureUsage.Sampled | TextureUsage.GenerateMipmaps));
+            // ReflectionDepthTexture = factory.CreateTexture(TextureDescription.Texture2D(ReflectionMapSize, ReflectionMapSize, 1, 1, PixelFormat.R32_Float, TextureUsage.DepthStencil));
+            // ReflectionColorView = factory.CreateTextureView(ReflectionColorTexture);
+            // ReflectionFramebuffer = factory.CreateFramebuffer(new FramebufferDescription(ReflectionDepthTexture, ReflectionColorTexture));
+            // ReflectionViewProjBuffer = factory.CreateBuffer(new BufferDescription(64, BufferUsage.UniformBuffer | BufferUsage.Dynamic));
 
-            MirrorClipPlaneBuffer = factory.CreateBuffer(new BufferDescription(32, BufferUsage.UniformBuffer));
-            gd.UpdateBuffer(MirrorClipPlaneBuffer, 0, new ClipPlaneInfo(MirrorMesh.Plane, true));
-            NoClipPlaneBuffer = factory.CreateBuffer(new BufferDescription(32, BufferUsage.UniformBuffer));
-            gd.UpdateBuffer(NoClipPlaneBuffer, 0, new ClipPlaneInfo());
+            // MirrorClipPlaneBuffer = factory.CreateBuffer(new BufferDescription(32, BufferUsage.UniformBuffer));
+            // gd.UpdateBuffer(MirrorClipPlaneBuffer, 0, new ClipPlaneInfo(MirrorMesh.Plane, true));
+            // NoClipPlaneBuffer = factory.CreateBuffer(new BufferDescription(32, BufferUsage.UniformBuffer));
+            // gd.UpdateBuffer(NoClipPlaneBuffer, 0, new ClipPlaneInfo());
 
             RecreateWindowSizedResources(gd, cl);
 
@@ -141,13 +134,6 @@ namespace Glitch
             DuplicatorTargetSet1.Dispose();
             DuplicatorFramebuffer.Dispose();
             TextureSamplerResourceLayout.Dispose();
-            ReflectionColorTexture.Dispose();
-            ReflectionDepthTexture.Dispose();
-            ReflectionColorView.Dispose();
-            ReflectionFramebuffer.Dispose();
-            ReflectionViewProjBuffer.Dispose();
-            MirrorClipPlaneBuffer.Dispose();
-            NoClipPlaneBuffer.Dispose();
             ShadowMaps.DestroyDeviceObjects();
         }
 

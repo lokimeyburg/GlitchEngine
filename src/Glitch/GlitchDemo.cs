@@ -76,20 +76,20 @@ namespace Glitch
             _sc.SetCurrentScene(_scene);
 
             // Create the ImGui menu bar and add it to the scene
-            _igRenderable = new ImGuiRenderable(_window.Width, _window.Height);
-            _resizeHandled += (w, h) => _igRenderable.WindowResized(w, h);
-            _scene.AddRenderable(_igRenderable);
-            _scene.AddUpdateable(_igRenderable);
+            // _igRenderable = new ImGuiRenderable(_window.Width, _window.Height);
+            // _resizeHandled += (w, h) => _igRenderable.WindowResized(w, h);
+            // _scene.AddRenderable(_igRenderable);
+            // _scene.AddUpdateable(_igRenderable);
 
             // Add the Skybox
             // Skybox skybox = Skybox.LoadDefaultSkybox();
             // _scene.AddRenderable(skybox);
 
-            AddSphere(new Vector3(0f));
+            // AddSphere(new Vector3(0f));
 
-            AddSphere(new Vector3(0f, 0f, 25f));
+            // AddSphere(new Vector3(0f, 0f, 25f));
 
-            AddFloor(new Vector3(0f, -12f, 0f));
+            // AddFloor(new Vector3(0f, -12f, 0f));
 
             _sc.Camera.Position = new Vector3(-80, 25, -4.3f);
             _sc.Camera.Yaw = -MathF.PI / 2;
@@ -230,118 +230,118 @@ namespace Glitch
             _fta.AddTime(deltaSeconds);
             _scene.Update(deltaSeconds);
 
-            if (ImGui.BeginMainMenuBar())
-            {
-                if (ImGui.BeginMenu("Settings"))
-                {
-                    if (ImGui.BeginMenu("Graphics Backend"))
-                    {
+            // if (ImGui.BeginMainMenuBar())
+            // {
+            //     if (ImGui.BeginMenu("Settings"))
+            //     {
+            //         if (ImGui.BeginMenu("Graphics Backend"))
+            //         {
 
-                        if (ImGui.MenuItem("Vulkan", GraphicsDevice.IsBackendSupported(GraphicsBackend.Vulkan)))
-                        {
-                            ChangeBackend(GraphicsBackend.Vulkan);
-                        }
-                        if (ImGui.MenuItem("OpenGL", GraphicsDevice.IsBackendSupported(GraphicsBackend.OpenGL)))
-                        {
-                            ChangeBackend(GraphicsBackend.OpenGL);
-                        }
-                        if (ImGui.MenuItem("OpenGL ES", GraphicsDevice.IsBackendSupported(GraphicsBackend.OpenGLES)))
-                        {
-                            ChangeBackend(GraphicsBackend.OpenGLES);
-                        }
-                        if (ImGui.MenuItem("Direct3D 11", GraphicsDevice.IsBackendSupported(GraphicsBackend.Direct3D11)))
-                        {
-                            ChangeBackend(GraphicsBackend.Direct3D11);
-                        }
-                        if (ImGui.MenuItem("Metal", GraphicsDevice.IsBackendSupported(GraphicsBackend.Metal)))
-                        {
-                            ChangeBackend(GraphicsBackend.Metal);
-                        }
-                        ImGui.EndMenu();
-                    }
-                    if (ImGui.BeginMenu("MSAA"))
-                    {
-                        if (ImGui.Combo("MSAA", ref _msaaOption, _msaaOptions))
-                        {
-                            ChangeMsaa(_msaaOption);
-                        }
+            //             if (ImGui.MenuItem("Vulkan", GraphicsDevice.IsBackendSupported(GraphicsBackend.Vulkan)))
+            //             {
+            //                 ChangeBackend(GraphicsBackend.Vulkan);
+            //             }
+            //             if (ImGui.MenuItem("OpenGL", GraphicsDevice.IsBackendSupported(GraphicsBackend.OpenGL)))
+            //             {
+            //                 ChangeBackend(GraphicsBackend.OpenGL);
+            //             }
+            //             if (ImGui.MenuItem("OpenGL ES", GraphicsDevice.IsBackendSupported(GraphicsBackend.OpenGLES)))
+            //             {
+            //                 ChangeBackend(GraphicsBackend.OpenGLES);
+            //             }
+            //             if (ImGui.MenuItem("Direct3D 11", GraphicsDevice.IsBackendSupported(GraphicsBackend.Direct3D11)))
+            //             {
+            //                 ChangeBackend(GraphicsBackend.Direct3D11);
+            //             }
+            //             if (ImGui.MenuItem("Metal", GraphicsDevice.IsBackendSupported(GraphicsBackend.Metal)))
+            //             {
+            //                 ChangeBackend(GraphicsBackend.Metal);
+            //             }
+            //             ImGui.EndMenu();
+            //         }
+            //         if (ImGui.BeginMenu("MSAA"))
+            //         {
+            //             if (ImGui.Combo("MSAA", ref _msaaOption, _msaaOptions))
+            //             {
+            //                 ChangeMsaa(_msaaOption);
+            //             }
 
-                        ImGui.EndMenu();
-                    }
-                    bool isFullscreen = _window.WindowState == WindowState.BorderlessFullScreen;
-                    if (ImGui.MenuItem("Fullscreen", "F11", isFullscreen, true))
-                    {
-                        ToggleFullscreenState();
-                    }
-                    if (ImGui.MenuItem("Always Recreate Sdl2Window", string.Empty, _recreateWindow, true))
-                    {
-                        _recreateWindow = !_recreateWindow;
-                    }
-                    if (ImGui.IsItemHovered(HoveredFlags.Default))
-                    {
-                        ImGui.SetTooltip(
-                            "Causes a new OS window to be created whenever the graphics backend is switched. This is much safer, and is the default.");
-                    }
-                    bool threadedRendering = _scene.ThreadedRendering;
-                    if (ImGui.MenuItem("Render with multiple threads", string.Empty, threadedRendering, true))
-                    {
-                        _scene.ThreadedRendering = !_scene.ThreadedRendering;
-                    }
-                    bool tinted = _fsq.UseTintedTexture;
-                    if (ImGui.MenuItem("Tinted output", string.Empty, tinted, true))
-                    {
-                        _fsq.UseTintedTexture = !tinted;
-                    }
-                    bool vsync = _gd.SyncToVerticalBlank;
-                    if (ImGui.MenuItem("VSync", string.Empty, vsync, true))
-                    {
-                        _gd.SyncToVerticalBlank = !_gd.SyncToVerticalBlank;
-                    }
+            //             ImGui.EndMenu();
+            //         }
+            //         bool isFullscreen = _window.WindowState == WindowState.BorderlessFullScreen;
+            //         if (ImGui.MenuItem("Fullscreen", "F11", isFullscreen, true))
+            //         {
+            //             ToggleFullscreenState();
+            //         }
+            //         if (ImGui.MenuItem("Always Recreate Sdl2Window", string.Empty, _recreateWindow, true))
+            //         {
+            //             _recreateWindow = !_recreateWindow;
+            //         }
+            //         if (ImGui.IsItemHovered(HoveredFlags.Default))
+            //         {
+            //             ImGui.SetTooltip(
+            //                 "Causes a new OS window to be created whenever the graphics backend is switched. This is much safer, and is the default.");
+            //         }
+            //         bool threadedRendering = _scene.ThreadedRendering;
+            //         if (ImGui.MenuItem("Render with multiple threads", string.Empty, threadedRendering, true))
+            //         {
+            //             _scene.ThreadedRendering = !_scene.ThreadedRendering;
+            //         }
+            //         bool tinted = _fsq.UseTintedTexture;
+            //         if (ImGui.MenuItem("Tinted output", string.Empty, tinted, true))
+            //         {
+            //             _fsq.UseTintedTexture = !tinted;
+            //         }
+            //         bool vsync = _gd.SyncToVerticalBlank;
+            //         if (ImGui.MenuItem("VSync", string.Empty, vsync, true))
+            //         {
+            //             _gd.SyncToVerticalBlank = !_gd.SyncToVerticalBlank;
+            //         }
 
-                    ImGui.EndMenu();
-                }
-                if (ImGui.BeginMenu("Materials"))
-                {
-                    if (ImGui.BeginMenu("Brick"))
-                    {
-                        DrawIndexedMaterialMenu(CommonMaterials.Brick);
-                        ImGui.EndMenu();
-                    }
-                    if (ImGui.BeginMenu("Vase"))
-                    {
-                        DrawIndexedMaterialMenu(CommonMaterials.Vase);
-                        ImGui.EndMenu();
-                    }
-                    if (ImGui.BeginMenu("Reflective"))
-                    {
-                        DrawIndexedMaterialMenu(CommonMaterials.Reflective);
-                        ImGui.EndMenu();
-                    }
+            //         ImGui.EndMenu();
+            //     }
+            //     if (ImGui.BeginMenu("Materials"))
+            //     {
+            //         if (ImGui.BeginMenu("Brick"))
+            //         {
+            //             DrawIndexedMaterialMenu(CommonMaterials.Brick);
+            //             ImGui.EndMenu();
+            //         }
+            //         if (ImGui.BeginMenu("Vase"))
+            //         {
+            //             DrawIndexedMaterialMenu(CommonMaterials.Vase);
+            //             ImGui.EndMenu();
+            //         }
+            //         if (ImGui.BeginMenu("Reflective"))
+            //         {
+            //             DrawIndexedMaterialMenu(CommonMaterials.Reflective);
+            //             ImGui.EndMenu();
+            //         }
 
-                    ImGui.EndMenu();
-                }
-                if (ImGui.BeginMenu("Debug"))
-                {
-                    if (ImGui.MenuItem("Refresh Device Objects"))
-                    {
-                        RefreshDeviceObjects(1);
-                    }
-                    if (ImGui.MenuItem("Refresh Device Objects (10 times)"))
-                    {
-                        RefreshDeviceObjects(10);
-                    }
-                    if (ImGui.MenuItem("Refresh Device Objects (100 times)"))
-                    {
-                        RefreshDeviceObjects(100);
-                    }
+            //         ImGui.EndMenu();
+            //     }
+            //     if (ImGui.BeginMenu("Debug"))
+            //     {
+            //         if (ImGui.MenuItem("Refresh Device Objects"))
+            //         {
+            //             RefreshDeviceObjects(1);
+            //         }
+            //         if (ImGui.MenuItem("Refresh Device Objects (10 times)"))
+            //         {
+            //             RefreshDeviceObjects(10);
+            //         }
+            //         if (ImGui.MenuItem("Refresh Device Objects (100 times)"))
+            //         {
+            //             RefreshDeviceObjects(100);
+            //         }
 
-                    ImGui.EndMenu();
-                }
+            //         ImGui.EndMenu();
+            //     }
 
-                ImGui.Text(_fta.CurrentAverageFramesPerSecond.ToString("000.0 fps / ") + _fta.CurrentAverageFrameTimeMilliseconds.ToString("#00.00 ms"));
+            //     ImGui.Text(_fta.CurrentAverageFramesPerSecond.ToString("000.0 fps / ") + _fta.CurrentAverageFrameTimeMilliseconds.ToString("#00.00 ms"));
 
-                ImGui.EndMainMenuBar();
-            }
+            //     ImGui.EndMainMenuBar();
+            // }
 
             if (InputTracker.GetKeyDown(Key.F11))
             {
