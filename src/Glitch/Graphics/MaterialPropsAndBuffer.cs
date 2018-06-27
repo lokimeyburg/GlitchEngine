@@ -2,7 +2,7 @@
 using Veldrid;
 using Glitch.Graphics;
 
-namespace Glitch.Objects
+namespace Glitch.Graphics
 {
     public class MaterialPropsAndBuffer
     {

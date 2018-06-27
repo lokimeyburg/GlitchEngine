@@ -7,10 +7,11 @@ using System.Runtime.CompilerServices;
 using Veldrid.Utilities;
 using Veldrid;
 using Glitch.Graphics;
+using Glitch.Behaviors;
 
-namespace Glitch.Objects
+namespace Glitch.Graphics
 {
-    public class Skybox : Renderable
+    public class Skybox : Component, IRenderable
     {
         private readonly Image<Rgba32> _front;
         private readonly Image<Rgba32> _back;
@@ -26,7 +27,6 @@ namespace Glitch.Objects
         private Pipeline _reflectionPipeline;
         private ResourceSet _resourceSet;
         private readonly DisposeCollector _disposeCollector = new DisposeCollector();
-
         public Skybox(
             Image<Rgba32> front, Image<Rgba32> back, Image<Rgba32> left,
             Image<Rgba32> right, Image<Rgba32> top, Image<Rgba32> bottom)
@@ -39,7 +39,7 @@ namespace Glitch.Objects
             _bottom = bottom;
         }
 
-        public unsafe override void CreateDeviceObjects(GraphicsDevice gd, CommandList cl, SceneContext sc)
+        public unsafe void CreateDeviceObjects(GraphicsDevice gd, CommandList cl, SceneContext sc)
         {
             ResourceFactory factory = gd.ResourceFactory;
 
@@ -116,8 +116,13 @@ namespace Glitch.Objects
             _disposeCollector.Add(_vb, _ib, textureCube, textureView, _layout, _pipeline, _reflectionPipeline, _resourceSet, vs, fs);
         }
 
-        public override void UpdatePerFrameResources(GraphicsDevice gd, CommandList cl, SceneContext sc)
+        public void UpdatePerFrameResources(GraphicsDevice gd, CommandList cl, SceneContext sc)
         {
+        }
+
+        public void Dispose()
+        {
+            DestroyDeviceObjects();
         }
 
         public static Skybox LoadDefaultSkybox()
@@ -131,12 +136,12 @@ namespace Glitch.Objects
                 Image.Load("Assets/Textures/cloudtop/cloudtop_dn.png"));
         }
 
-        public override void DestroyDeviceObjects()
+        public void DestroyDeviceObjects()
         {
             _disposeCollector.DisposeAll();
         }
 
-        public override void Render(GraphicsDevice gd, CommandList cl, SceneContext sc, RenderPasses renderPass)
+        public void Render(GraphicsDevice gd, CommandList cl, SceneContext sc, RenderPasses renderPass)
         {
             cl.SetVertexBuffer(0, _vb);
             cl.SetIndexBuffer(_ib, IndexFormat.UInt16);
@@ -147,12 +152,34 @@ namespace Glitch.Objects
             cl.DrawIndexed((uint)s_indices.Length, 1, 0, 0, 0);
         }
 
-        public override RenderPasses RenderPasses => RenderPasses.Standard | RenderPasses.ReflectionMap;
+        public RenderPasses RenderPasses => Glitch.Graphics.RenderPasses.Standard | Glitch.Graphics.RenderPasses.ReflectionMap;
 
-        public override RenderOrderKey GetRenderOrderKey(Vector3 cameraPosition)
+        public RenderOrderKey GetRenderOrderKey(Vector3 cameraPosition)
         {
             return new RenderOrderKey(ulong.MaxValue);
         }
+
+        // Component Implementation
+        protected override void Attached(SystemRegistry registry)
+        {
+
+        }
+        protected override void Removed(SystemRegistry registry)
+        {
+
+        }
+
+        protected override void OnEnabled()
+        {
+
+        }
+
+        protected override void OnDisabled()
+        {
+
+        }
+
+
 
         private static readonly VertexPosition[] s_vertices = new VertexPosition[]
         {

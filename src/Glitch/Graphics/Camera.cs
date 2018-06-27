@@ -8,7 +8,7 @@ using Glitch.Behaviors;
 
 namespace Glitch.Graphics
 {
-    public class Camera : IUpdateable
+    public class Camera : Component, IUpdateable
     {
         private float _fov = 1f;
         private float _near = 1f;
@@ -153,6 +153,32 @@ namespace Glitch.Graphics
             CameraPosition_WorldSpace = _position,
             CameraLookDirection = _lookDirection
         };
+
+        protected override void OnEnabled()
+        {
+            // GameObject.Transform.TransformChanged += SetViewMatrix;
+
+            // SetViewMatrix(GameObject.Transform);
+            // SetProjectionMatrix();
+            // UpdateViewFrustum();
+        }
+
+        protected override void OnDisabled()
+        {
+            // GameObject.Transform.TransformChanged -= SetViewMatrix;
+            // _gs.Context.WindowResized -= SetProjectionMatrix;
+        }
+
+        protected override void Attached(SystemRegistry registry)
+        {
+
+        }
+
+        protected override void Removed(SystemRegistry registry)
+        {
+
+        }
+
     }
 
     [StructLayout(LayoutKind.Sequential)]

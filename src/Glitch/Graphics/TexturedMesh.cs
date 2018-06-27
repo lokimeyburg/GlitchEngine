@@ -6,8 +6,9 @@ using Veldrid.Utilities;
 using Veldrid;
 using System.Collections.Generic;
 using Glitch.Graphics;
+using Glitch.Behaviors;
 
-namespace Glitch.Objects
+namespace Glitch.Graphics
 {
     public class TexturedMesh : CullRenderable
     {

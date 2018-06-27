@@ -11,11 +11,15 @@ using Veldrid.Utilities;
 using Veldrid.Sdl2;
 using Veldrid;
 using Glitch.Graphics;
+using Glitch.AssetUtil;
+using Glitch.ProjectSystem;
 
 namespace Glitch
 {
     public class GlitchDemo
     {
+        ProjectManifest projectManifest;
+
         private Sdl2Window _window;
         private GraphicsDevice _gd;
         private Scene _scene;
@@ -78,8 +82,8 @@ namespace Glitch
             _scene.AddUpdateable(_igRenderable);
 
             // Add the Skybox
-            Skybox skybox = Skybox.LoadDefaultSkybox();
-            _scene.AddRenderable(skybox);
+            // Skybox skybox = Skybox.LoadDefaultSkybox();
+            // _scene.AddRenderable(skybox);
 
             AddSphere(new Vector3(0f));
 
