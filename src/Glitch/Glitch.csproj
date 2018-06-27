@@ -9,21 +9,21 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Content Include="$(AssetsDir)\Textures\**">
+    <Content Include="..\..\Assets\Textures\**">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <Link>Assets\Textures\%(RecursiveDir)\%(FileName)%(Extension)</Link>
     </Content>
   </ItemGroup>
 
   <ItemGroup>
-    <Content Include="$(AssetsDir)\Models\**">
+    <Content Include="..\..\Assets\Models\**">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <Link>Assets\Models\%(RecursiveDir)\%(FileName)%(Extension)</Link>
     </Content>
   </ItemGroup>
 
   <ItemGroup>
-    <Content Include="$(AssetsDir)\Shaders\**">
+    <Content Include="..\..\Assets\Shaders\**">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <Link>Assets\Shaders\%(RecursiveDir)\%(FileName)%(Extension)</Link>
     </Content>

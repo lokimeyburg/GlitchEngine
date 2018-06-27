@@ -132,7 +132,7 @@ namespace Glitch
         private void AddSphere(Vector3 offset)
         {
             ObjParser parser = new ObjParser();
-            using (FileStream objStream = File.OpenRead(AssetHelper.GetPath("Models/sphere.obj")))
+            using (FileStream objStream = File.OpenRead("Assets/Models/sphere.obj"))
             {
                 ObjFile atriumFile = parser.Parse(objStream);
                 foreach (ObjFile.MeshGroup group in atriumFile.MeshGroups)

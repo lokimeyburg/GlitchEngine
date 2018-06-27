@@ -123,12 +123,12 @@ namespace Glitch.Objects
         public static Skybox LoadDefaultSkybox()
         {
             return new Skybox(
-                Image.Load(AssetHelper.GetPath("Textures/cloudtop/cloudtop_ft.png")),
-                Image.Load(AssetHelper.GetPath("Textures/cloudtop/cloudtop_bk.png")),
-                Image.Load(AssetHelper.GetPath("Textures/cloudtop/cloudtop_lf.png")),
-                Image.Load(AssetHelper.GetPath("Textures/cloudtop/cloudtop_rt.png")),
-                Image.Load(AssetHelper.GetPath("Textures/cloudtop/cloudtop_up.png")),
-                Image.Load(AssetHelper.GetPath("Textures/cloudtop/cloudtop_dn.png")));
+                Image.Load("Assets/Textures/cloudtop/cloudtop_ft.png"),
+                Image.Load("Assets/Textures/cloudtop/cloudtop_bk.png"),
+                Image.Load("Assets/Textures/cloudtop/cloudtop_lf.png"),
+                Image.Load("Assets/Textures/cloudtop/cloudtop_rt.png"),
+                Image.Load("Assets/Textures/cloudtop/cloudtop_up.png"),
+                Image.Load("Assets/Textures/cloudtop/cloudtop_dn.png"));
         }
 
         public override void DestroyDeviceObjects()
