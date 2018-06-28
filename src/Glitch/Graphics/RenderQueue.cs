@@ -3,15 +3,16 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Numerics;
+using Glitch.Behaviors;
 
 namespace Glitch.Graphics
 {
-    public class RenderQueue : IEnumerable<Renderable>
+    public class RenderQueue : IEnumerable<IRenderable>
     {
         private const int DefaultCapacity = 250;
 
         private readonly List<RenderItemIndex> _indices = new List<RenderItemIndex>(DefaultCapacity);
-        private readonly List<Renderable> _renderables = new List<Renderable>(DefaultCapacity);
+        private readonly List<IRenderable> _renderables = new List<IRenderable>(DefaultCapacity);
 
         public int Count => _renderables.Count;
 
@@ -21,11 +22,11 @@ namespace Glitch.Graphics
             _renderables.Clear();
         }
 
-        public void AddRange(List<Renderable> Renderables, Vector3 viewPosition)
+        public void AddRange(List<IRenderable> Renderables, Vector3 viewPosition)
         {
             for (int i = 0; i < Renderables.Count; i++)
             {
-                Renderable Renderable = Renderables[i];
+                IRenderable Renderable = Renderables[i];
                 if (Renderable != null)
                 {
                     Add(Renderable, viewPosition);
@@ -33,11 +34,11 @@ namespace Glitch.Graphics
             }
         }
 
-        public void AddRange(IReadOnlyList<Renderable> Renderables, Vector3 viewPosition)
+        public void AddRange(IReadOnlyList<IRenderable> Renderables, Vector3 viewPosition)
         {
             for (int i = 0; i < Renderables.Count; i++)
             {
-                Renderable Renderable = Renderables[i];
+                IRenderable Renderable = Renderables[i];
                 if (Renderable != null)
                 {
                     Add(Renderable, viewPosition);
@@ -45,9 +46,9 @@ namespace Glitch.Graphics
             }
         }
 
-        public void AddRange(IEnumerable<Renderable> Renderables, Vector3 viewPosition)
+        public void AddRange(IEnumerable<IRenderable> Renderables, Vector3 viewPosition)
         {
-            foreach (Renderable item in Renderables)
+            foreach (IRenderable item in Renderables)
             {
                 if (item != null)
                 {
@@ -56,7 +57,7 @@ namespace Glitch.Graphics
             }
         }
 
-        public void Add(Renderable item, Vector3 viewPosition)
+        public void Add(IRenderable item, Vector3 viewPosition)
         {
             int index = _renderables.Count;
             _indices.Add(new RenderItemIndex(item.GetRenderOrderKey(viewPosition), index));
@@ -86,17 +87,17 @@ namespace Glitch.Graphics
             return new Enumerator(_indices, _renderables);
         }
 
-        IEnumerator<Renderable> IEnumerable<Renderable>.GetEnumerator() => GetEnumerator();
+        IEnumerator<IRenderable> IEnumerable<IRenderable>.GetEnumerator() => GetEnumerator();
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 
-        public struct Enumerator : IEnumerator<Renderable>
+        public struct Enumerator : IEnumerator<IRenderable>
         {
             private readonly List<RenderItemIndex> _indices;
-            private readonly List<Renderable> _Renderables;
+            private readonly List<IRenderable> _Renderables;
             private int _nextItemIndex;
-            private Renderable _currentItem;
+            private IRenderable _currentItem;
 
-            public Enumerator(List<RenderItemIndex> indices, List<Renderable> Renderables)
+            public Enumerator(List<RenderItemIndex> indices, List<IRenderable> Renderables)
             {
                 _indices = indices;
                 _Renderables = Renderables;
@@ -104,7 +105,7 @@ namespace Glitch.Graphics
                 _currentItem = null;
             }
 
-            public Renderable Current => _currentItem;
+            public IRenderable Current => _currentItem;
             object IEnumerator.Current => _currentItem;
 
             public void Dispose()

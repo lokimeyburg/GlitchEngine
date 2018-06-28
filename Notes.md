@@ -5,8 +5,9 @@ My scratchpad of notes, ideas and tasks.
 ## Tasks
 
 - [x] Demo with a sphere, floor and one light
-- [ ] Create game object, system registry & component system
-- [ ]
+- [x] Strip the scene code
+- [x] Add IRenderable and ICullRenderable interfaces. 
+- [x] Make sure to uncomment all CullRenderable code.
 - [ ] Split demo into Glitch, Launcher and Editor.
 - [ ] Create a seperate Game repository that uses the GlitchEngine
 

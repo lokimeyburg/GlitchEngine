@@ -5,14 +5,14 @@ using Glitch.Graphics;
 
 namespace Glitch.Objects
 {
-    internal class ScreenDuplicator : Renderable
+    internal class ScreenDuplicator : IRenderable
     {
         private DisposeCollector _disposeCollector;
         private Pipeline _pipeline;
         private DeviceBuffer _ib;
         private DeviceBuffer _vb;
 
-        public override void CreateDeviceObjects(GraphicsDevice gd, CommandList cl, SceneContext sc)
+        public void CreateDeviceObjects(GraphicsDevice gd, CommandList cl, SceneContext sc)
         {
             DisposeCollectorResourceFactory factory = new DisposeCollectorResourceFactory(gd.ResourceFactory);
             _disposeCollector = factory.DisposeCollector;
@@ -53,17 +53,17 @@ namespace Glitch.Objects
             cl.UpdateBuffer(_ib, 0, s_quadIndices);
         }
 
-        public override void DestroyDeviceObjects()
+        public void DestroyDeviceObjects()
         {
             _disposeCollector.DisposeAll();
         }
 
-        public override RenderOrderKey GetRenderOrderKey(Vector3 cameraPosition)
+        public RenderOrderKey GetRenderOrderKey(Vector3 cameraPosition)
         {
             return new RenderOrderKey();
         }
 
-        public override void Render(GraphicsDevice gd, CommandList cl, SceneContext sc, RenderPasses renderPass)
+        public void Render(GraphicsDevice gd, CommandList cl, SceneContext sc, RenderPasses renderPass)
         {
             cl.SetPipeline(_pipeline);
             cl.SetGraphicsResourceSet(0, sc.MainSceneViewResourceSet);
@@ -72,10 +72,17 @@ namespace Glitch.Objects
             cl.DrawIndexed(6, 1, 0, 0, 0);
         }
 
-        public override RenderPasses RenderPasses => RenderPasses.Duplicator;
+        public RenderPasses RenderPasses() { 
+            return Glitch.Graphics.RenderPasses.Duplicator;
+        }
 
-        public override void UpdatePerFrameResources(GraphicsDevice gd, CommandList cl, SceneContext sc)
+        public void UpdatePerFrameResources(GraphicsDevice gd, CommandList cl, SceneContext sc)
         {
+        }
+
+        public void Dispose()
+        {
+            DestroyDeviceObjects();
         }
 
         private static ushort[] s_quadIndices = new ushort[] { 0, 1, 2, 0, 2, 3 };

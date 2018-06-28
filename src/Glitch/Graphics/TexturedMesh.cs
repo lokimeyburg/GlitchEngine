@@ -10,7 +10,7 @@ using Glitch.Behaviors;
 
 namespace Glitch.Graphics
 {
-    public class TexturedMesh : CullRenderable
+    public class TexturedMesh : ICullRenderable
     {
         private readonly string _name;
         private readonly MeshData _meshData;
@@ -60,9 +60,11 @@ namespace Glitch.Graphics
             _materialProps = materialProps;
         }
 
-        public override BoundingBox BoundingBox => BoundingBox.Transform(_centeredBounds, _transform.GetWorldMatrix());
+        public BoundingBox BoundingBox() {
+            return Veldrid.Utilities.BoundingBox.Transform(_centeredBounds, _transform.GetWorldMatrix());
+        }
 
-        public unsafe override void CreateDeviceObjects(GraphicsDevice gd, CommandList cl, SceneContext sc)
+        public unsafe void CreateDeviceObjects(GraphicsDevice gd, CommandList cl, SceneContext sc)
         {
             ResourceFactory disposeFactory = new DisposeCollectorResourceFactory(gd.ResourceFactory, _disposeCollector);
             _vb = _meshData.CreateVertexBuffer(disposeFactory, cl);
@@ -244,7 +246,7 @@ namespace Glitch.Graphics
             return ret;
         }
 
-        public override void DestroyDeviceObjects()
+        public void DestroyDeviceObjects()
         {
             if (_materialPropsOwned)
             {
@@ -254,51 +256,48 @@ namespace Glitch.Graphics
             _disposeCollector.DisposeAll();
         }
 
-        public override RenderOrderKey GetRenderOrderKey(Vector3 cameraPosition)
+        public RenderOrderKey GetRenderOrderKey(Vector3 cameraPosition)
         {
             return RenderOrderKey.Create(
                 _pipeline.GetHashCode(),
                 Vector3.Distance((_objectCenter * _transform.Scale) + _transform.Position, cameraPosition));
         }
 
-        public override RenderPasses RenderPasses
+        public RenderPasses RenderPasses()
         {
-            get
+            if (_alphaTextureData != null)
             {
-                if (_alphaTextureData != null)
-                {
-                    return RenderPasses.AllShadowMap | RenderPasses.AlphaBlend | RenderPasses.ReflectionMap;
-                }
-                else
-                {
-                    return RenderPasses.AllShadowMap | RenderPasses.Standard | RenderPasses.ReflectionMap;
-                }
+                return Glitch.Graphics.RenderPasses.AllShadowMap | Glitch.Graphics.RenderPasses.AlphaBlend | Glitch.Graphics.RenderPasses.ReflectionMap;
+            }
+            else
+            {
+                return Glitch.Graphics.RenderPasses.AllShadowMap | Glitch.Graphics.RenderPasses.Standard | Glitch.Graphics.RenderPasses.ReflectionMap;
             }
         }
 
-        public override void Render(GraphicsDevice gd, CommandList cl, SceneContext sc, RenderPasses renderPass)
+        public void Render(GraphicsDevice gd, CommandList cl, SceneContext sc, RenderPasses renderPass)
         {
             if (_materialPropsOwned)
             {
                 _materialProps.FlushChanges(cl);
             }
 
-            if ((renderPass & RenderPasses.AllShadowMap) != 0)
+            if ((renderPass & Glitch.Graphics.RenderPasses.AllShadowMap) != 0)
             {
-                int shadowMapIndex = renderPass == RenderPasses.ShadowMapNear ? 0 : renderPass == RenderPasses.ShadowMapMid ? 1 : 2;
+                int shadowMapIndex = renderPass == Glitch.Graphics.RenderPasses.ShadowMapNear ? 0 : renderPass == Glitch.Graphics.RenderPasses.ShadowMapMid ? 1 : 2;
                 RenderShadowMap(cl, sc, shadowMapIndex);
             }
-            else if (renderPass == RenderPasses.Standard || renderPass == RenderPasses.AlphaBlend)
+            else if (renderPass == Glitch.Graphics.RenderPasses.Standard || renderPass == Glitch.Graphics.RenderPasses.AlphaBlend)
             {
                 RenderStandard(cl, sc, false);
             }
-            else if (renderPass == RenderPasses.ReflectionMap)
+            else if (renderPass == Glitch.Graphics.RenderPasses.ReflectionMap)
             {
                 RenderStandard(cl, sc, true);
             }
         }
 
-        public override void UpdatePerFrameResources(GraphicsDevice gd, CommandList cl, SceneContext sc)
+        public void UpdatePerFrameResources(GraphicsDevice gd, CommandList cl, SceneContext sc)
         {
             WorldAndInverse wai;
             wai.World = _transform.GetWorldMatrix();
@@ -327,6 +326,20 @@ namespace Glitch.Graphics
             // cl.SetGraphicsResourceSet(3, reflectionPass ? _reflectionRS : _noReflectionRS);
             cl.DrawIndexed((uint)_indexCount, 1, 0, 0, 0);
         }
+
+
+        public void Dispose()
+        {
+            DestroyDeviceObjects();
+        }
+
+        public bool Cull(ref BoundingFrustum visibleFrustum)
+        {
+            // return false
+            return visibleFrustum.Contains(BoundingBox()) == ContainmentType.Disjoint;
+        }
+
+
     }
 
     public struct WorldAndInverse

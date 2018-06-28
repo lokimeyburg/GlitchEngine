@@ -85,11 +85,11 @@ namespace Glitch
             // Skybox skybox = Skybox.LoadDefaultSkybox();
             // _scene.AddRenderable(skybox);
 
-            // AddSphere(new Vector3(0f));
+            AddSphere(new Vector3(0f));
 
-            // AddSphere(new Vector3(0f, 0f, 25f));
+            AddSphere(new Vector3(0f, 0f, 25f));
 
-            // AddFloor(new Vector3(0f, -12f, 0f));
+            AddFloor(new Vector3(0f, -12f, 0f));
 
             _sc.Camera.Position = new Vector3(-80, 25, -4.3f);
             _sc.Camera.Yaw = -MathF.PI / 2;
@@ -188,7 +188,7 @@ namespace Glitch
             mesh.Transform.Position = position;
             mesh.Transform.Rotation = rotation;
             mesh.Transform.Scale = scale;
-            _scene.AddRenderable(mesh);
+           _scene.AddRenderable(mesh);
         }
 
         public void Run()

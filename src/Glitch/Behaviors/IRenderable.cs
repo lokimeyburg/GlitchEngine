@@ -13,8 +13,11 @@ namespace Glitch.Graphics
         void DestroyDeviceObjects();
         void Dispose();
         RenderOrderKey GetRenderOrderKey(Vector3 cameraPosition);
+        RenderPasses RenderPasses();
 
-        // RenderPasses RenderPasses => RenderPasses.Standard;
+        // public RenderPasses RenderPasses() { 
+        //     return Glitch.Graphics.RenderPasses.Standard;
+        // }
     }
 
 }

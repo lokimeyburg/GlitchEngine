@@ -16,14 +16,14 @@ namespace Glitch
 {
     public class Scene
     {
-        private readonly Octree<CullRenderable> _octree
-            = new Octree<CullRenderable>(new BoundingBox(Vector3.One * -50, Vector3.One * 50), 2);
+        private readonly Octree<ICullRenderable> _octree
+            = new Octree<ICullRenderable>(new BoundingBox(Vector3.One * -50, Vector3.One * 50), 2);
 
-        private readonly List<Renderable> _freeRenderables = new List<Renderable>();
+        private readonly List<IRenderable> _freeRenderables = new List<IRenderable>();
         private readonly List<IUpdateable> _updateables = new List<IUpdateable>();
 
-        private readonly ConcurrentDictionary<RenderPasses, Func<CullRenderable, bool>> _filters
-            = new ConcurrentDictionary<RenderPasses, Func<CullRenderable, bool>>(new RenderPassesComparer());
+        private readonly ConcurrentDictionary<RenderPasses, Func<ICullRenderable, bool>> _filters
+            = new ConcurrentDictionary<RenderPasses, Func<ICullRenderable, bool>>(new RenderPassesComparer());
 
         private readonly Camera _camera;
 
@@ -49,11 +49,11 @@ namespace Glitch
             _updateables.Add(_camera);
         }
 
-        public void AddRenderable(Renderable r)
+        public void AddRenderable(IRenderable r)
         {
-            if (r is CullRenderable cr)
+            if (r is ICullRenderable cr)
             {
-                _octree.AddItem(cr.BoundingBox, cr);
+                _octree.AddItem(cr.BoundingBox(), cr);
             }
             else
             {
@@ -213,7 +213,7 @@ namespace Glitch
             cl.End();
 
             _resourceUpdateCL.Begin();
-            foreach (Renderable renderable in _allPerFrameRenderablesSet)
+            foreach (IRenderable renderable in _allPerFrameRenderablesSet)
             {
                 renderable.UpdatePerFrameResources(gd, _resourceUpdateCL, sc);
             }
@@ -490,16 +490,16 @@ namespace Glitch
             BoundingFrustum frustum,
             Vector3 viewPosition,
             RenderQueue renderQueue,
-            List<CullRenderable> cullRenderableList,
-            List<Renderable> renderableList,
+            List<ICullRenderable> ICullRenderableList,
+            List<IRenderable> renderableList,
             Comparer<RenderItemIndex> comparer,
             bool threaded)
         {
             renderQueue.Clear();
 
-            cullRenderableList.Clear();
-            CollectVisibleObjects(ref frustum, pass, cullRenderableList);
-            renderQueue.AddRange(cullRenderableList, viewPosition);
+            ICullRenderableList.Clear();
+            CollectVisibleObjects(ref frustum, pass, ICullRenderableList);
+            renderQueue.AddRange(ICullRenderableList, viewPosition);
 
             renderableList.Clear();
             CollectFreeObjects(pass, renderableList);
@@ -514,7 +514,7 @@ namespace Glitch
                 renderQueue.Sort(comparer);
             }
 
-            foreach (Renderable renderable in renderQueue)
+            foreach (IRenderable renderable in renderQueue)
             {
                 renderable.Render(gd, rc, sc, pass);
             }
@@ -523,65 +523,65 @@ namespace Glitch
             {
                 lock (_allPerFrameRenderablesSet)
                 {
-                    foreach (CullRenderable thing in cullRenderableList) { _allPerFrameRenderablesSet.Add(thing); }
-                    foreach (Renderable thing in renderableList) { _allPerFrameRenderablesSet.Add(thing); }
+                    foreach (ICullRenderable thing in ICullRenderableList) { _allPerFrameRenderablesSet.Add(thing); }
+                    foreach (IRenderable thing in renderableList) { _allPerFrameRenderablesSet.Add(thing); }
                 }
             }
             else
             {
-                foreach (CullRenderable thing in cullRenderableList) { _allPerFrameRenderablesSet.Add(thing); }
-                foreach (Renderable thing in renderableList) { _allPerFrameRenderablesSet.Add(thing); }
+                foreach (ICullRenderable thing in ICullRenderableList) { _allPerFrameRenderablesSet.Add(thing); }
+                foreach (IRenderable thing in renderableList) { _allPerFrameRenderablesSet.Add(thing); }
             }
         }
 
-        private readonly HashSet<Renderable> _allPerFrameRenderablesSet = new HashSet<Renderable>();
+        private readonly HashSet<IRenderable> _allPerFrameRenderablesSet = new HashSet<IRenderable>();
         private readonly RenderQueue[] _renderQueues = Enumerable.Range(0, 4).Select(i => new RenderQueue()).ToArray();
-        private readonly List<CullRenderable>[] _cullableStage = Enumerable.Range(0, 4).Select(i => new List<CullRenderable>()).ToArray();
-        private readonly List<Renderable>[] _renderableStage = Enumerable.Range(0, 4).Select(i => new List<Renderable>()).ToArray();
+        private readonly List<ICullRenderable>[] _cullableStage = Enumerable.Range(0, 4).Select(i => new List<ICullRenderable>()).ToArray();
+        private readonly List<IRenderable>[] _renderableStage = Enumerable.Range(0, 4).Select(i => new List<IRenderable>()).ToArray();
 
         private void CollectVisibleObjects(
             ref BoundingFrustum frustum,
             RenderPasses renderPass,
-            List<CullRenderable> renderables)
+            List<ICullRenderable> renderables)
         {
             _octree.GetContainedObjects(frustum, renderables, GetFilter(renderPass));
         }
 
-        private void CollectFreeObjects(RenderPasses renderPass, List<Renderable> renderables)
+        private void CollectFreeObjects(RenderPasses renderPass, List<IRenderable> renderables)
         {
-            foreach (Renderable r in _freeRenderables)
+            foreach (IRenderable r in _freeRenderables)
             {
-                if ((r.RenderPasses & renderPass) != 0)
+                if ((r.RenderPasses() & renderPass) != 0)
                 {
                     renderables.Add(r);
                 }
             }
         }
 
-        private static Func<RenderPasses, Func<CullRenderable, bool>> s_createFilterFunc = rp => CreateFilter(rp);
+        private static Func<RenderPasses, Func<ICullRenderable, bool>> s_createFilterFunc = rp => CreateFilter(rp);
         private CommandList _resourceUpdateCL;
 
-        private Func<CullRenderable, bool> GetFilter(RenderPasses passes)
+        private Func<ICullRenderable, bool> GetFilter(RenderPasses passes)
         {
             return _filters.GetOrAdd(passes, s_createFilterFunc);
         }
 
-        private static Func<CullRenderable, bool> CreateFilter(RenderPasses rp)
+        private static Func<ICullRenderable, bool> CreateFilter(RenderPasses rp)
         {
             // This cannot be inlined into GetFilter -- a Roslyn bug causes copious allocations.
             // https://github.com/dotnet/roslyn/issues/22589
-            return cr => (cr.RenderPasses & rp) == rp;
+            return cr => (cr.RenderPasses() & rp) == rp;
         }
 
         internal void DestroyAllDeviceObjects()
         {
             _cullableStage[0].Clear();
             _octree.GetAllContainedObjects(_cullableStage[0]);
-            foreach (CullRenderable cr in _cullableStage[0])
+            foreach (ICullRenderable cr in _cullableStage[0])
             {
                 cr.DestroyDeviceObjects();
             }
-            foreach (Renderable r in _freeRenderables)
+            foreach (IRenderable r in _freeRenderables)
             {
                 r.DestroyDeviceObjects();
             }
@@ -593,11 +593,11 @@ namespace Glitch
         {
             _cullableStage[0].Clear();
             _octree.GetAllContainedObjects(_cullableStage[0]);
-            foreach (CullRenderable cr in _cullableStage[0])
+            foreach (ICullRenderable cr in _cullableStage[0])
             {
                 cr.CreateDeviceObjects(gd, cl, sc);
             }
-            foreach (Renderable r in _freeRenderables)
+            foreach (IRenderable r in _freeRenderables)
             {
                 r.CreateDeviceObjects(gd, cl, sc);
             }
