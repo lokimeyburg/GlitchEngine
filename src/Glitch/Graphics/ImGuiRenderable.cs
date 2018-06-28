@@ -7,7 +7,7 @@ using Glitch.Behaviors;
 
 namespace Glitch.Graphics
 {
-    public class ImGuiRenderable : Renderable, IUpdateable
+    public class ImGuiRenderable : IRenderable, IUpdateable
     {
         private ImGuiRenderer _imguiRenderer;
         private int _width;
@@ -21,7 +21,7 @@ namespace Glitch.Graphics
 
         public void WindowResized(int width, int height) => _imguiRenderer.WindowResized(width, height);
 
-        public override void CreateDeviceObjects(GraphicsDevice gd, CommandList cl, SceneContext sc)
+        public void CreateDeviceObjects(GraphicsDevice gd, CommandList cl, SceneContext sc)
         {
             if (_imguiRenderer == null)
             {
@@ -33,31 +33,38 @@ namespace Glitch.Graphics
             }
         }
 
-        public override void DestroyDeviceObjects()
+        public void DestroyDeviceObjects()
         {
             _imguiRenderer.Dispose();
         }
 
-        public override RenderOrderKey GetRenderOrderKey(Vector3 cameraPosition)
+        public RenderOrderKey GetRenderOrderKey(Vector3 cameraPosition)
         {
             return new RenderOrderKey(ulong.MaxValue);
         }
 
-        public override void Render(GraphicsDevice gd, CommandList cl, SceneContext sc, RenderPasses renderPass)
+        public void Render(GraphicsDevice gd, CommandList cl, SceneContext sc, RenderPasses renderPass)
         {
-            Debug.Assert(renderPass == RenderPasses.Overlay);
+            Debug.Assert(renderPass == Glitch.Graphics.RenderPasses.Overlay);
             _imguiRenderer.Render(gd, cl);
         }
 
-        public override void UpdatePerFrameResources(GraphicsDevice gd, CommandList cl, SceneContext sc)
+        public void UpdatePerFrameResources(GraphicsDevice gd, CommandList cl, SceneContext sc)
         {
         }
 
-        public override RenderPasses RenderPasses => RenderPasses.Overlay;
+        public RenderPasses RenderPasses() {
+            return Glitch.Graphics.RenderPasses.Overlay;
+        }
 
         public void Update(float deltaSeconds)
         {
             _imguiRenderer.Update(deltaSeconds, InputTracker.FrameSnapshot);
+        }
+
+        public void Dispose()
+        {
+            DestroyDeviceObjects();
         }
     }
 }

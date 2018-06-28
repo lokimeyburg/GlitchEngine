@@ -11,7 +11,7 @@ using Glitch.Behaviors;
 
 namespace Glitch.Graphics
 {
-    public class Skybox : Component, IRenderable
+    public class Skybox : IRenderable
     {
         private readonly Image<Rgba32> _front;
         private readonly Image<Rgba32> _back;
@@ -102,9 +102,9 @@ namespace Glitch.Graphics
                 new ResourceLayout[] { _layout },
                 sc.MainSceneFramebuffer.OutputDescription);
 
-            // _pipeline = factory.CreateGraphicsPipeline(ref pd);
-            // pd.Outputs = sc.ReflectionFramebuffer.OutputDescription;
-            // _reflectionPipeline = factory.CreateGraphicsPipeline(ref pd);
+            _pipeline = factory.CreateGraphicsPipeline(ref pd);
+            pd.Outputs = sc.MainSceneFramebuffer.OutputDescription;
+            _reflectionPipeline = factory.CreateGraphicsPipeline(ref pd);
 
             _resourceSet = factory.CreateResourceSet(new ResourceSetDescription(
                 _layout,
@@ -145,7 +145,7 @@ namespace Glitch.Graphics
         {
             cl.SetVertexBuffer(0, _vb);
             cl.SetIndexBuffer(_ib, IndexFormat.UInt16);
-            cl.SetPipeline(renderPass == Glitch.Graphics.RenderPasses.ReflectionMap ? _reflectionPipeline : _pipeline);
+            cl.SetPipeline(_pipeline);
             cl.SetGraphicsResourceSet(0, _resourceSet);
             float depth = gd.IsDepthRangeZeroToOne ? 0 : 1;
             cl.SetViewport(0, new Viewport(0, 0, sc.MainSceneColorTexture.Width, sc.MainSceneColorTexture.Height, depth, depth));
@@ -157,25 +157,25 @@ namespace Glitch.Graphics
             return new RenderOrderKey(ulong.MaxValue);
         }
 
-        // Component Implementation
-        protected override void Attached(SystemRegistry registry)
-        {
+        // // Component Implementation
+        // protected override void Attached(SystemRegistry registry)
+        // {
 
-        }
-        protected override void Removed(SystemRegistry registry)
-        {
+        // }
+        // protected override void Removed(SystemRegistry registry)
+        // {
 
-        }
+        // }
 
-        protected override void OnEnabled()
-        {
+        // protected override void OnEnabled()
+        // {
 
-        }
+        // }
 
-        protected override void OnDisabled()
-        {
+        // protected override void OnDisabled()
+        // {
 
-        }
+        // }
 
         public RenderPasses RenderPasses() { 
             return Glitch.Graphics.RenderPasses.Standard | Glitch.Graphics.RenderPasses.ReflectionMap;
