@@ -1,0 +1,34 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.0</TargetFramework>
+    <AssemblyName>Spark</AssemblyName>
+    <RootNamespace>Spark</RootNamespace>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <GameAssetOutputDir>$(AssetDir)\Managed</GameAssetOutputDir>
+    <!-- <DisableImplicitFrameworkReferences>true</DisableImplicitFrameworkReferences>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    <EnableDefaultCompileItems>false</EnableDefaultCompileItems> -->
+
+    <OutputPath>..\Glitch\bin\$(Configuration)</OutputPath>
+  </PropertyGroup>
+
+  <Target Name="CopyCustomContent" AfterTargets="AfterBuild">
+    <Copy SourceFiles="Spark.manifest" DestinationFolder="$(OutDir)" />
+  </Target>
+
+
+  <!-- <ItemGroup>
+    <Compile Include="Class1.cs" />
+  </ItemGroup> -->
+
+  <!-- <ItemGroup>
+    <Compile Include="Class1.cs" />
+  </ItemGroup>
+
+  <Target Name="CopyToGameAssetDir" AfterTargets="CopyFilesToOutputDirectory">
+    <Copy SourceFiles="$(TargetPath)" DestinationFolder="$(GameAssetOutputDir)" />
+    <Copy SourceFiles="$(TargetPath.Replace('.dll', '.pdb'))" DestinationFolder="$(GameAssetOutputDir)" />
+  </Target> -->
+
+</Project>

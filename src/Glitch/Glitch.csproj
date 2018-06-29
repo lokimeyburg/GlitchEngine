@@ -9,10 +9,6 @@
     <!-- <EnableDefaultCompileItems>false</EnableDefaultCompileItems> -->
   </PropertyGroup>
 
-  <Target Name="CopyCustomContent" AfterTargets="AfterBuild">
-    <Copy SourceFiles="Spark.manifest" DestinationFolder="$(OutDir)" />
-  </Target>
-
   <ItemGroup>
     <Content Include="..\..\Assets\Textures\**">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>

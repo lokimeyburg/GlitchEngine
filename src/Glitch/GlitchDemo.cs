@@ -59,7 +59,6 @@ namespace Glitch
                         Console.WriteLine("Error: Multiple project manifests in this directory: " + currentDir);
                         // return -1;
                     }
-
                     manifestName = file;
                 }
             }
@@ -75,11 +74,18 @@ namespace Glitch
                 }
                 catch (Exception e)
                 {
-                    Console.WriteLine("An error was encountered while loading the project manifest.");
+                    string errorMessage = "An error was encountered while loading the project manifest.";
+                    Console.WriteLine(errorMessage);
                     Console.WriteLine(e);
-                    // return -1;
+                    throw new System.NullReferenceException(errorMessage);
                 }
             }
+
+            Game game = new Game();
+
+            AssemblyLoadSystem als = new AssemblyLoadSystem();
+            als.LoadFromProjectManifest(projectManifest, AppContext.BaseDirectory);
+            game.SystemRegistry.Register(als);
 
             // Window & Graphics Device
             // --------------------------------------------------
@@ -132,11 +138,7 @@ namespace Glitch
             // Skybox skybox = Skybox.LoadDefaultSkybox();
             // _scene.AddRenderable(skybox);
 
-            // Game game = new Game();
 
-            // AssemblyLoadSystem als = new AssemblyLoadSystem();
-            // als.LoadFromProjectManifest(projectManifest, AppContext.BaseDirectory);
-            // game.SystemRegistry.Register(als);
 
             // AssetSystem assetSystem = new AssetSystem(Path.Combine(AppContext.BaseDirectory, projectManifest.AssetRoot), als.Binder);
             // game.SystemRegistry.Register(assetSystem);
