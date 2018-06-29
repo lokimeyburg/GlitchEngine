@@ -1,3 +1,6 @@
 [submodule "ext/veldrid"]
 	path = ext/veldrid
 	url = git@github.com:lokimeyburg/veldrid.git
+[submodule "ext/SharpFont"]
+	path = ext/SharpFont
+	url = git@github.com:Robmaister/SharpFont.git

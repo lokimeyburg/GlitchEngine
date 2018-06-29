@@ -3,12 +3,13 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
-using System.Numerics;
+using System.Numerics;  
 using Veldrid.ImageSharp;
 using Glitch.Objects;
 using Veldrid.StartupUtilities;
 using Veldrid.Utilities;
 using Veldrid.Sdl2;
+using Newtonsoft.Json;
 using Veldrid;
 using Glitch.Graphics;
 using Glitch.AssetUtil;
@@ -18,8 +19,6 @@ namespace Glitch
 {
     public class GlitchDemo
     {
-        ProjectManifest projectManifest;
-
         private Sdl2Window _window;
         private GraphicsDevice _gd;
         private Scene _scene;
@@ -45,6 +44,45 @@ namespace Glitch
 
         public GlitchDemo()
         {
+            // Project Manifest
+            // --------------------------------------------------
+            ProjectManifest projectManifest;
+            string currentDir = AppContext.BaseDirectory;
+            string manifestName = null;
+            
+            foreach (var file in Directory.EnumerateFiles(currentDir))
+            {
+                if (file.EndsWith("manifest"))
+                {
+                    if (manifestName != null)
+                    {
+                        Console.WriteLine("Error: Multiple project manifests in this directory: " + currentDir);
+                        // return -1;
+                    }
+
+                    manifestName = file;
+                }
+            }
+
+            using (var fs = File.OpenRead(manifestName))
+            using (var sr = new StreamReader(fs))
+            using (var jtr = new JsonTextReader(sr))
+            {
+                var js = new JsonSerializer();
+                try
+                {
+                    projectManifest = js.Deserialize<ProjectManifest>(jtr);
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine("An error was encountered while loading the project manifest.");
+                    Console.WriteLine(e);
+                    // return -1;
+                }
+            }
+
+            // Window & Graphics Device
+            // --------------------------------------------------
             WindowCreateInfo windowCI = new WindowCreateInfo
             {
                 X = 50,
@@ -70,26 +108,68 @@ namespace Glitch
                 out _gd);
             _window.Resized += () => _windowResized = true;
 
+
+            // SCENE
+            // --------------------------------------------------
+
             // Create a new scene and set it as the current Scene Context
             _scene = new Scene(_gd, _window.Width, _window.Height);
             // sets the SceneContext.Camera to the scene's camera (scene.camera)
             _sc.SetCurrentScene(_scene);
 
-            // Create the ImGui menu bar and add it to the scene
+            // GUI
+            // --------------------------------------------------
+
             _igRenderable = new ImGuiRenderable(_window.Width, _window.Height);
             _resizeHandled += (w, h) => _igRenderable.WindowResized(w, h);
             _scene.AddRenderable(_igRenderable);
             _scene.AddUpdateable(_igRenderable);
 
+            // START DOODLE
+            // -------------------------------
+
             // Add the Skybox
-            Skybox skybox = Skybox.LoadDefaultSkybox();
-            _scene.AddRenderable(skybox);
+            // Skybox skybox = Skybox.LoadDefaultSkybox();
+            // _scene.AddRenderable(skybox);
 
-            AddSphere(new Vector3(0f));
+            // Game game = new Game();
 
-            AddSphere(new Vector3(0f, 0f, 25f));
+            // AssemblyLoadSystem als = new AssemblyLoadSystem();
+            // als.LoadFromProjectManifest(projectManifest, AppContext.BaseDirectory);
+            // game.SystemRegistry.Register(als);
 
-            AddFloor(new Vector3(0f, -12f, 0f));
+            // AssetSystem assetSystem = new AssetSystem(Path.Combine(AppContext.BaseDirectory, projectManifest.AssetRoot), als.Binder);
+            // game.SystemRegistry.Register(assetSystem);
+
+
+            // SceneAsset sceneAsset;
+            // AssetID mainSceneID = projectManifest.OpeningScene.ID;
+            // if (mainSceneID.IsEmpty)
+            // {
+            //     var scenes = assetSystem.Database.GetAssetsOfType(typeof(SceneAsset));
+            //     if (!scenes.Any())
+            //     {
+            //         Console.WriteLine("No scenes were available to load.");
+            //         // return -1;
+            //     }
+            //     else
+            //     {
+            //         mainSceneID = scenes.First();
+            //     }
+            // }
+
+            // sceneAsset = assetSystem.Database.LoadAsset<SceneAsset>(mainSceneID);
+            // sceneAsset.GenerateGameObjects();
+
+            
+            // END DOODLE
+            // -------------------------------
+
+            // AddSphere(new Vector3(0f));
+
+            // AddSphere(new Vector3(0f, 0f, 25f));
+
+            // AddFloor(new Vector3(0f, -12f, 0f));
 
             _sc.Camera.Position = new Vector3(-80, 25, -4.3f);
             _sc.Camera.Yaw = -MathF.PI / 2;
