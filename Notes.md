@@ -8,8 +8,8 @@ My scratchpad of notes, ideas and tasks.
 - [x] Strip the scene code
 - [x] Add IRenderable and ICullRenderable interfaces. 
 - [x] Make sure to uncomment all CullRenderable code.
-- [ ] Split demo into Glitch, Launcher and Editor.
-- [ ] Create a seperate Game repository that uses the GlitchEngine
+- [x] Create a seperate Game repository that uses the GlitchEngine
+- [ ] [WIP] Get Spark to compile and output it's DLL in Glitch's output
 
 ## Notes for physics engine
 
