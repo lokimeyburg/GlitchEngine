@@ -10,6 +10,9 @@ My scratchpad of notes, ideas and tasks.
 - [x] Make sure to uncomment all CullRenderable code.
 - [x] Create a seperate Game repository that uses the GlitchEngine
 - [ ] [WIP] Get Spark to compile and output it's DLL in Glitch's output
+- [ ] Get the Asset System to read both loose file and embedded assets
+- [ ] Render the Skybox Game Object from reading the `.scene` file
+- [ ] Render primitive textured meshes as Game Objects
 
 ## Notes for physics engine
 
