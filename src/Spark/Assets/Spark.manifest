@@ -17,10 +17,10 @@
     }
   },
   "GameStartupFunctions":{
-    "$type":"System.Collections.Generic.List`1[[Glitch.ProjectSystem.StartupFunction, Engine]], System.Private.CoreLib",
+    "$type":"System.Collections.Generic.List`1[[Glitch.ProjectSystem.StartupFunction, Glitch]], System.Private.CoreLib",
     "$values":[
       {
-        "$type":"Engine.ProjectSystem.StartupFunction, Engine",
+        "$type":"Glitch.ProjectSystem.StartupFunction, Glitch",
         "TypeName":"Spark.SparkPreferences",
         "MethodName":"GameInit"
       }

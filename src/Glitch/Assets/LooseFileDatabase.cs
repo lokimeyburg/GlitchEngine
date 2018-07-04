@@ -243,8 +243,8 @@ namespace Glitch.Assets
             AssetLoader loader;
             if (!_assetLoaders.TryGetValue(t, out loader))
             {
-                // loader = new TextAssetLoader<object>(_serializer);
-                // _assetLoaders.Add(t, loader);
+                loader = new TextAssetLoader<object>(_serializer);
+                _assetLoaders.Add(t, loader);
             }
 
             return loader;

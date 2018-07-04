@@ -11,7 +11,7 @@ using Glitch.Behaviors;
 
 namespace Glitch.Graphics
 {
-    public class Skybox : IRenderable
+    public class Skybox : Component, IRenderable
     {
         private readonly Image<Rgba32> _front;
         private readonly Image<Rgba32> _back;
@@ -158,25 +158,26 @@ namespace Glitch.Graphics
             return new RenderOrderKey(ulong.MaxValue);
         }
 
-        // // Component Implementation
-        // protected override void Attached(SystemRegistry registry)
-        // {
+        // Component Implementation
+        protected override void Attached(SystemRegistry registry)
+        {
 
-        // }
-        // protected override void Removed(SystemRegistry registry)
-        // {
+        }
+        protected override void Removed(SystemRegistry registry)
+        {
 
-        // }
+        }
 
-        // protected override void OnEnabled()
-        // {
+        protected override void OnEnabled()
+        {
 
-        // }
+        }
 
-        // protected override void OnDisabled()
-        // {
+        protected override void OnDisabled()
+        {
 
-        // }
+        }
+        // END component implementation
 
         public RenderPasses RenderPasses() { 
             return Glitch.Graphics.RenderPasses.Standard | Glitch.Graphics.RenderPasses.ReflectionMap;

@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Numerics;  
+using System.Linq;
 using Veldrid.ImageSharp;
 using Glitch.Objects;
 using Veldrid.StartupUtilities;
@@ -44,6 +45,34 @@ namespace Glitch
 
         public GlitchDemo()
         {
+            // Window & Graphics Device
+            // --------------------------------------------------
+            WindowCreateInfo windowCI = new WindowCreateInfo
+            {
+                X = 50,
+                Y = 50,
+                WindowWidth = 960,
+                WindowHeight = 540,
+                WindowInitialState = WindowState.Normal,
+                WindowTitle = "Glitch Demo"
+            };
+            GraphicsDeviceOptions gdOptions = new GraphicsDeviceOptions(false, null, false, ResourceBindingModel.Improved, true);
+#if DEBUG
+            gdOptions.Debug = true;
+#endif
+
+            VeldridStartup.CreateWindowAndGraphicsDevice(
+                windowCI,
+                gdOptions,
+                //GraphicsBackend.Metal,
+                //GraphicsBackend.Vulkan,
+                //GraphicsBackend.OpenGL,
+                //GraphicsBackend.OpenGLES,
+                out _window,
+                out _gd);
+            _window.Resized += () => _windowResized = true;
+
+
             // Project Manifest
             // --------------------------------------------------
             ProjectManifest projectManifest;
@@ -88,33 +117,6 @@ namespace Glitch
             als.LoadFromProjectManifest(projectManifest, AppContext.BaseDirectory);
             game.SystemRegistry.Register(als);
 
-            // Window & Graphics Device
-            // --------------------------------------------------
-            WindowCreateInfo windowCI = new WindowCreateInfo
-            {
-                X = 50,
-                Y = 50,
-                WindowWidth = 960,
-                WindowHeight = 540,
-                WindowInitialState = WindowState.Normal,
-                WindowTitle = "Glitch Demo"
-            };
-            GraphicsDeviceOptions gdOptions = new GraphicsDeviceOptions(false, null, false, ResourceBindingModel.Improved, true);
-#if DEBUG
-            gdOptions.Debug = true;
-#endif
-
-            VeldridStartup.CreateWindowAndGraphicsDevice(
-                windowCI,
-                gdOptions,
-                //GraphicsBackend.Metal,
-                //GraphicsBackend.Vulkan,
-                //GraphicsBackend.OpenGL,
-                //GraphicsBackend.OpenGLES,
-                out _window,
-                out _gd);
-            _window.Resized += () => _windowResized = true;
-
 
             // SCENE
             // --------------------------------------------------
@@ -136,35 +138,29 @@ namespace Glitch
             // -------------------------------
 
             // Add the Skybox
-            Skybox skybox = Skybox.LoadDefaultSkybox();
-            _scene.AddRenderable(skybox);
+            // Skybox skybox = Skybox.LoadDefaultSkybox();
+            // _scene.AddRenderable(skybox);
 
             AssetSystem assetSystem = new AssetSystem(Path.Combine(AppContext.BaseDirectory, projectManifest.AssetRoot), als.Binder);
             game.SystemRegistry.Register(assetSystem);
 
-            // Load texture from database
-            AssetDatabase ad = assetSystem.Database;
-            var front = ad.LoadAsset<ImageSharpTexture>(EngineEmbeddedAssets.SkyboxFrontID);
-            
+            SceneAsset sceneAsset;
+            AssetID mainSceneID = projectManifest.OpeningScene.ID;
+            if (mainSceneID.IsEmpty)
+            {
+                var scenes = assetSystem.Database.GetAssetsOfType(typeof(SceneAsset));
+                if (!scenes.Any())
+                {                    
+                    Console.WriteLine("No scenes were available to load.");
+                    throw new System.Exception("No scenes were available to load.");
+                }
+                else
+                {
+                    mainSceneID = scenes.First();
+                }
+            }
 
-
-            // SceneAsset sceneAsset;
-            // AssetID mainSceneID = projectManifest.OpeningScene.ID;
-            // if (mainSceneID.IsEmpty)
-            // {
-            //     var scenes = assetSystem.Database.GetAssetsOfType(typeof(SceneAsset));
-            //     if (!scenes.Any())
-            //     {
-            //         Console.WriteLine("No scenes were available to load.");
-            //         // return -1;
-            //     }
-            //     else
-            //     {
-            //         mainSceneID = scenes.First();
-            //     }
-            // }
-
-            // sceneAsset = assetSystem.Database.LoadAsset<SceneAsset>(mainSceneID);
+            sceneAsset = assetSystem.Database.LoadAsset<SceneAsset>(mainSceneID);
             // sceneAsset.GenerateGameObjects();
 
             
