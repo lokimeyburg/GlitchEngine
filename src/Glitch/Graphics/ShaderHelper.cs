@@ -70,6 +70,8 @@ namespace Glitch.Graphics
             if (backend == GraphicsBackend.Vulkan || backend == GraphicsBackend.Direct3D11)
             {
                 string bytecodeExtension = GetBytecodeExtension(backend);
+                // TODO: This should not be reading from a file path. Instead 1) embed the assets 2) read from the asset database
+                // for reference, checkout EngineEmeddedAssets.cs 
                 string bytecodePath = AssetHelper.GetPath(Path.Combine("Shaders", name + bytecodeExtension));
                 if (File.Exists(bytecodePath))
                 {

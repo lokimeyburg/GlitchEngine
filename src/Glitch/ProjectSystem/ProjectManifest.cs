@@ -1,5 +1,5 @@
 using System.Collections.Generic;
-using Glitch.AssetUtil;
+using Glitch.Assets;
 
 namespace Glitch.ProjectSystem
 {

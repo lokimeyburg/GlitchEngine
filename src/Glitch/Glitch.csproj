@@ -9,7 +9,7 @@
     <!-- <EnableDefaultCompileItems>false</EnableDefaultCompileItems> -->
   </PropertyGroup>
 
-  <ItemGroup>
+  <!-- <ItemGroup>
     <Content Include="..\..\Assets\Textures\**">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <Link>Assets\Textures\%(RecursiveDir)\%(FileName)%(Extension)</Link>
@@ -28,9 +28,70 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <Link>Assets\Shaders\%(RecursiveDir)\%(FileName)%(Extension)</Link>
     </Content>
+  </ItemGroup> -->
+
+  <ItemGroup>
+    <Content Include="Assets\Textures\**">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Link>Assets\Textures\%(RecursiveDir)\%(FileName)%(Extension)</Link>
+    </Content>
   </ItemGroup>
 
   <ItemGroup>
+    <Content Include="Assets\Shaders\**">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Link>Assets\Shaders\%(RecursiveDir)\%(FileName)%(Extension)</Link>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\HLSL\imgui-frag.hlsl" />
+    <EmbeddedResource Include="Assets\HLSL\imgui-vertex.hlsl" />
+    <EmbeddedResource Include="Assets\HLSL\lit-frag.hlsl" />
+    <EmbeddedResource Include="Assets\HLSL\shadow-frag.hlsl" />
+    <EmbeddedResource Include="Assets\HLSL\shadow-vertex.hlsl" />
+    <EmbeddedResource Include="Assets\HLSL\shadowmap-frag.hlsl" />
+    <EmbeddedResource Include="Assets\HLSL\shadowmap-vertex.hlsl" />
+    <EmbeddedResource Include="Assets\HLSL\simple-2d-frag.hlsl" />
+    <EmbeddedResource Include="Assets\HLSL\simple-2d-vertex.hlsl" />
+    <EmbeddedResource Include="Assets\HLSL\skybox-frag.hlsl" />
+    <EmbeddedResource Include="Assets\HLSL\skybox-vertex.hlsl" />
+    <EmbeddedResource Include="Assets\HLSL\textured-vertex.hlsl" />
+    <EmbeddedResource Include="Assets\Models\Sphere.obj" />
+    <EmbeddedResource Include="Assets\GLSL\imgui-frag.glsl" />
+    <EmbeddedResource Include="Assets\GLSL\imgui-vertex.glsl" />
+    <EmbeddedResource Include="Assets\GLSL\lit-frag.glsl" />
+    <EmbeddedResource Include="Assets\GLSL\skybox-frag.glsl" />
+    <EmbeddedResource Include="Assets\GLSL\skybox-vertex.glsl" />
+    <EmbeddedResource Include="Assets\GLSL\textured-vertex.glsl" />
+    <EmbeddedResource Include="Assets\GLSL\shadow-frag.glsl" />
+    <EmbeddedResource Include="Assets\GLSL\shadow-vertex.glsl" />
+    <EmbeddedResource Include="Assets\GLSL\shadowmap-frag.glsl" />
+    <EmbeddedResource Include="Assets\GLSL\shadowmap-vertex.glsl" />
+    <EmbeddedResource Include="Assets\GLSL\simple-2d-frag.glsl" />
+    <EmbeddedResource Include="Assets\GLSL\simple-2d-vertex.glsl" />
+    <EmbeddedResource Include="Assets\GLSL\geometry-frag.glsl" />
+    <EmbeddedResource Include="Assets\GLSL\geometry-vertex.glsl" />
+    <EmbeddedResource Include="Assets\Textures\cloudtop\cloudtop_bk.png" />
+    <EmbeddedResource Include="Assets\Textures\cloudtop\cloudtop_dn.png" />
+    <EmbeddedResource Include="Assets\Textures\cloudtop\cloudtop_ft.png" />
+    <EmbeddedResource Include="Assets\Textures\cloudtop\cloudtop_lf.png" />
+    <EmbeddedResource Include="Assets\Textures\cloudtop\cloudtop_rt.png" />
+    <EmbeddedResource Include="Assets\Textures\cloudtop\cloudtop_up.png" />
+    <EmbeddedResource Include="Assets\HLSL\billboard-geometry.hlsl" />
+    <EmbeddedResource Include="Assets\HLSL\particle-fragment.hlsl" />
+    <EmbeddedResource Include="Assets\HLSL\passthrough-vertex.hlsl" />
+    <EmbeddedResource Include="Assets\GLSL\billboard-geometry.glsl" />
+    <EmbeddedResource Include="Assets\GLSL\particle-fragment.glsl" />
+    <EmbeddedResource Include="Assets\GLSL\passthrough-vertex.glsl" />
+    <EmbeddedResource Include="Assets\GLSL\text-fragment.glsl" />
+    <EmbeddedResource Include="Assets\GLSL\text-vertex.glsl" />
+    <EmbeddedResource Include="Assets\HLSL\text-fragment.hlsl" />
+    <EmbeddedResource Include="Assets\HLSL\text-vertex.hlsl" />
+    <EmbeddedResource Include="Assets\HLSL\shadow-transparent-frag.hlsl" />
+    <EmbeddedResource Include="Assets\GLSL\shadow-transparent-frag.glsl" />
+    <EmbeddedResource Include="Assets\HLSL\shadow-transparent-vertex.hlsl" />
+    <EmbeddedResource Include="Assets\GLSL\shadow-transparent-vertex.glsl" />
     <Content Include="$(MSBuildThisFileDirectory)..\..\ext\veldrid\src\Veldrid.SDL2\native\win-x64\SDL2.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

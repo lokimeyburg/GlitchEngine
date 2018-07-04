@@ -12,7 +12,7 @@ using Veldrid.Sdl2;
 using Newtonsoft.Json;
 using Veldrid;
 using Glitch.Graphics;
-using Glitch.AssetUtil;
+using Glitch.Assets;
 using Glitch.ProjectSystem;
 
 namespace Glitch
@@ -50,14 +50,15 @@ namespace Glitch
             string currentDir = AppContext.BaseDirectory;
             string manifestName = null;
             
-            foreach (var file in Directory.EnumerateFiles(currentDir))
+            foreach (var file in Directory.EnumerateFiles(currentDir + "Assets"))
             {
                 if (file.EndsWith("manifest"))
                 {
                     if (manifestName != null)
                     {
-                        Console.WriteLine("Error: Multiple project manifests in this directory: " + currentDir);
-                        // return -1;
+                        string errorMessage  = "Error: Multiple project manifests in this directory: " + currentDir;
+                        Console.WriteLine(errorMessage);
+                        throw new System.Exception(errorMessage);
                     }
                     manifestName = file;
                 }
@@ -135,13 +136,13 @@ namespace Glitch
             // -------------------------------
 
             // Add the Skybox
-            // Skybox skybox = Skybox.LoadDefaultSkybox();
-            // _scene.AddRenderable(skybox);
+            Skybox skybox = Skybox.LoadDefaultSkybox();
+            _scene.AddRenderable(skybox);
 
 
 
-            // AssetSystem assetSystem = new AssetSystem(Path.Combine(AppContext.BaseDirectory, projectManifest.AssetRoot), als.Binder);
-            // game.SystemRegistry.Register(assetSystem);
+            AssetSystem assetSystem = new AssetSystem(Path.Combine(AppContext.BaseDirectory, projectManifest.AssetRoot), als.Binder);
+            game.SystemRegistry.Register(assetSystem);
 
 
             // SceneAsset sceneAsset;

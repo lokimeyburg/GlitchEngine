@@ -127,13 +127,14 @@ namespace Glitch.Graphics
 
         public static Skybox LoadDefaultSkybox()
         {
+            // TODO: the Skybox should load the textures from the engine embedded assets
             return new Skybox(
-                Image.Load("Assets/Textures/cloudtop/cloudtop_ft.png"),
-                Image.Load("Assets/Textures/cloudtop/cloudtop_bk.png"),
-                Image.Load("Assets/Textures/cloudtop/cloudtop_lf.png"),
-                Image.Load("Assets/Textures/cloudtop/cloudtop_rt.png"),
-                Image.Load("Assets/Textures/cloudtop/cloudtop_up.png"),
-                Image.Load("Assets/Textures/cloudtop/cloudtop_dn.png"));
+                Image.Load(AssetHelper.GetPath("Textures/cloudtop/cloudtop_ft.png")),
+                Image.Load(AssetHelper.GetPath("Textures/cloudtop/cloudtop_bk.png")),
+                Image.Load(AssetHelper.GetPath("Textures/cloudtop/cloudtop_lf.png")),
+                Image.Load(AssetHelper.GetPath("Textures/cloudtop/cloudtop_rt.png")),
+                Image.Load(AssetHelper.GetPath("Textures/cloudtop/cloudtop_up.png")),
+                Image.Load(AssetHelper.GetPath("Textures/cloudtop/cloudtop_dn.png")));
         }
 
         public void DestroyDeviceObjects()

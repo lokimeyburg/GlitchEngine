@@ -1,34 +1,36 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netcoreapp2.0</TargetFramework>
+    <OutputType>Library</OutputType>
     <AssemblyName>Spark</AssemblyName>
     <RootNamespace>Spark</RootNamespace>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <TargetFramework>netcoreapp2.0</TargetFramework>
     <GameAssetOutputDir>$(AssetDir)\Managed</GameAssetOutputDir>
-    <!-- <DisableImplicitFrameworkReferences>true</DisableImplicitFrameworkReferences>
+    <DisableImplicitFrameworkReferences>true</DisableImplicitFrameworkReferences>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
-    <EnableDefaultCompileItems>false</EnableDefaultCompileItems> -->
-
-    <OutputPath>..\Glitch\bin\$(Configuration)</OutputPath>
   </PropertyGroup>
 
-  <Target Name="CopyCustomContent" AfterTargets="AfterBuild">
-    <Copy SourceFiles="Spark.manifest" DestinationFolder="$(OutDir)" />
-  </Target>
-
-
-  <!-- <ItemGroup>
-    <Compile Include="Class1.cs" />
-  </ItemGroup> -->
-
-  <!-- <ItemGroup>
-    <Compile Include="Class1.cs" />
+  <ItemGroup>
+    <ProjectReference Include="..\Glitch\Glitch.csproj">
+      <Name>Glitch</Name>
+      <Private>False</Private>
+    </ProjectReference>
   </ItemGroup>
-
+  
   <Target Name="CopyToGameAssetDir" AfterTargets="CopyFilesToOutputDirectory">
     <Copy SourceFiles="$(TargetPath)" DestinationFolder="$(GameAssetOutputDir)" />
     <Copy SourceFiles="$(TargetPath.Replace('.dll', '.pdb'))" DestinationFolder="$(GameAssetOutputDir)" />
-  </Target> -->
+  </Target>
+
+  <!-- Copy the Assets from Spark and put it into Glitch's output path  -->
+  <Target Name="CopyAssetsToGlitchOutput" AfterTargets="CopyFilesToOutputDirectory">
+    <ItemGroup>
+      <_CopyItems Include="$(AssetDir)\**\*.*" />
+    </ItemGroup>
+    <Copy SourceFiles="@(_CopyItems)" DestinationFolder="../bin/Glitch/$(TargetFramework)/Assets/%(RecursiveDir)" />
+  </Target>
+
+
 
 </Project>

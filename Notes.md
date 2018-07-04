@@ -13,10 +13,17 @@ My scratchpad of notes, ideas and tasks.
 - [ ] Get the Asset System to read both loose file and embedded assets
 - [ ] Render the Skybox Game Object from reading the `.scene` file
 - [ ] Render primitive textured meshes as Game Objects
+- [ ] Rename 1EngineEmeddedAssets.cs` to `EngineEmbeddedAssets.cs`
+- [ ] Refactor ShaderHelper.LoadBytecode() to use embedded assets instead of loading from a filepath (that may or may not be there depending on how everything is published)  
 
 ## Notes for physics engine
 
 I've removed a bunch of physics code from the Transform component and will have to add them back at some point.
+
+## Thoughts on naming things
+
+- Game => Spark
+- Asset System => BiFrost
 
 ## DotNET Terminal Commands Cheat Sheet
 

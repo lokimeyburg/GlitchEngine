@@ -60,11 +60,15 @@ namespace Glitch.Graphics
 
     public static class SphereModel
     {
-        private static readonly ConstructedMeshInfo s_sphereMeshInfo = LoadShereMesh();
+        private static readonly ConstructedMeshInfo s_sphereMeshInfo = LoadSphereMesh();
         public static MeshData MeshData => s_sphereMeshInfo;
 
-        private static ConstructedMeshInfo LoadShereMesh()
+        private static ConstructedMeshInfo LoadSphereMesh()
         {
+            // using (FileStream objStream = File.OpenRead("Assets/Models/sphere.obj"))
+            // {
+            //     return new ObjParser().Parse(objStream).GetFirstMesh();
+            // }
             Assembly assembly = typeof(SphereModel).GetTypeInfo().Assembly;
             using (var rs = assembly.GetManifestResourceStream($"{assembly.GetName().Name}.Assets.Models.Sphere.obj"))
             {

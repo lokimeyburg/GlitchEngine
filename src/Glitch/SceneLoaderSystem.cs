@@ -1,5 +1,5 @@
 using System;
-using Glitch.AssetUtil;
+using Glitch.Assets;
 using Glitch.Behaviors;
 
 namespace Glitch

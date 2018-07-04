@@ -1,0 +1,30 @@
+{
+  "$type":"Glitch.ProjectSystem.ProjectManifest, Glitch",
+  "Name":"Spark",
+  "AssetRoot":"Assets",
+  "ManagedAssemblies":{
+    "$type":"System.Collections.Generic.List`1[[System.String, System.Private.CoreLib]], System.Private.CoreLib",
+    "$values":[
+      "Assets/Managed/Spark.dll"
+    ]
+  },
+  "OpeningScene":{
+    "$type":"Glitch.Assets.AssetRef`1[[Glitch.Assets.SceneAsset, Glitch]], Glitch.Assets",
+    "ID":{
+      "$type":"Glitch.Assets.AssetID, Glitch.Assets",
+      "Value":"Scenes/MainMenu.scene",
+      "IsEmpty":false
+    }
+  },
+  "GameStartupFunctions":{
+    "$type":"System.Collections.Generic.List`1[[Glitch.ProjectSystem.StartupFunction, Engine]], System.Private.CoreLib",
+    "$values":[
+      {
+        "$type":"Engine.ProjectSystem.StartupFunction, Engine",
+        "TypeName":"Spark.SparkPreferences",
+        "MethodName":"GameInit"
+      }
+    ]
+  },
+  "GraphicsPreferencesProviderTypeName":"Spark.SparkPreferences"
+}
