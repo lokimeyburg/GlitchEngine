@@ -139,10 +139,13 @@ namespace Glitch
             Skybox skybox = Skybox.LoadDefaultSkybox();
             _scene.AddRenderable(skybox);
 
-
-
             AssetSystem assetSystem = new AssetSystem(Path.Combine(AppContext.BaseDirectory, projectManifest.AssetRoot), als.Binder);
             game.SystemRegistry.Register(assetSystem);
+
+            // Load texture from database
+            AssetDatabase ad = assetSystem.Database;
+            var front = ad.LoadAsset<ImageSharpTexture>(EngineEmbeddedAssets.SkyboxFrontID);
+            
 
 
             // SceneAsset sceneAsset;

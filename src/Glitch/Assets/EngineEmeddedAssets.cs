@@ -3,6 +3,7 @@ using System.Reflection;
 using Veldrid;
 using Veldrid.Utilities;
 using Veldrid.ImageSharp;
+using SixLabors.ImageSharp;
 using Glitch.Graphics;
 
 namespace Glitch.Assets
@@ -58,13 +59,13 @@ namespace Glitch.Assets
 
         private static ImageSharpTexture LoadEmbeddedTexture(string embeddedName)
         {
-            return new ImageSharpTexture(embeddedName);
-            // using (var stream = s_engineAssembly.GetManifestResourceStream(embeddedName))
-            // {
-            //     // LoadTexture(AssetHelper.GetPath("Models/gray.png"), true);
-            //     ImageSharpTexture
-            //     return new ImageSharpTexture(stream);
-            // }
+            // return new ImageSharpTexture(embeddedName);
+            using (var stream = s_engineAssembly.GetManifestResourceStream(embeddedName))
+            {
+
+                // LoadTexture(AssetHelper.GetPath("Models/gray.png"), true);
+                return new ImageSharpTexture(Image.Load(stream));
+            }
         }
     }
 }
