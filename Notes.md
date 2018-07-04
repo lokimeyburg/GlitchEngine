@@ -9,12 +9,12 @@ My scratchpad of notes, ideas and tasks.
 - [x] Add IRenderable and ICullRenderable interfaces. 
 - [x] Make sure to uncomment all CullRenderable code.
 - [x] Create a seperate Game repository that uses the GlitchEngine
-- [ ] [WIP] Get Spark to compile and output it's DLL in Glitch's output
-- [ ] Get the Asset System to read both loose file and embedded assets
+- [x] Get Spark to compile and output it's DLL in Glitch's output
+- [x] Get the Asset System to read both loose file and embedded assets
 - [ ] Render the Skybox Game Object from reading the `.scene` file
 - [ ] Render primitive textured meshes as Game Objects
-- [ ] Rename 1EngineEmeddedAssets.cs` to `EngineEmbeddedAssets.cs`
-- [ ] Refactor ShaderHelper.LoadBytecode() to use embedded assets instead of loading from a filepath (that may or may not be there depending on how everything is published)  
+- [ ] Rename `EngineEmeddedAssets.cs` to `EngineEmbeddedAssets.cs`
+- [ ] Refactor ShaderHelper.LoadBytecode() to use embedded assets instead of loading from a filepath (that may or may not be there depending on how everything is published) 
 
 ## Notes for physics engine
 
