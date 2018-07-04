@@ -11,7 +11,7 @@ My scratchpad of notes, ideas and tasks.
 - [x] Create a seperate Game repository that uses the GlitchEngine
 - [x] Get Spark to compile and output it's DLL in Glitch's output
 - [x] Get the Asset System to read both loose file and embedded assets
-- [ ] Render the Skybox Game Object from reading the `.scene` file
+- [ ] [WIP] Render the Skybox Game Object by reading the `.scene` file
 - [ ] Render primitive textured meshes as Game Objects
 - [ ] Rename `EngineEmeddedAssets.cs` to `EngineEmbeddedAssets.cs`
 - [ ] Refactor ShaderHelper.LoadBytecode() to use embedded assets instead of loading from a filepath (that may or may not be there depending on how everything is published) 
