@@ -15,6 +15,7 @@ My scratchpad of notes, ideas and tasks.
 - [ ] Render primitive textured meshes as Game Objects
 - [ ] Rename `EngineEmeddedAssets.cs` to `EngineEmbeddedAssets.cs`
 - [ ] Refactor ShaderHelper.LoadBytecode() to use embedded assets instead of loading from a filepath (that may or may not be there depending on how everything is published) 
+- [ ] Fix the spelling of `EngineSerializationBinder`
 
 ## Notes for physics engine
 
