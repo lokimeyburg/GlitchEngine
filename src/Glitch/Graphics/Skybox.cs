@@ -5,20 +5,31 @@ using System;
 using System.Numerics;
 using System.Runtime.CompilerServices;
 using Veldrid.Utilities;
+using Veldrid.ImageSharp;
 using Veldrid;
 using Glitch.Graphics;
 using Glitch.Behaviors;
+using Glitch.Assets;
 
 namespace Glitch.Graphics
 {
     public class Skybox : Component, IRenderable
     {
-        private readonly Image<Rgba32> _front;
-        private readonly Image<Rgba32> _back;
-        private readonly Image<Rgba32> _left;
-        private readonly Image<Rgba32> _right;
-        private readonly Image<Rgba32> _top;
-        private readonly Image<Rgba32> _bottom;
+        private static ImageSharpTexture s_blankTexture = CreateBlankTexture();
+
+        private AssetSystem _as;
+
+        private RefOrImmediate<ImageSharpTexture> _front;
+        private RefOrImmediate<ImageSharpTexture> _back;
+        private RefOrImmediate<ImageSharpTexture> _left;
+        private RefOrImmediate<ImageSharpTexture> _right;
+        private RefOrImmediate<ImageSharpTexture> _top;
+        private RefOrImmediate<ImageSharpTexture> _bottom;
+
+        private static ImageSharpTexture CreateBlankTexture()
+        {
+            return new ImageSharpTexture(new Image<Rgba32>(1, 1));
+        }
 
         // Context objects
         private DeviceBuffer _vb;
@@ -27,9 +38,22 @@ namespace Glitch.Graphics
         private Pipeline _reflectionPipeline;
         private ResourceSet _resourceSet;
         private readonly DisposeCollector _disposeCollector = new DisposeCollector();
+
+        // public Skybox(
+        //     Image<Rgba32> front, Image<Rgba32> back, Image<Rgba32> left,
+        //     Image<Rgba32> right, Image<Rgba32> top, Image<Rgba32> bottom)
+        // {
+        //     _front = front;
+        //     _back = back;
+        //     _left = left;
+        //     _right = right;
+        //     _top = top;
+        //     _bottom = bottom;
+        // }
+
         public Skybox(
-            Image<Rgba32> front, Image<Rgba32> back, Image<Rgba32> left,
-            Image<Rgba32> right, Image<Rgba32> top, Image<Rgba32> bottom)
+            AssetRef<ImageSharpTexture> front, AssetRef<ImageSharpTexture> back, AssetRef<ImageSharpTexture> left,
+            AssetRef<ImageSharpTexture> right, AssetRef<ImageSharpTexture> top, AssetRef<ImageSharpTexture> bottom)
         {
             _front = front;
             _back = back;
@@ -41,6 +65,7 @@ namespace Glitch.Graphics
 
         public unsafe void CreateDeviceObjects(GraphicsDevice gd, CommandList cl, SceneContext sc)
         {
+            AssetDatabase ad = _as.Database;
             ResourceFactory factory = gd.ResourceFactory;
 
             _vb = factory.CreateBuffer(new BufferDescription(s_vertices.SizeInBytes(), BufferUsage.VertexBuffer));
@@ -51,15 +76,34 @@ namespace Glitch.Graphics
 
             Texture textureCube;
             TextureView textureView;
-            fixed (Rgba32* frontPin = &_front.DangerousGetPinnableReferenceToPixelBuffer())
-            fixed (Rgba32* backPin = &_back.DangerousGetPinnableReferenceToPixelBuffer())
-            fixed (Rgba32* leftPin = &_left.DangerousGetPinnableReferenceToPixelBuffer())
-            fixed (Rgba32* rightPin = &_right.DangerousGetPinnableReferenceToPixelBuffer())
-            fixed (Rgba32* topPin = &_top.DangerousGetPinnableReferenceToPixelBuffer())
-            fixed (Rgba32* bottomPin = &_bottom.DangerousGetPinnableReferenceToPixelBuffer())
+
+            var front = !_front.HasValue ? _front.Get(ad) : ad.LoadAsset<ImageSharpTexture>(EngineEmbeddedAssets.SkyboxFrontID);
+            var back = !_back.HasValue ? _back.Get(ad) : ad.LoadAsset<ImageSharpTexture>(EngineEmbeddedAssets.SkyboxBackID);
+            var left = !_left.HasValue ? _left.Get(ad) : ad.LoadAsset<ImageSharpTexture>(EngineEmbeddedAssets.SkyboxLeftID);
+            var right = !_right.HasValue ? _right.Get(ad) : ad.LoadAsset<ImageSharpTexture>(EngineEmbeddedAssets.SkyboxRightID);
+            var top = !_top.HasValue ? _top.Get(ad) : ad.LoadAsset<ImageSharpTexture>(EngineEmbeddedAssets.SkyboxTopID);
+            var bottom = !_bottom.HasValue ? _bottom.Get(ad) : ad.LoadAsset<ImageSharpTexture>(EngineEmbeddedAssets.SkyboxBottomID);
+
+
+            // front.Images[0].DangerousGetPinnableReferenceToPixelBuffer()
+
+            // using (var frontPin = front.Pixels.Pin())
+            // using (var backPin = back.Pixels.Pin())
+            // using (var leftPin = left.Pixels.Pin())
+            // using (var rightPin = right.Pixels.Pin())
+            // using (var topPin = top.Pixels.Pin())
+            // using (var bottomPin = bottom.Pixels.Pin())
+
+            fixed (Rgba32* frontPin = &front.Images[0].DangerousGetPinnableReferenceToPixelBuffer())
+            fixed (Rgba32* backPin = &back.Images[0].DangerousGetPinnableReferenceToPixelBuffer())
+            fixed (Rgba32* leftPin = &left.Images[0].DangerousGetPinnableReferenceToPixelBuffer())
+            fixed (Rgba32* rightPin = &right.Images[0].DangerousGetPinnableReferenceToPixelBuffer())
+            fixed (Rgba32* topPin = &top.Images[0].DangerousGetPinnableReferenceToPixelBuffer())
+            fixed (Rgba32* bottomPin = &bottom.Images[0].DangerousGetPinnableReferenceToPixelBuffer())
+
             {
-                uint width = (uint)_front.Width;
-                uint height = (uint)_front.Height;
+                uint width = (uint)front.Width;
+                uint height = (uint)front.Height;
                 textureCube = factory.CreateTexture(TextureDescription.Texture2D(
                     width,
                     height,
@@ -68,7 +112,7 @@ namespace Glitch.Graphics
                     PixelFormat.R8_G8_B8_A8_UNorm,
                     TextureUsage.Sampled | TextureUsage.Cubemap));
 
-                uint faceSize = (uint)(_front.Width * _front.Height * Unsafe.SizeOf<Rgba32>());
+                uint faceSize = (uint)(front.Width * front.Height * Unsafe.SizeOf<Rgba32>());
                 gd.UpdateTexture(textureCube, (IntPtr)rightPin, faceSize, 0, 0, 0, width, height, 1, 0, 0);
                 gd.UpdateTexture(textureCube, (IntPtr)leftPin, faceSize, 0, 0, 0, width, height, 1, 0, 1);
                 gd.UpdateTexture(textureCube, (IntPtr)topPin, faceSize, 0, 0, 0, width, height, 1, 0, 2);
@@ -125,16 +169,22 @@ namespace Glitch.Graphics
             DestroyDeviceObjects();
         }
 
-        public static Skybox LoadDefaultSkybox()
+        public static Skybox LoadDefaultSkybox(SystemRegistry registry)
         {
+            var assetSystem = registry.GetSystem<AssetSystem>();
+            AssetDatabase ad = assetSystem.Database;
+
+            AssetRef<ImageSharpTexture> front = new AssetRef<ImageSharpTexture>(EngineEmbeddedAssets.SkyboxFrontID);
+            AssetRef<ImageSharpTexture> back = new AssetRef<ImageSharpTexture>(EngineEmbeddedAssets.SkyboxBackID);
+            AssetRef<ImageSharpTexture> left = new AssetRef<ImageSharpTexture>(EngineEmbeddedAssets.SkyboxLeftID);
+            AssetRef<ImageSharpTexture> right = new AssetRef<ImageSharpTexture>(EngineEmbeddedAssets.SkyboxRightID);
+            AssetRef<ImageSharpTexture> top = new AssetRef<ImageSharpTexture>(EngineEmbeddedAssets.SkyboxTopID);
+            AssetRef<ImageSharpTexture> bottom = new AssetRef<ImageSharpTexture>(EngineEmbeddedAssets.SkyboxBottomID);
+
             // TODO: the Skybox should load the textures from the engine embedded assets
-            return new Skybox(
-                Image.Load(AssetHelper.GetPath("Textures/cloudtop/cloudtop_ft.png")),
-                Image.Load(AssetHelper.GetPath("Textures/cloudtop/cloudtop_bk.png")),
-                Image.Load(AssetHelper.GetPath("Textures/cloudtop/cloudtop_lf.png")),
-                Image.Load(AssetHelper.GetPath("Textures/cloudtop/cloudtop_rt.png")),
-                Image.Load(AssetHelper.GetPath("Textures/cloudtop/cloudtop_up.png")),
-                Image.Load(AssetHelper.GetPath("Textures/cloudtop/cloudtop_dn.png")));
+            var skybox =  new Skybox(front, back, left, right, top, bottom);
+            skybox._as = assetSystem;
+            return skybox;
         }
 
         public void DestroyDeviceObjects()
@@ -158,10 +208,40 @@ namespace Glitch.Graphics
             return new RenderOrderKey(ulong.MaxValue);
         }
 
+        public RefOrImmediate<ImageSharpTexture> Back
+        {
+            get { return _back; }
+            set { _back = value; }
+        }
+
+        public RefOrImmediate<ImageSharpTexture> Left
+        {
+            get { return _left; }
+            set { _left = value; }
+        }
+
+        public RefOrImmediate<ImageSharpTexture> Right
+        {
+            get { return _right; }
+            set { _right = value; }
+        }
+
+        public RefOrImmediate<ImageSharpTexture> Bottom
+        {
+            get { return _bottom; }
+            set { _bottom = value; }
+        }
+
+        public RefOrImmediate<ImageSharpTexture> Top
+        {
+            get { return _top; }
+            set { _top = value; }
+        }
+
         // Component Implementation
         protected override void Attached(SystemRegistry registry)
         {
-
+            _as = registry.GetSystem<AssetSystem>();
         }
         protected override void Removed(SystemRegistry registry)
         {

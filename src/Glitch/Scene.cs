@@ -11,6 +11,7 @@ using Veldrid.Utilities;
 using Veldrid;
 using Glitch.Behaviors;
 using Glitch.Graphics;
+using Glitch.Assets; // refactor Scene to BE apart of .assets?
 
 namespace Glitch
 {
@@ -30,6 +31,10 @@ namespace Glitch
         public Camera Camera => _camera;
 
         public bool ThreadedRendering { get; set; } = false;
+
+        public string Name { get; set; }
+
+        public SerializedGameObject[] GameObjects { get; set; }
 
         float _lScale = 1f;
         float _rScale = 1f;

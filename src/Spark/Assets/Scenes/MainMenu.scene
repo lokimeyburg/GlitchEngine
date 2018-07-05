@@ -1,28 +1,28 @@
-{  
+{
   "$type":"Glitch.Assets.SceneAsset, Glitch",
-  "GameObjects":{  
+  "GameObjects":{
     "$type":"Glitch.Assets.SerializedGameObject[], Glitch",
-    "$values":[  
-      {  
+    "$values":[
+      {
         "$type":"Glitch.Assets.SerializedGameObject, Glitch",
-        "Name":"MainMenu",
-        "Transform":{  
+        "Name":"PlayerCamera",
+        "Transform":{
           "$type":"Glitch.Assets.SerializedTransform, Glitch",
-          "LocalPosition":{  
+          "LocalPosition":{
             "$type":"System.Numerics.Vector3, System.Numerics.Vectors",
             "X":0.0,
-            "Y":0.0,
-            "Z":0.0
+            "Y":6.20000029,
+            "Z":25.0
           },
-          "LocalRotation":{  
+          "LocalRotation":{
             "$type":"System.Numerics.Quaternion, System.Numerics.Vectors",
-            "X":0.0,
+            "X":-0.16375643,
             "Y":0.0,
             "Z":0.0,
-            "W":1.0,
-            "IsIdentity":true
+            "W":0.9865008,
+            "IsIdentity":false
           },
-          "LocalScale":{  
+          "LocalScale":{
             "$type":"System.Numerics.Vector3, System.Numerics.Vectors",
             "X":1.0,
             "Y":1.0,
@@ -30,7 +30,94 @@
           },
           "ParentID":0
         },
-        "ID":46
+        "Components":{
+          "$type":"Glitch.Component[], Glitch",
+          "$values":[
+            {
+              "$type":"Glitch.Graphics.Skybox, Glitch",
+              "Front":{
+                "$type":"Glitch.RefOrImmediate`1[[Veldrid.Graphics.ImageSharpTexture, Veldrid]], Glitch",
+                "_ref":{
+                  "$type":"Glitch.Assets.AssetRef`1[[Veldrid.Graphics.ImageSharpTexture, Veldrid]], Veldrid.Assets",
+                  "ID":{
+                    "$type":"Glitch.Assets.AssetID, Veldrid.Assets",
+                    "Value":"Internal:SkyboxFront",
+                    "IsEmpty":false
+                  }
+                },
+                "_value":null,
+                "HasValue":false
+              },
+              "Back":{
+                "$type":"Glitch.RefOrImmediate`1[[Veldrid.Graphics.ImageSharpTexture, Veldrid]], Glitch",
+                "_ref":{
+                  "$type":"Glitch.Assets.AssetRef`1[[Veldrid.Graphics.ImageSharpTexture, Veldrid]], Veldrid.Assets",
+                  "ID":{
+                    "$type":"Glitch.Assets.AssetID, Veldrid.Assets",
+                    "Value":"Internal:SkyboxBack",
+                    "IsEmpty":false
+                  }
+                },
+                "_value":null,
+                "HasValue":false
+              },
+              "Left":{
+                "$type":"Glitch.RefOrImmediate`1[[Veldrid.Graphics.ImageSharpTexture, Veldrid]], Glitch",
+                "_ref":{
+                  "$type":"Glitch.Assets.AssetRef`1[[Veldrid.Graphics.ImageSharpTexture, Veldrid]], Veldrid.Assets",
+                  "ID":{
+                    "$type":"Glitch.Assets.AssetID, Veldrid.Assets",
+                    "Value":"Internal:SkyboxLeft",
+                    "IsEmpty":false
+                  }
+                },
+                "_value":null,
+                "HasValue":false
+              },
+              "Right":{
+                "$type":"Glitch.RefOrImmediate`1[[Veldrid.Graphics.ImageSharpTexture, Veldrid]], Glitch",
+                "_ref":{
+                  "$type":"Glitch.Assets.AssetRef`1[[Veldrid.Graphics.ImageSharpTexture, Veldrid]], Veldrid.Assets",
+                  "ID":{
+                    "$type":"Glitch.Assets.AssetID, Veldrid.Assets",
+                    "Value":"Internal:SkyboxRight",
+                    "IsEmpty":false
+                  }
+                },
+                "_value":null,
+                "HasValue":false
+              },
+              "Bottom":{
+                "$type":"Glitch.RefOrImmediate`1[[Veldrid.Graphics.ImageSharpTexture, Veldrid]], Glitch",
+                "_ref":{
+                  "$type":"Glitch.Assets.AssetRef`1[[Veldrid.Graphics.ImageSharpTexture, Veldrid]], Veldrid.Assets",
+                  "ID":{
+                    "$type":"Glitch.Assets.AssetID, Veldrid.Assets",
+                    "Value":"Internal:SkyboxBottom",
+                    "IsEmpty":false
+                  }
+                },
+                "_value":null,
+                "HasValue":false
+              },
+              "Top":{
+                "$type":"Glitch.RefOrImmediate`1[[Veldrid.Graphics.ImageSharpTexture, Veldrid]], Glitch",
+                "_ref":{
+                  "$type":"Glitch.Assets.AssetRef`1[[Veldrid.Graphics.ImageSharpTexture, Veldrid]], Veldrid.Assets",
+                  "ID":{
+                    "$type":"Glitch.Assets.AssetID, Veldrid.Assets",
+                    "Value":"Internal:SkyboxTop",
+                    "IsEmpty":false
+                  }
+                },
+                "_value":null,
+                "HasValue":false
+              },
+              "Enabled":true,
+              "EnabledInHierarchy":false
+            }
+          ]
+        }
       }
     ]
   }

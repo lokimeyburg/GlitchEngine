@@ -111,56 +111,52 @@ namespace Glitch
                 }
             }
 
+            // Initialize Game()
+            // --------------------------------------------------
             Game game = new Game();
 
+            // Assembly & Asset System
+            // --------------------------------------------------
             AssemblyLoadSystem als = new AssemblyLoadSystem();
             als.LoadFromProjectManifest(projectManifest, AppContext.BaseDirectory);
             game.SystemRegistry.Register(als);
 
+            AssetSystem assetSystem = new AssetSystem(Path.Combine(AppContext.BaseDirectory, projectManifest.AssetRoot), als.Binder);
+            game.SystemRegistry.Register(assetSystem);
 
-            // SCENE
+            // Scene
             // --------------------------------------------------
-
-            // Create a new scene and set it as the current Scene Context
             _scene = new Scene(_gd, _window.Width, _window.Height);
-            // sets the SceneContext.Camera to the scene's camera (scene.camera)
             _sc.SetCurrentScene(_scene);
+
+            // Add the Skybox
+            Skybox skybox = Skybox.LoadDefaultSkybox(game.SystemRegistry);
+            _scene.AddRenderable(skybox);
 
             // GUI
             // --------------------------------------------------
-
             _igRenderable = new ImGuiRenderable(_window.Width, _window.Height);
             _resizeHandled += (w, h) => _igRenderable.WindowResized(w, h);
             _scene.AddRenderable(_igRenderable);
             _scene.AddUpdateable(_igRenderable);
 
-            // START DOODLE
-            // -------------------------------
+            // SceneAsset sceneAsset;
+            // AssetID mainSceneID = projectManifest.OpeningScene.ID;
+            // if (mainSceneID.IsEmpty)
+            // {
+            //     var scenes = assetSystem.Database.GetAssetsOfType(typeof(SceneAsset));
+            //     if (!scenes.Any())
+            //     {                    
+            //         Console.WriteLine("No scenes were available to load.");
+            //         throw new System.Exception("No scenes were available to load.");
+            //     }
+            //     else
+            //     {
+            //         mainSceneID = scenes.First();
+            //     }
+            // }
 
-            // Add the Skybox
-            // Skybox skybox = Skybox.LoadDefaultSkybox();
-            // _scene.AddRenderable(skybox);
-
-            AssetSystem assetSystem = new AssetSystem(Path.Combine(AppContext.BaseDirectory, projectManifest.AssetRoot), als.Binder);
-            game.SystemRegistry.Register(assetSystem);
-
-            SceneAsset sceneAsset;
-            AssetID mainSceneID = projectManifest.OpeningScene.ID;
-            if (mainSceneID.IsEmpty)
-            {
-                var scenes = assetSystem.Database.GetAssetsOfType(typeof(SceneAsset));
-                if (!scenes.Any())
-                {                    
-                    Console.WriteLine("No scenes were available to load.");
-                    throw new System.Exception("No scenes were available to load.");
-                }
-                else
-                {
-                    mainSceneID = scenes.First();
-                }
-            }
-
-            sceneAsset = assetSystem.Database.LoadAsset<SceneAsset>(mainSceneID);
+            // sceneAsset = assetSystem.Database.LoadAsset<SceneAsset>(mainSceneID);
             // sceneAsset.GenerateGameObjects();
 
             
@@ -173,9 +169,9 @@ namespace Glitch
 
             // AddFloor(new Vector3(0f, -12f, 0f));
 
-            _sc.Camera.Position = new Vector3(-80, 25, -4.3f);
-            _sc.Camera.Yaw = -MathF.PI / 2;
-            _sc.Camera.Pitch = -MathF.PI / 9;
+            // _sc.Camera.Position = new Vector3(-80, 25, -4.3f);
+            // _sc.Camera.Yaw = -MathF.PI / 2;
+            // _sc.Camera.Pitch = -MathF.PI / 9;
 
             ScreenDuplicator duplicator = new ScreenDuplicator();
             _scene.AddRenderable(duplicator);
