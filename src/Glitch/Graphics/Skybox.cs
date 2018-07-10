@@ -208,6 +208,12 @@ namespace Glitch.Graphics
             return new RenderOrderKey(ulong.MaxValue);
         }
 
+        public RefOrImmediate<ImageSharpTexture> Front
+        {
+            get { return _front; }
+            set { _front = value; }
+        }
+
         public RefOrImmediate<ImageSharpTexture> Back
         {
             get { return _back; }

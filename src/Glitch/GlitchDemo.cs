@@ -5,6 +5,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Numerics;  
 using System.Linq;
+using System.Text; //Remove
 using Veldrid.ImageSharp;
 using Glitch.Objects;
 using Veldrid.StartupUtilities;
@@ -130,34 +131,39 @@ namespace Glitch
             _sc.SetCurrentScene(_scene);
 
             // Add the Skybox
-            Skybox skybox = Skybox.LoadDefaultSkybox(game.SystemRegistry);
-            _scene.AddRenderable(skybox);
+            // Skybox skybox = Skybox.LoadDefaultSkybox(game.SystemRegistry);
+            // _scene.AddRenderable(skybox);
 
-            // GUI
+
+            // LooseFileDatabase lfd = new LooseFileDatabase("/Assets"); 
+            // JsonSerializer serializer = lfd.DefaultSerializer;
+
+            // StringBuilder sb = new StringBuilder();
+            // StringWriter sw = new StringWriter(sb);
+            // JsonWriter writer = new JsonTextWriter(sw);
+            // serializer.Serialize(writer, skybox);
+            
+
+            // Scene Assets
             // --------------------------------------------------
-            _igRenderable = new ImGuiRenderable(_window.Width, _window.Height);
-            _resizeHandled += (w, h) => _igRenderable.WindowResized(w, h);
-            _scene.AddRenderable(_igRenderable);
-            _scene.AddUpdateable(_igRenderable);
+            SceneAsset sceneAsset;
+            AssetID mainSceneID = projectManifest.OpeningScene.ID;
+            if (mainSceneID.IsEmpty)
+            {
+                var scenes = assetSystem.Database.GetAssetsOfType(typeof(SceneAsset));
+                if (!scenes.Any())
+                {                    
+                    Console.WriteLine("No scenes were available to load.");
+                    throw new System.Exception("No scenes were available to load.");
+                }
+                else
+                {
+                    mainSceneID = scenes.First();
+                }
+            }
 
-            // SceneAsset sceneAsset;
-            // AssetID mainSceneID = projectManifest.OpeningScene.ID;
-            // if (mainSceneID.IsEmpty)
-            // {
-            //     var scenes = assetSystem.Database.GetAssetsOfType(typeof(SceneAsset));
-            //     if (!scenes.Any())
-            //     {                    
-            //         Console.WriteLine("No scenes were available to load.");
-            //         throw new System.Exception("No scenes were available to load.");
-            //     }
-            //     else
-            //     {
-            //         mainSceneID = scenes.First();
-            //     }
-            // }
-
-            // sceneAsset = assetSystem.Database.LoadAsset<SceneAsset>(mainSceneID);
-            // sceneAsset.GenerateGameObjects();
+            sceneAsset = assetSystem.Database.LoadAsset<SceneAsset>(mainSceneID);
+            //sceneAsset.GenerateGameObjects();
 
             
             // END DOODLE
@@ -173,6 +179,15 @@ namespace Glitch
             // _sc.Camera.Yaw = -MathF.PI / 2;
             // _sc.Camera.Pitch = -MathF.PI / 9;
 
+            // GUI
+            // --------------------------------------------------
+            _igRenderable = new ImGuiRenderable(_window.Width, _window.Height);
+            _resizeHandled += (w, h) => _igRenderable.WindowResized(w, h);
+            _scene.AddRenderable(_igRenderable);
+            _scene.AddUpdateable(_igRenderable);
+
+            // Duplicate Screen (for post-processing filters)
+            // --------------------------------------------------
             ScreenDuplicator duplicator = new ScreenDuplicator();
             _scene.AddRenderable(duplicator);
 
