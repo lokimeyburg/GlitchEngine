@@ -14,7 +14,8 @@ My scratchpad of notes, ideas and tasks.
 - [x] Render Skybox using embedded assets
 - [ ] [WIP] Render the Skybox Game Object by reading the `.scene` file
 - [ ] Render primitive textured meshes as Game Objects
-- [ ] Rename `EngineEmeddedAssets.cs` to `EngineEmbeddedAssets.cs`
+- [ ] Delete `RefOrImmediate.cs` if it's no longer being used by now.
+- [x] Rename `EngineEmeddedAssets.cs` to `EngineEmbeddedAssets.cs`
 - [ ] Refactor ShaderHelper.LoadBytecode() to use embedded assets instead of loading from a filepath (that may or may not be there depending on how everything is published) 
 - [x] Fix the spelling of `EngineSerializationBinder`
 
