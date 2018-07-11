@@ -7,9 +7,9 @@ namespace Glitch
 {
     public struct RefOrImmediate<T>
     {
-        [JsonProperty]
+        [JsonProperty(TypeNameHandling = TypeNameHandling.Auto)]
         private AssetRef<T> _ref;
-        [JsonProperty]
+        [JsonProperty(TypeNameHandling = TypeNameHandling.Auto)]
         private T _value;
 
         public bool HasValue => _ref == null;

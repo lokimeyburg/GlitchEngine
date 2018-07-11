@@ -10,13 +10,38 @@
     <DisableImplicitFrameworkReferences>true</DisableImplicitFrameworkReferences>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
   </PropertyGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\Glitch\Glitch.csproj">
-      <Name>Glitch</Name>
-      <Private>False</Private>
-    </ProjectReference>
-  </ItemGroup>
+  
+    <ItemGroup>
+      <ProjectReference Include="..\Glitch\Glitch.csproj">
+        <Name>Glitch</Name>
+        <Private>False</Private>
+      </ProjectReference>
+      <ProjectReference Include="..\..\ext\veldrid\src\Veldrid\Veldrid.csproj">
+        <Name>Veldrid</Name>
+        <Private>False</Private>
+      </ProjectReference>
+      <ProjectReference Include="..\..\ext\veldrid\src\Veldrid.SDL2\Veldrid.SDL2.csproj">
+        <Name>Veldrid.SDL2</Name>
+        <Private>False</Private>
+      </ProjectReference>
+      <ProjectReference Include="..\..\ext\veldrid\src\Veldrid.StartupUtilities\Veldrid.StartupUtilities.csproj">
+        <Name>Veldrid.StartupUtilities</Name>
+        <Private>False</Private>
+      </ProjectReference>
+      <ProjectReference Include="..\..\ext\veldrid\src\Veldrid.ImageSharp\Veldrid.ImageSharp.csproj">
+        <Name>Veldrid.ImageSharp</Name>
+        <Private>False</Private>
+      </ProjectReference>
+      <ProjectReference Include="..\..\ext\veldrid\src\Veldrid.Utilities\Veldrid.Utilities.csproj">
+        <Name>Veldrid.Utilities</Name>
+        <Private>False</Private>
+      </ProjectReference>
+      <ProjectReference Include="..\..\ext\veldrid\src\Veldrid.ImGui\Veldrid.ImGui.csproj">
+        <Name>Veldrid.ImGui</Name>
+        <Private>False</Private>
+      </ProjectReference>
+      
+    </ItemGroup>
   
   <Target Name="CopyToGameAssetDir" AfterTargets="CopyFilesToOutputDirectory">
     <Copy SourceFiles="$(TargetPath)" DestinationFolder="$(GameAssetOutputDir)" />

@@ -7,7 +7,17 @@
             "type": "process",
             "args": [
                 "build",
-                "${workspaceFolder}/src/Glitch/Glitch.csproj"
+                "${workspaceFolder}/src/Spark/Spark.csproj"
+            ],
+            "problemMatcher": "$msCompile"
+        },
+        {
+            "label": "build",
+            "command": "dotnet",
+            "type": "process",
+            "args": [
+                "build",
+                "${workspaceFolder}/src/Glitch/Glitch.csproj",
             ],
             "problemMatcher": "$msCompile"
         }

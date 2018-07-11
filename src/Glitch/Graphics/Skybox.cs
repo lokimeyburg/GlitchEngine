@@ -13,18 +13,19 @@ using Glitch.Assets;
 
 namespace Glitch.Graphics
 {
+    [Serializable]
     public class Skybox : Component, IRenderable
     {
         private static ImageSharpTexture s_blankTexture = CreateBlankTexture();
 
         private AssetSystem _as;
 
-        private RefOrImmediate<ImageSharpTexture> _front;
-        private RefOrImmediate<ImageSharpTexture> _back;
-        private RefOrImmediate<ImageSharpTexture> _left;
-        private RefOrImmediate<ImageSharpTexture> _right;
-        private RefOrImmediate<ImageSharpTexture> _top;
-        private RefOrImmediate<ImageSharpTexture> _bottom;
+        private AssetRef<ImageSharpTexture> _front;
+        private AssetRef<ImageSharpTexture> _back;
+        private AssetRef<ImageSharpTexture> _left;
+        private AssetRef<ImageSharpTexture> _right;
+        private AssetRef<ImageSharpTexture> _top;
+        private AssetRef<ImageSharpTexture> _bottom;
 
         private static ImageSharpTexture CreateBlankTexture()
         {
@@ -77,12 +78,21 @@ namespace Glitch.Graphics
             Texture textureCube;
             TextureView textureView;
 
-            var front = !_front.HasValue ? _front.Get(ad) : ad.LoadAsset<ImageSharpTexture>(EngineEmbeddedAssets.SkyboxFrontID);
-            var back = !_back.HasValue ? _back.Get(ad) : ad.LoadAsset<ImageSharpTexture>(EngineEmbeddedAssets.SkyboxBackID);
-            var left = !_left.HasValue ? _left.Get(ad) : ad.LoadAsset<ImageSharpTexture>(EngineEmbeddedAssets.SkyboxLeftID);
-            var right = !_right.HasValue ? _right.Get(ad) : ad.LoadAsset<ImageSharpTexture>(EngineEmbeddedAssets.SkyboxRightID);
-            var top = !_top.HasValue ? _top.Get(ad) : ad.LoadAsset<ImageSharpTexture>(EngineEmbeddedAssets.SkyboxTopID);
-            var bottom = !_bottom.HasValue ? _bottom.Get(ad) : ad.LoadAsset<ImageSharpTexture>(EngineEmbeddedAssets.SkyboxBottomID);
+
+            var front = ad.LoadAsset<ImageSharpTexture>(EngineEmbeddedAssets.SkyboxFrontID);
+            var back = ad.LoadAsset<ImageSharpTexture>(EngineEmbeddedAssets.SkyboxBackID);
+            var left = ad.LoadAsset<ImageSharpTexture>(EngineEmbeddedAssets.SkyboxLeftID);
+            var right = ad.LoadAsset<ImageSharpTexture>(EngineEmbeddedAssets.SkyboxRightID);
+            var top = ad.LoadAsset<ImageSharpTexture>(EngineEmbeddedAssets.SkyboxTopID);
+            var bottom = ad.LoadAsset<ImageSharpTexture>(EngineEmbeddedAssets.SkyboxBottomID);
+
+
+            // var front = !_front.HasValue ? _front.Get(ad) : ad.LoadAsset<ImageSharpTexture>(EngineEmbeddedAssets.SkyboxFrontID);
+            // var back = !_back.HasValue ? _back.Get(ad) : ad.LoadAsset<ImageSharpTexture>(EngineEmbeddedAssets.SkyboxBackID);
+            // var left = !_left.HasValue ? _left.Get(ad) : ad.LoadAsset<ImageSharpTexture>(EngineEmbeddedAssets.SkyboxLeftID);
+            // var right = !_right.HasValue ? _right.Get(ad) : ad.LoadAsset<ImageSharpTexture>(EngineEmbeddedAssets.SkyboxRightID);
+            // var top = !_top.HasValue ? _top.Get(ad) : ad.LoadAsset<ImageSharpTexture>(EngineEmbeddedAssets.SkyboxTopID);
+            // var bottom = !_bottom.HasValue ? _bottom.Get(ad) : ad.LoadAsset<ImageSharpTexture>(EngineEmbeddedAssets.SkyboxBottomID);
 
 
             // front.Images[0].DangerousGetPinnableReferenceToPixelBuffer()
@@ -181,7 +191,6 @@ namespace Glitch.Graphics
             AssetRef<ImageSharpTexture> top = new AssetRef<ImageSharpTexture>(EngineEmbeddedAssets.SkyboxTopID);
             AssetRef<ImageSharpTexture> bottom = new AssetRef<ImageSharpTexture>(EngineEmbeddedAssets.SkyboxBottomID);
 
-            // TODO: the Skybox should load the textures from the engine embedded assets
             var skybox =  new Skybox(front, back, left, right, top, bottom);
             skybox._as = assetSystem;
             return skybox;
@@ -208,31 +217,37 @@ namespace Glitch.Graphics
             return new RenderOrderKey(ulong.MaxValue);
         }
 
-        public RefOrImmediate<ImageSharpTexture> Back
+        public AssetRef<ImageSharpTexture> Front
+        {
+            get { return _front; }
+            set { _front = value; }
+        }
+
+        public AssetRef<ImageSharpTexture> Back
         {
             get { return _back; }
             set { _back = value; }
         }
 
-        public RefOrImmediate<ImageSharpTexture> Left
+        public AssetRef<ImageSharpTexture> Left
         {
             get { return _left; }
             set { _left = value; }
         }
 
-        public RefOrImmediate<ImageSharpTexture> Right
+        public AssetRef<ImageSharpTexture> Right
         {
             get { return _right; }
             set { _right = value; }
         }
 
-        public RefOrImmediate<ImageSharpTexture> Bottom
+        public AssetRef<ImageSharpTexture> Bottom
         {
             get { return _bottom; }
             set { _bottom = value; }
         }
 
-        public RefOrImmediate<ImageSharpTexture> Top
+        public AssetRef<ImageSharpTexture> Top
         {
             get { return _top; }
             set { _top = value; }

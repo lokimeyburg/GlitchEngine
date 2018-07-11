@@ -1,29 +1,30 @@
 {
-  "$type":"Glitch.Assets.SceneAsset, Glitch",
+  "$type":"Glitch.Assets.SceneAsset, Glitch, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+  "Name":"MainMenu",
   "GameObjects":{
-    "$type":"Glitch.Assets.SerializedGameObject[], Glitch",
+    "$type":"Glitch.Assets.SerializedGameObject[], Glitch, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
     "$values":[
       {
-        "$type":"Glitch.Assets.SerializedGameObject, Glitch",
+        "$type":"Glitch.Assets.SerializedGameObject, Glitch, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
         "Name":"PlayerCamera",
         "Transform":{
-          "$type":"Glitch.Assets.SerializedTransform, Glitch",
+          "$type":"Glitch.Assets.SerializedTransform, Glitch, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
           "LocalPosition":{
-            "$type":"System.Numerics.Vector3, System.Numerics.Vectors",
+            "$type":"System.Numerics.Vector3, System.Numerics.Vectors, Version=4.1.4.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a",
             "X":0.0,
-            "Y":6.20000029,
-            "Z":25.0
+            "Y":0.0,
+            "Z":0.0
           },
           "LocalRotation":{
-            "$type":"System.Numerics.Quaternion, System.Numerics.Vectors",
-            "X":-0.16375643,
+            "$type":"System.Numerics.Quaternion, System.Numerics.Vectors, Version=4.1.4.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a",
+            "X":0.0,
             "Y":0.0,
             "Z":0.0,
-            "W":0.9865008,
+            "W":0.0,
             "IsIdentity":false
           },
           "LocalScale":{
-            "$type":"System.Numerics.Vector3, System.Numerics.Vectors",
+            "$type":"System.Numerics.Vector3, System.Numerics.Vectors, Version=4.1.4.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a",
             "X":1.0,
             "Y":1.0,
             "Z":1.0
@@ -31,93 +32,58 @@
           "ParentID":0
         },
         "Components":{
-          "$type":"Glitch.Component[], Glitch",
+          "$type":"Glitch.Component[], Glitch, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
           "$values":[
             {
-              "$type":"Glitch.Graphics.Skybox, Glitch",
+              "$type":"Glitch.Graphics.Skybox, Glitch, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
               "Front":{
-                "$type":"Glitch.RefOrImmediate`1[[Veldrid.Graphics.ImageSharpTexture, Veldrid]], Glitch",
-                "_ref":{
-                  "$type":"Glitch.Assets.AssetRef`1[[Veldrid.Graphics.ImageSharpTexture, Veldrid]], Veldrid.Assets",
-                  "ID":{
-                    "$type":"Glitch.Assets.AssetID, Veldrid.Assets",
-                    "Value":"Internal:SkyboxFront",
-                    "IsEmpty":false
-                  }
-                },
-                "_value":null,
-                "HasValue":false
+                "$type":"Glitch.Assets.AssetRef`1[[Veldrid.ImageSharp.ImageSharpTexture, Veldrid.ImageSharp, Version=4.3.0.0, Culture=neutral, PublicKeyToken=null]], Glitch, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+                "ID":{
+                  "Value":"Internal:SkyboxFront",
+                  "IsEmpty":false
+                }
               },
               "Back":{
-                "$type":"Glitch.RefOrImmediate`1[[Veldrid.Graphics.ImageSharpTexture, Veldrid]], Glitch",
-                "_ref":{
-                  "$type":"Glitch.Assets.AssetRef`1[[Veldrid.Graphics.ImageSharpTexture, Veldrid]], Veldrid.Assets",
-                  "ID":{
-                    "$type":"Glitch.Assets.AssetID, Veldrid.Assets",
-                    "Value":"Internal:SkyboxBack",
-                    "IsEmpty":false
-                  }
-                },
-                "_value":null,
-                "HasValue":false
+                "$type":"Glitch.Assets.AssetRef`1[[Veldrid.ImageSharp.ImageSharpTexture, Veldrid.ImageSharp, Version=4.3.0.0, Culture=neutral, PublicKeyToken=null]], Glitch, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+                "ID":{
+                  "Value":"Internal:SkyboxBack",
+                  "IsEmpty":false
+                }
               },
               "Left":{
-                "$type":"Glitch.RefOrImmediate`1[[Veldrid.Graphics.ImageSharpTexture, Veldrid]], Glitch",
-                "_ref":{
-                  "$type":"Glitch.Assets.AssetRef`1[[Veldrid.Graphics.ImageSharpTexture, Veldrid]], Veldrid.Assets",
-                  "ID":{
-                    "$type":"Glitch.Assets.AssetID, Veldrid.Assets",
-                    "Value":"Internal:SkyboxLeft",
-                    "IsEmpty":false
-                  }
-                },
-                "_value":null,
-                "HasValue":false
+                "$type":"Glitch.Assets.AssetRef`1[[Veldrid.ImageSharp.ImageSharpTexture, Veldrid.ImageSharp, Version=4.3.0.0, Culture=neutral, PublicKeyToken=null]], Glitch, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+                "ID":{
+                  "Value":"Internal:SkyboxLeft",
+                  "IsEmpty":false
+                }
               },
               "Right":{
-                "$type":"Glitch.RefOrImmediate`1[[Veldrid.Graphics.ImageSharpTexture, Veldrid]], Glitch",
-                "_ref":{
-                  "$type":"Glitch.Assets.AssetRef`1[[Veldrid.Graphics.ImageSharpTexture, Veldrid]], Veldrid.Assets",
-                  "ID":{
-                    "$type":"Glitch.Assets.AssetID, Veldrid.Assets",
-                    "Value":"Internal:SkyboxRight",
-                    "IsEmpty":false
-                  }
-                },
-                "_value":null,
-                "HasValue":false
+                "$type":"Glitch.Assets.AssetRef`1[[Veldrid.ImageSharp.ImageSharpTexture, Veldrid.ImageSharp, Version=4.3.0.0, Culture=neutral, PublicKeyToken=null]], Glitch, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+                "ID":{
+                  "Value":"Internal:SkyboxRight",
+                  "IsEmpty":false
+                }
               },
               "Bottom":{
-                "$type":"Glitch.RefOrImmediate`1[[Veldrid.Graphics.ImageSharpTexture, Veldrid]], Glitch",
-                "_ref":{
-                  "$type":"Glitch.Assets.AssetRef`1[[Veldrid.Graphics.ImageSharpTexture, Veldrid]], Veldrid.Assets",
-                  "ID":{
-                    "$type":"Glitch.Assets.AssetID, Veldrid.Assets",
-                    "Value":"Internal:SkyboxBottom",
-                    "IsEmpty":false
-                  }
-                },
-                "_value":null,
-                "HasValue":false
+                "$type":"Glitch.Assets.AssetRef`1[[Veldrid.ImageSharp.ImageSharpTexture, Veldrid.ImageSharp, Version=4.3.0.0, Culture=neutral, PublicKeyToken=null]], Glitch, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+                "ID":{
+                  "Value":"Internal:SkyboxBottom",
+                  "IsEmpty":false
+                }
               },
               "Top":{
-                "$type":"Glitch.RefOrImmediate`1[[Veldrid.Graphics.ImageSharpTexture, Veldrid]], Glitch",
-                "_ref":{
-                  "$type":"Glitch.Assets.AssetRef`1[[Veldrid.Graphics.ImageSharpTexture, Veldrid]], Veldrid.Assets",
-                  "ID":{
-                    "$type":"Glitch.Assets.AssetID, Veldrid.Assets",
-                    "Value":"Internal:SkyboxTop",
-                    "IsEmpty":false
-                  }
-                },
-                "_value":null,
-                "HasValue":false
+                "$type":"Glitch.Assets.AssetRef`1[[Veldrid.ImageSharp.ImageSharpTexture, Veldrid.ImageSharp, Version=4.3.0.0, Culture=neutral, PublicKeyToken=null]], Glitch, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+                "ID":{
+                  "Value":"Internal:SkyboxTop",
+                  "IsEmpty":false
+                }
               },
               "Enabled":true,
-              "EnabledInHierarchy":false
+              "EnabledInHierarchy":true
             }
           ]
-        }
+        },
+        "ID":1
       }
     ]
   }

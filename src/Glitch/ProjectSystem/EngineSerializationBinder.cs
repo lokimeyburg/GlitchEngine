@@ -6,7 +6,7 @@ using System.Reflection;
 
 namespace Glitch.ProjectSystem
 {
-    public class EngineSerializationBinder : SerializationBinder
+    public class EngineSerializationBinder : ISerializationBinder
     {
         private readonly Dictionary<string, Assembly> _projectLoadedAssemblies = new Dictionary<string, Assembly>();
         private readonly DefaultSerializationBinder _defaultBinder = new DefaultSerializationBinder();
@@ -18,12 +18,12 @@ namespace Glitch.ProjectSystem
             _projectLoadedAssemblies.Add(assembly.GetName().Name, assembly);
         }
 
-        public override void BindToName(Type serializedType, out string assemblyName, out string typeName)
+        public void BindToName(Type serializedType, out string assemblyName, out string typeName)
         {
             _defaultBinder.BindToName(serializedType, out assemblyName, out typeName);
         }
 
-        public override Type BindToType(string assemblyName, string typeName)
+        public Type BindToType(string assemblyName, string typeName)
         {
             Assembly assembly;
             if (_projectLoadedAssemblies.TryGetValue(assemblyName, out assembly))

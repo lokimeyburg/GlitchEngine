@@ -1,8 +1,9 @@
 using System;
+using System.Numerics;
 using Newtonsoft.Json;
 using Veldrid;
 using Veldrid.Utilities;
-using System.Numerics;
+
 
 namespace Glitch.Assets.Converters
 {

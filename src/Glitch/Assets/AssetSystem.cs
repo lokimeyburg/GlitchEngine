@@ -1,5 +1,6 @@
 using Glitch.Graphics;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
 // using SharpFont;
 using System;
 using System.IO;
@@ -12,17 +13,17 @@ namespace Glitch.Assets
         private readonly AssetDatabase _ad;
         private string _assetRootPath;
 
-        public AssetSystem(string assetRootPath, SerializationBinder binder)
+        public AssetSystem(string assetRootPath, ISerializationBinder binder)
         {
             _assetRootPath = assetRootPath;
             _ad = CreateAssetDatabase(binder);
             LooseFileDatabase.AddExtensionTypeMapping(".scene", typeof(SceneAsset));
         }
 
-        protected virtual AssetDatabase CreateAssetDatabase(SerializationBinder binder)
+        protected virtual AssetDatabase CreateAssetDatabase(ISerializationBinder binder)
         {
             var fileAssets = new LooseFileDatabase(_assetRootPath);
-            fileAssets.DefaultSerializer.Binder = binder;
+            fileAssets.DefaultSerializer.SerializationBinder = binder;
             // fileAssets.RegisterTypeLoader(typeof(WaveFile), new WaveFileLoader());
             // LooseFileDatabase.AddExtensionTypeMapping(".wav", typeof(WaveFile));
             // fileAssets.RegisterTypeLoader(typeof(FontFace), new FontFaceLoader());
