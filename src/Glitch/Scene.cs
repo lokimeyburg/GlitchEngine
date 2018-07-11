@@ -54,6 +54,11 @@ namespace Glitch
             _updateables.Add(_camera);
         }
 
+        public void LoadSceneAsset(SceneAsset sa) {
+            // generate game objects and render them if neccessary
+            sa.GenerateGameObjects(this, true);
+        }
+
         public void AddRenderable(IRenderable r)
         {
             if (r is ICullRenderable cr)

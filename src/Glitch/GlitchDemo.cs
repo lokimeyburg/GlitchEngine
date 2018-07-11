@@ -130,27 +130,27 @@ namespace Glitch
             _scene = new Scene(_gd, _window.Width, _window.Height);
             _sc.SetCurrentScene(_scene);
 
-            // Add the Skybox
-            Skybox skybox = Skybox.LoadDefaultSkybox(game.SystemRegistry);
-            _scene.AddRenderable(skybox);
+            // // Add the Skybox
+            // Skybox skybox = Skybox.LoadDefaultSkybox(game.SystemRegistry);
+            // _scene.AddRenderable(skybox);
 
-            SceneAsset sa = new SceneAsset();
-            sa.Name = "MainMenu";
-            GameObject go = new GameObject();
-            go.Name = "PlayerCamera";
-            go.Enabled = true;
-            go.AddComponent(skybox);
-            SerializedGameObject sgo = new SerializedGameObject(go);
-            sa.GameObjects = new SerializedGameObject[1];
-            sa.GameObjects[0] = sgo;
+            // SceneAsset sa = new SceneAsset();
+            // sa.Name = "MainMenu";
+            // GameObject go = new GameObject();
+            // go.Name = "PlayerCamera";
+            // go.Enabled = true;
+            // go.AddComponent(skybox);
+            // SerializedGameObject sgo = new SerializedGameObject(go);
+            // sa.GameObjects = new SerializedGameObject[1];
+            // sa.GameObjects[0] = sgo;
 
-            LooseFileDatabase lfd = new LooseFileDatabase("/Assets"); 
-            JsonSerializer serializer = lfd.DefaultSerializer;
+            // LooseFileDatabase lfd = new LooseFileDatabase("/Assets"); 
+            // JsonSerializer serializer = lfd.DefaultSerializer;
 
-            StringBuilder sb = new StringBuilder();
-            StringWriter sw = new StringWriter(sb);
-            JsonWriter writer = new JsonTextWriter(sw);
-            serializer.Serialize(writer, sa);
+            // StringBuilder sb = new StringBuilder();
+            // StringWriter sw = new StringWriter(sb);
+            // JsonWriter writer = new JsonTextWriter(sw);
+            // serializer.Serialize(writer, sa);
             
 
             // Scene Assets
@@ -172,8 +172,7 @@ namespace Glitch
             }
 
             sceneAsset = assetSystem.Database.LoadAsset<SceneAsset>(mainSceneID);
-            // sceneAsset.GenerateGameObjects();
-
+            _scene.LoadSceneAsset(sceneAsset);
             
             // END DOODLE
             // -------------------------------

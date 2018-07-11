@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Numerics;
 using System.Threading.Tasks;
+using Glitch.Graphics;
+using Glitch.Behaviors;
 
 namespace Glitch.Assets
 {
@@ -13,7 +15,7 @@ namespace Glitch.Assets
 
         public SerializedGameObject[] GameObjects { get; set; }
 
-        public void GenerateGameObjects(bool parallel = false)
+        public void GenerateGameObjects(Scene scene, bool parallel = false)
         {
             ConcurrentDictionary<ulong, GameObject> idToGO = new ConcurrentDictionary<ulong, GameObject>();
 
@@ -28,7 +30,18 @@ namespace Glitch.Assets
 
                     foreach (var component in sgo.Components)
                     {
+                        // Add the component to the game object
                         go.AddComponent(component);
+
+                        // Add the component to the scene's render list
+                        if(component is IRenderable) {
+                            scene.AddRenderable(component as IRenderable);
+                        }
+
+                        // Add the component to the scene's update list
+                        if(component is IUpdateable) {
+                            scene.AddUpdateable(component as IUpdateable);
+                        }
                     }
 
                     if (!idToGO.TryAdd(sgo.ID, go))
@@ -48,7 +61,18 @@ namespace Glitch.Assets
 
                     foreach (var component in sgo.Components)
                     {
+                        // Add the component to the game object
                         go.AddComponent(component);
+
+                        // Add the component to the scene's render list
+                        if(component is IRenderable) {
+                            scene.AddRenderable(component as IRenderable);
+                        }
+
+                        // Add the component to the scene's update list
+                        if(component is IUpdateable) {
+                            scene.AddUpdateable(component as IUpdateable);
+                        }
                     }
 
                     if (!idToGO.TryAdd(sgo.ID, go))

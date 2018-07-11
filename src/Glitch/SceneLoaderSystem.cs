@@ -42,7 +42,7 @@ namespace Glitch
             BeforeSceneLoaded?.Invoke();
             ClearCurrentSceneGameObjects();
             _game.FlushDeletedObjects();
-            asset.GenerateGameObjects();
+            // asset.GenerateGameObjects();
             _loadedScene = asset;
             AfterSceneLoaded?.Invoke();
             _game.NewSceneLoaded();
