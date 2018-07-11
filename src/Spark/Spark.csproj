@@ -10,15 +10,12 @@
     <DisableImplicitFrameworkReferences>true</DisableImplicitFrameworkReferences>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
   </PropertyGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\Glitch\Glitch.csproj">
-      <Name>Glitch</Name>
-      <Private>False</Private>
-    </ProjectReference>
-  </ItemGroup>
-
+  
     <ItemGroup>
+      <ProjectReference Include="..\Glitch\Glitch.csproj">
+        <Name>Glitch</Name>
+        <Private>False</Private>
+      </ProjectReference>
       <ProjectReference Include="..\..\ext\veldrid\src\Veldrid\Veldrid.csproj">
         <Name>Veldrid</Name>
         <Private>False</Private>

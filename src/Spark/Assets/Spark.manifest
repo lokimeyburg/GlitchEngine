@@ -9,9 +9,9 @@
     ]
   },
   "OpeningScene":{
-    "$type":"Glitch.Assets.AssetRef`1[[Glitch.Assets.SceneAsset, Glitch]], Glitch.Assets",
+    "$type":"Glitch.Assets.AssetRef`1[[Glitch.Assets.SceneAsset, Glitch]], Glitch",
     "ID":{
-      "$type":"Glitch.Assets.AssetID, Glitch.Assets",
+      "$type":"Glitch.Assets.AssetID, Glitch",
       "Value":"Scenes/MainMenu.scene",
       "IsEmpty":false
     }

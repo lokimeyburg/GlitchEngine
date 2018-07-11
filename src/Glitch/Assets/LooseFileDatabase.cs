@@ -65,7 +65,8 @@ namespace Glitch.Assets
             return JsonSerializer.Create(new JsonSerializerSettings()
             {
                 TypeNameHandling = TypeNameHandling.All,
-                Converters = converters
+                Converters = converters,
+                TypeNameAssemblyFormatHandling = Newtonsoft.Json.TypeNameAssemblyFormatHandling.Full
             });
         }
 

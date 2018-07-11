@@ -12,7 +12,7 @@ namespace Glitch.Assets
 
         public TextAssetLoader(JsonSerializer serializer)
         {
-            _serializer = serializer;
+            _serializer = serializer;           
         }
 
         public override T Load(Stream s)
