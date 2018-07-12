@@ -34,11 +34,18 @@ namespace Glitch.Graphics
         public event Action<Matrix4x4> ViewChanged;
 
         public Camera(GraphicsDevice gd, float width, float height)
-        {
-            _backend = gd.BackendType;
-            _useReverseDepth = gd.IsDepthRangeZeroToOne;
-            _windowWidth = width;
-            _windowHeight = height;
+        {   
+            _backend = GraphicsBackend.OpenGL;
+            _useReverseDepth = false;
+            // _backend = gd.BackendType;
+            // _useReverseDepth = gd.IsDepthRangeZeroToOne;
+            // _windowWidth = width;
+            // _windowHeight = height;
+            // UpdatePerspectiveMatrix();
+            // UpdateViewMatrix();
+        }
+
+        public void foo(){
             UpdatePerspectiveMatrix();
             UpdateViewMatrix();
         }
@@ -60,6 +67,10 @@ namespace Glitch.Graphics
 
         public float FieldOfView => _fov;
         public float NearDistance => _near;
+
+        public float WindowHeight { get => _windowHeight; set { _windowHeight = value; UpdateViewMatrix(); } }
+
+        public float WindowWidth { get => _windowWidth; set { _windowWidth = value; UpdateViewMatrix(); } }
 
         public float AspectRatio => _windowWidth / _windowHeight;
 

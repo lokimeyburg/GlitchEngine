@@ -26,7 +26,7 @@ namespace Glitch
         private readonly ConcurrentDictionary<RenderPasses, Func<ICullRenderable, bool>> _filters
             = new ConcurrentDictionary<RenderPasses, Func<ICullRenderable, bool>>(new RenderPassesComparer());
 
-        private readonly Camera _camera;
+        private Camera _camera;
 
         public Camera Camera => _camera;
 
@@ -47,16 +47,29 @@ namespace Glitch
         float _midCascadeLimit = 300;
         float _farCascadeLimit;
 
-        public Scene(GraphicsDevice gd, int viewWidth, int viewHeight)
+        int _viewWidth;
+        int _viewHeight;
+
+        public Scene(GraphicsDevice gd, int viewWidth = 960, int viewHeight = 540)
         {
-            _camera = new Camera(gd, viewWidth, viewHeight);
-            _farCascadeLimit = _camera.FarDistance;
-            _updateables.Add(_camera);
+            _viewWidth = viewWidth;
+            _viewHeight = viewWidth;
+
+            
+            // _camera = new Camera(gd, viewWidth, viewHeight);
+            // _farCascadeLimit = _camera.FarDistance;
+            _farCascadeLimit = 1000f; // Default FarDistance
+            // _updateables.Add(new Camera(gd, viewWidth, viewHeight));
         }
 
         public void LoadSceneAsset(SceneAsset sa) {
             // generate game objects and render them if neccessary
             sa.GenerateGameObjects(this, true);
+            Console.WriteLine("=> -----------------");
+        }
+
+        public void SetCamera(Camera camera){
+            _camera = camera;
         }
 
         public void AddRenderable(IRenderable r)
@@ -74,6 +87,11 @@ namespace Glitch
         public void AddUpdateable(IUpdateable updateable)
         {
             Debug.Assert(updateable != null);
+            // if camera component, set it to this scene's camera
+            if(updateable is Camera){
+                _camera = updateable as Camera;
+                _camera.foo();
+            }
             _updateables.Add(updateable);
         }
 
