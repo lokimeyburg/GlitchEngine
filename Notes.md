@@ -12,8 +12,10 @@ My scratchpad of notes, ideas and tasks.
 - [x] Get Spark to compile and output it's DLL in Glitch's output
 - [x] Get the Asset System to read both loose file and embedded assets
 - [x] Render Skybox using embedded assets
-- [ ] [WIP] Render the Skybox Game Object by reading the `.scene` file
+- [x] Render the Skybox Game Object by reading the `.scene` file
+- [ ] Render the Camera by reading the `.scene` file
 - [ ] Render primitive textured meshes as Game Objects
+- [ ] Render primitive textured meshes by reading the `.scene` file
 - [ ] Delete `RefOrImmediate.cs` if it's no longer being used by now.
 - [x] Rename `EngineEmeddedAssets.cs` to `EngineEmbeddedAssets.cs`
 - [ ] Refactor ShaderHelper.LoadBytecode() to use embedded assets instead of loading from a filepath (that may or may not be there depending on how everything is published) 
