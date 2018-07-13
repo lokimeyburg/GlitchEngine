@@ -14,8 +14,8 @@ My scratchpad of notes, ideas and tasks.
 - [x] Render Skybox using embedded assets
 - [x] Render the Skybox Game Object by reading the `.scene` file
 - [x] Render the Camera by reading the `.scene` file
-- [ ] [WIP] Clean up how the Camera is being added to the scene
-- [ ] Render primitive textured meshes as Game Objects
+- [x] Clean up how the Camera is being added to the scene
+- [ ] [WIP] Render primitive textured meshes as Game Objects
 - [ ] Render primitive textured meshes by reading the `.scene` file
 - [ ] Delete `RefOrImmediate.cs` if it's no longer being used by now.
 - [x] Rename `EngineEmeddedAssets.cs` to `EngineEmbeddedAssets.cs`
