@@ -7,9 +7,9 @@ namespace Glitch.Graphics
 {
     public interface IRenderable
     {
-        void UpdatePerFrameResources(GraphicsDevice gd, CommandList cl, SceneContext sc);
-        void Render(GraphicsDevice gd, CommandList cl, SceneContext sc, RenderPasses renderPass);
-        void CreateDeviceObjects(GraphicsDevice gd, CommandList cl, SceneContext sc);
+        void UpdatePerFrameResources(GraphicsDevice gd, CommandList cl, GraphicsSystem sc);
+        void Render(GraphicsDevice gd, CommandList cl, GraphicsSystem sc, RenderPasses renderPass);
+        void CreateDeviceObjects(GraphicsDevice gd, CommandList cl, GraphicsSystem sc);
         void DestroyDeviceObjects();
         void Dispose();
         RenderOrderKey GetRenderOrderKey(Vector3 cameraPosition);

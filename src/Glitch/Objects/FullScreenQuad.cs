@@ -14,7 +14,7 @@ namespace Glitch.Objects
         private DeviceBuffer _vb;
         public bool UseTintedTexture { get; set; }
 
-        public void CreateDeviceObjects(GraphicsDevice gd, CommandList cl, SceneContext sc)
+        public void CreateDeviceObjects(GraphicsDevice gd, CommandList cl, GraphicsSystem sc)
         {
             DisposeCollectorResourceFactory factory = new DisposeCollectorResourceFactory(gd.ResourceFactory);
             _disposeCollector = factory.DisposeCollector;
@@ -64,7 +64,7 @@ namespace Glitch.Objects
             return new RenderOrderKey();
         }
 
-        public void Render(GraphicsDevice gd, CommandList cl, SceneContext sc, RenderPasses renderPass)
+        public void Render(GraphicsDevice gd, CommandList cl, GraphicsSystem sc, RenderPasses renderPass)
         {
             cl.SetPipeline(_pipeline);
             cl.SetGraphicsResourceSet(0, UseTintedTexture ? sc.DuplicatorTargetSet1 : sc.DuplicatorTargetSet0);
@@ -77,7 +77,7 @@ namespace Glitch.Objects
             return Glitch.Graphics.RenderPasses.SwapchainOutput;
         }
 
-        public void UpdatePerFrameResources(GraphicsDevice gd, CommandList cl, SceneContext sc)
+        public void UpdatePerFrameResources(GraphicsDevice gd, CommandList cl, GraphicsSystem sc)
         {
         }
 

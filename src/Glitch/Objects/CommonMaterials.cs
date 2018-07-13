@@ -17,7 +17,7 @@ namespace Glitch.Objects
             Reflective = new MaterialPropsAndBuffer(new MaterialProperties { SpecularIntensity = new Vector3(0.2f), SpecularPower = 10f, Reflectivity = 0.3f }) { Name = "Reflective" };
         }
 
-        public static void CreateAllDeviceObjects(GraphicsDevice gd, CommandList cl, SceneContext sc)
+        public static void CreateAllDeviceObjects(GraphicsDevice gd, CommandList cl, GraphicsSystem sc)
         {
             Brick.CreateDeviceObjects(gd, cl, sc);
             Vase.CreateDeviceObjects(gd, cl, sc);

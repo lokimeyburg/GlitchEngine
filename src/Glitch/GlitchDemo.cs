@@ -25,7 +25,7 @@ namespace Glitch
         private GraphicsDevice _gd;
         private Scene _scene;
         private readonly ImGuiRenderable _igRenderable;
-        private readonly SceneContext _sc = new SceneContext();
+        private readonly GraphicsSystem _gs;
         private bool _windowResized;
         private RenderOrderKeyComparer _renderOrderKeyComparer = new RenderOrderKeyComparer();
         private bool _recreateWindow = true;
@@ -125,35 +125,40 @@ namespace Glitch
             AssetSystem assetSystem = new AssetSystem(Path.Combine(AppContext.BaseDirectory, projectManifest.AssetRoot), als.Binder);
             game.SystemRegistry.Register(assetSystem);
 
+            // Graphics System
+            // --------------------------------------------------
+            _gs = new GraphicsSystem(_gd);
+            game.SystemRegistry.Register(_gs);
+
             // Scene
             // --------------------------------------------------
             _scene = new Scene(_gd, _window.Width, _window.Height);
 
             // [For Debugging] - Custom SceneAsset Serializer
             // --------------------------------------------------
-            SceneAsset sa = new SceneAsset();
-            sa.Name = "MainMenu";
-            // Custom GameObject
-            GameObject go = new GameObject();
-            go.Name = "PlayerCamera";
-            go.Enabled = true;
-            // Add custom camera to GameObject
-            Camera camera = new Camera(_gd, _window.Width, _window.Height);
-            go.AddComponent(camera);
-            // Add custom skybox to GameObject
-            Skybox skybox = Skybox.LoadDefaultSkybox(game.SystemRegistry);
-            go.AddComponent(skybox);
-            // Add custom GameObject to SceneAsset
-            SerializedGameObject sgo = new SerializedGameObject(go);
-            sa.GameObjects = new SerializedGameObject[1];
-            sa.GameObjects[0] = sgo;
-            // Serialize SceneAsset (inspect StringWriter in console)
-            LooseFileDatabase lfd = new LooseFileDatabase("/Assets"); 
-            JsonSerializer serializer = lfd.DefaultSerializer;
-            StringBuilder sb = new StringBuilder();
-            StringWriter sw = new StringWriter(sb);
-            JsonWriter writer = new JsonTextWriter(sw);
-            serializer.Serialize(writer, sa);
+            // SceneAsset sa = new SceneAsset();
+            // sa.Name = "MainMenu";
+            // // Custom GameObject
+            // GameObject go = new GameObject();
+            // go.Name = "PlayerCamera";
+            // go.Enabled = true;
+            // // Add custom camera to GameObject
+            // Camera camera = new Camera(_gd, _window.Width, _window.Height);
+            // go.AddComponent(camera);
+            // // Add custom skybox to GameObject
+            // Skybox skybox = Skybox.LoadDefaultSkybox(game.SystemRegistry);
+            // go.AddComponent(skybox);
+            // // Add custom GameObject to SceneAsset
+            // SerializedGameObject sgo = new SerializedGameObject(go);
+            // sa.GameObjects = new SerializedGameObject[1];
+            // sa.GameObjects[0] = sgo;
+            // // Serialize SceneAsset (inspect StringWriter in console)
+            // LooseFileDatabase lfd = new LooseFileDatabase("/Assets"); 
+            // JsonSerializer serializer = lfd.DefaultSerializer;
+            // StringBuilder sb = new StringBuilder();
+            // StringWriter sw = new StringWriter(sb);
+            // JsonWriter writer = new JsonTextWriter(sw);
+            // serializer.Serialize(writer, sa);
 
             // Scene Assets
             // --------------------------------------------------
@@ -175,17 +180,7 @@ namespace Glitch
 
             sceneAsset = assetSystem.Database.LoadAsset<SceneAsset>(mainSceneID);
             _scene.LoadSceneAsset(sceneAsset);
-            _sc.SetCurrentScene(_scene);
-
-            // AddSphere(new Vector3(0f));
-
-            // AddSphere(new Vector3(0f, 0f, 25f));
-
-            // AddFloor(new Vector3(0f, -12f, 0f));
-
-            // _sc.Camera.Position = new Vector3(-80, 25, -4.3f);
-            // _sc.Camera.Yaw = -MathF.PI / 2;
-            // _sc.Camera.Pitch = -MathF.PI / 9;
+            _gs.SetCurrentScene(_scene);
 
             // GUI
             // --------------------------------------------------
@@ -520,7 +515,7 @@ namespace Glitch
                 _resizeHandled?.Invoke(width, height);
                 CommandList cl = _gd.ResourceFactory.CreateCommandList();
                 cl.Begin();
-                _sc.RecreateWindowSizedResources(_gd, cl);
+                _gs.RecreateWindowSizedResources(_gd, cl);
                 cl.End();
                 _gd.SubmitCommands(cl);
                 cl.Dispose();
@@ -528,7 +523,7 @@ namespace Glitch
 
             if (_newSampleCount != null)
             {
-                _sc.MainSceneSampleCount = _newSampleCount.Value;
+                _gs.MainSceneSampleCount = _newSampleCount.Value;
                 _newSampleCount = null;
                 DestroyAllObjects();
                 CreateAllObjects();
@@ -538,7 +533,7 @@ namespace Glitch
 
             CommonMaterials.FlushAll(_frameCommands);
 
-            _scene.RenderAllStages(_gd, _frameCommands, _sc);
+            _scene.RenderAllStages(_gd, _frameCommands, _gs);
             _gd.SwapBuffers();
         }
 
@@ -572,8 +567,7 @@ namespace Glitch
             gdOptions.Debug = true;
 #endif
             _gd = VeldridStartup.CreateGraphicsDevice(_window, gdOptions, backend);
-
-            _scene.Camera.UpdateBackend(_gd);
+            _gs.UpdateBackend(_gd);
 
             CreateAllObjects();
         }
@@ -588,9 +582,9 @@ namespace Glitch
             CommandList initCL = _gd.ResourceFactory.CreateCommandList();
             initCL.Name = "Recreation Initialization Command List";
             initCL.Begin();
-            _sc.CreateDeviceObjects(_gd, initCL, _sc);
-            CommonMaterials.CreateAllDeviceObjects(_gd, initCL, _sc);
-            _scene.CreateAllDeviceObjects(_gd, initCL, _sc);
+            _gs.CreateDeviceObjects(_gd, initCL, _gs);
+            CommonMaterials.CreateAllDeviceObjects(_gd, initCL, _gs);
+            _scene.CreateAllDeviceObjects(_gd, initCL, _gs);
             initCL.End();
             _gd.SubmitCommands(initCL);
             initCL.Dispose();
@@ -600,7 +594,7 @@ namespace Glitch
         {
             _gd.WaitForIdle();
             _frameCommands.Dispose();
-            _sc.DestroyDeviceObjects();
+            _gs.DestroyDeviceObjects();
             _scene.DestroyAllDeviceObjects();
             CommonMaterials.DestroyAllDeviceObjects();
             StaticResourceCache.DestroyAllDeviceObjects();

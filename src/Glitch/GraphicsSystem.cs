@@ -9,9 +9,9 @@ namespace Glitch
 {
 
     /// <summary>
-    /// The SceneContext contains all of the device buffers and frame buffers for the current scene
+    /// The GraphicsSystem contains all of the device buffers and frame buffers for the current scene
     /// </summary>
-    public class SceneContext
+    public class GraphicsSystem : GameSystem
     {
         public DeviceBuffer ProjectionMatrixBuffer { get; private set; }
         public DeviceBuffer ViewMatrixBuffer { get; private set; }
@@ -51,11 +51,17 @@ namespace Glitch
         public Framebuffer DuplicatorFramebuffer { get; private set; }
 
         public Camera Camera { get; set; }
+
+        public GraphicsDevice GraphicsDeviceBackend { get; private set; }
+
         public DirectionalLight DirectionalLight { get; } = new DirectionalLight();
         public TextureSampleCount MainSceneSampleCount { get; internal set; }
 
+        public GraphicsSystem(GraphicsDevice gd) {
+            GraphicsDeviceBackend = gd;
+        }
 
-        public virtual void CreateDeviceObjects(GraphicsDevice gd, CommandList cl, SceneContext sc)
+        public virtual void CreateDeviceObjects(GraphicsDevice gd, CommandList cl, GraphicsSystem sc)
         {
             ResourceFactory factory = gd.ResourceFactory;
             ProjectionMatrixBuffer = factory.CreateBuffer(new BufferDescription(64, BufferUsage.UniformBuffer | BufferUsage.Dynamic));
@@ -218,6 +224,19 @@ namespace Glitch
 
             FramebufferDescription fbDesc = new FramebufferDescription(null, DuplicatorTarget0, DuplicatorTarget1);
             DuplicatorFramebuffer = factory.CreateFramebuffer(ref fbDesc);
+        }
+
+
+        // TODO
+        protected override void UpdateCore(float deltaSeconds)
+        {
+            
+        }
+
+        public void UpdateBackend(GraphicsDevice gd)
+        {
+            GraphicsDeviceBackend = gd;
+            Camera.UpdateBackend(gd);
         }
     }
 

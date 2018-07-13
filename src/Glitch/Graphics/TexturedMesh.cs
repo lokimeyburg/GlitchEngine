@@ -64,7 +64,7 @@ namespace Glitch.Graphics
             return Veldrid.Utilities.BoundingBox.Transform(_centeredBounds, _transform.GetWorldMatrix());
         }
 
-        public unsafe void CreateDeviceObjects(GraphicsDevice gd, CommandList cl, SceneContext sc)
+        public unsafe void CreateDeviceObjects(GraphicsDevice gd, CommandList cl, GraphicsSystem sc)
         {
             ResourceFactory disposeFactory = new DisposeCollectorResourceFactory(gd.ResourceFactory, _disposeCollector);
             _vb = _meshData.CreateVertexBuffer(disposeFactory, cl);
@@ -225,7 +225,7 @@ namespace Glitch.Graphics
             ResourceFactory sharedFactory,
             ResourceFactory disposeFactory,
             CommandList cl,
-            SceneContext sc,
+            GraphicsSystem sc,
             ResourceLayout projViewLayout,
             ResourceLayout worldLayout)
         {
@@ -275,7 +275,7 @@ namespace Glitch.Graphics
             }
         }
 
-        public void Render(GraphicsDevice gd, CommandList cl, SceneContext sc, RenderPasses renderPass)
+        public void Render(GraphicsDevice gd, CommandList cl, GraphicsSystem sc, RenderPasses renderPass)
         {
             if (_materialPropsOwned)
             {
@@ -297,7 +297,7 @@ namespace Glitch.Graphics
             }
         }
 
-        public void UpdatePerFrameResources(GraphicsDevice gd, CommandList cl, SceneContext sc)
+        public void UpdatePerFrameResources(GraphicsDevice gd, CommandList cl, GraphicsSystem sc)
         {
             WorldAndInverse wai;
             wai.World = _transform.GetWorldMatrix();
@@ -305,7 +305,7 @@ namespace Glitch.Graphics
             gd.UpdateBuffer(_worldAndInverseBuffer, 0, ref wai);
         }
 
-        private void RenderShadowMap(CommandList cl, SceneContext sc, int shadowMapIndex)
+        private void RenderShadowMap(CommandList cl, GraphicsSystem sc, int shadowMapIndex)
         {
             cl.SetVertexBuffer(0, _vb);
             cl.SetIndexBuffer(_ib, IndexFormat.UInt16);
@@ -315,7 +315,7 @@ namespace Glitch.Graphics
             cl.DrawIndexed((uint)_indexCount, 1, 0, 0, 0);
         }
 
-        private void RenderStandard(CommandList cl, SceneContext sc, bool reflectionPass)
+        private void RenderStandard(CommandList cl, GraphicsSystem sc, bool reflectionPass)
         {
             cl.SetVertexBuffer(0, _vb);
             cl.SetIndexBuffer(_ib, IndexFormat.UInt16);

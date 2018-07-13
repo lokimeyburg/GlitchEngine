@@ -21,7 +21,7 @@ namespace Glitch.Graphics
 
         public void WindowResized(int width, int height) => _imguiRenderer.WindowResized(width, height);
 
-        public void CreateDeviceObjects(GraphicsDevice gd, CommandList cl, SceneContext sc)
+        public void CreateDeviceObjects(GraphicsDevice gd, CommandList cl, GraphicsSystem sc)
         {
             if (_imguiRenderer == null)
             {
@@ -43,13 +43,13 @@ namespace Glitch.Graphics
             return new RenderOrderKey(ulong.MaxValue);
         }
 
-        public void Render(GraphicsDevice gd, CommandList cl, SceneContext sc, RenderPasses renderPass)
+        public void Render(GraphicsDevice gd, CommandList cl, GraphicsSystem sc, RenderPasses renderPass)
         {
             Debug.Assert(renderPass == Glitch.Graphics.RenderPasses.Overlay);
             _imguiRenderer.Render(gd, cl);
         }
 
-        public void UpdatePerFrameResources(GraphicsDevice gd, CommandList cl, SceneContext sc)
+        public void UpdatePerFrameResources(GraphicsDevice gd, CommandList cl, GraphicsSystem sc)
         {
         }
 

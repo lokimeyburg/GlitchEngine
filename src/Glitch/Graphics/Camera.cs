@@ -33,23 +33,6 @@ namespace Glitch.Graphics
         public event Action<Matrix4x4> ProjectionChanged;
         public event Action<Matrix4x4> ViewChanged;
 
-        public Camera(GraphicsDevice gd, float width, float height)
-        {   
-            _backend = GraphicsBackend.OpenGL;
-            _useReverseDepth = false;
-            // _backend = gd.BackendType;
-            // _useReverseDepth = gd.IsDepthRangeZeroToOne;
-            // _windowWidth = width;
-            // _windowHeight = height;
-            // UpdatePerspectiveMatrix();
-            // UpdateViewMatrix();
-        }
-
-        public void foo(){
-            UpdatePerspectiveMatrix();
-            UpdateViewMatrix();
-        }
-
         public void UpdateBackend(GraphicsDevice gd)
         {
             _backend = gd.BackendType;
@@ -182,7 +165,12 @@ namespace Glitch.Graphics
 
         protected override void Attached(SystemRegistry registry)
         {
+            GraphicsSystem gs = registry.GetSystem<GraphicsSystem>();
+            _backend = gs.GraphicsDeviceBackend.BackendType;
+            _useReverseDepth = gs.GraphicsDeviceBackend.IsDepthRangeZeroToOne;
 
+            UpdatePerspectiveMatrix();
+            UpdateViewMatrix();
         }
 
         protected override void Removed(SystemRegistry registry)

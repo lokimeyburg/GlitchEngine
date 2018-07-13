@@ -7,9 +7,9 @@ namespace Glitch.Graphics
 {
     public abstract class Renderable : IDisposable
     {
-        public abstract void UpdatePerFrameResources(GraphicsDevice gd, CommandList cl, SceneContext sc);
-        public abstract void Render(GraphicsDevice gd, CommandList cl, SceneContext sc, RenderPasses renderPass);
-        public abstract void CreateDeviceObjects(GraphicsDevice gd, CommandList cl, SceneContext sc);
+        public abstract void UpdatePerFrameResources(GraphicsDevice gd, CommandList cl, GraphicsSystem sc);
+        public abstract void Render(GraphicsDevice gd, CommandList cl, GraphicsSystem sc, RenderPasses renderPass);
+        public abstract void CreateDeviceObjects(GraphicsDevice gd, CommandList cl, GraphicsSystem sc);
         public abstract void DestroyDeviceObjects();
         public abstract RenderOrderKey GetRenderOrderKey(Vector3 cameraPosition);
         public virtual RenderPasses RenderPasses => RenderPasses.Standard;

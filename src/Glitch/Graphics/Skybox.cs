@@ -64,7 +64,7 @@ namespace Glitch.Graphics
             _bottom = bottom;
         }
 
-        public unsafe void CreateDeviceObjects(GraphicsDevice gd, CommandList cl, SceneContext sc)
+        public unsafe void CreateDeviceObjects(GraphicsDevice gd, CommandList cl, GraphicsSystem sc)
         {
             AssetDatabase ad = _as.Database;
             ResourceFactory factory = gd.ResourceFactory;
@@ -170,7 +170,7 @@ namespace Glitch.Graphics
             _disposeCollector.Add(_vb, _ib, textureCube, textureView, _layout, _pipeline, _reflectionPipeline, _resourceSet, vs, fs);
         }
 
-        public void UpdatePerFrameResources(GraphicsDevice gd, CommandList cl, SceneContext sc)
+        public void UpdatePerFrameResources(GraphicsDevice gd, CommandList cl, GraphicsSystem sc)
         {
         }
 
@@ -201,7 +201,7 @@ namespace Glitch.Graphics
             _disposeCollector.DisposeAll();
         }
 
-        public void Render(GraphicsDevice gd, CommandList cl, SceneContext sc, RenderPasses renderPass)
+        public void Render(GraphicsDevice gd, CommandList cl, GraphicsSystem sc, RenderPasses renderPass)
         {
             cl.SetVertexBuffer(0, _vb);
             cl.SetIndexBuffer(_ib, IndexFormat.UInt16);

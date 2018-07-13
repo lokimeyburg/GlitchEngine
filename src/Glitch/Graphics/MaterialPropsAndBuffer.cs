@@ -23,7 +23,7 @@ namespace Glitch.Graphics
             _properties = mp;
         }
 
-        public void CreateDeviceObjects(GraphicsDevice gd, CommandList cl, SceneContext sc)
+        public void CreateDeviceObjects(GraphicsDevice gd, CommandList cl, GraphicsSystem sc)
         {
             UniformBuffer = gd.ResourceFactory.CreateBuffer(
                 new BufferDescription((uint)Unsafe.SizeOf<MaterialProperties>(), BufferUsage.UniformBuffer));

@@ -59,13 +59,11 @@ namespace Glitch
             // _camera = new Camera(gd, viewWidth, viewHeight);
             // _farCascadeLimit = _camera.FarDistance;
             _farCascadeLimit = 1000f; // Default FarDistance
-            // _updateables.Add(new Camera(gd, viewWidth, viewHeight));
         }
 
         public void LoadSceneAsset(SceneAsset sa) {
             // generate game objects and render them if neccessary
             sa.GenerateGameObjects(this, true);
-            Console.WriteLine("=> -----------------");
         }
 
         public void SetCamera(Camera camera){
@@ -90,7 +88,6 @@ namespace Glitch
             // if camera component, set it to this scene's camera
             if(updateable is Camera){
                 _camera = updateable as Camera;
-                _camera.foo();
             }
             _updateables.Add(updateable);
         }
@@ -105,7 +102,7 @@ namespace Glitch
 
         private readonly Task[] _tasks = new Task[4];
 
-        public void RenderAllStages(GraphicsDevice gd, CommandList cl, SceneContext sc)
+        public void RenderAllStages(GraphicsDevice gd, CommandList cl, GraphicsSystem sc)
         {
             if (ThreadedRendering)
             {
@@ -117,7 +114,7 @@ namespace Glitch
             }
         }
 
-        private void RenderAllSingleThread(GraphicsDevice gd, CommandList cl, SceneContext sc)
+        private void RenderAllSingleThread(GraphicsDevice gd, CommandList cl, GraphicsSystem sc)
         {
             float depthClear = gd.IsDepthRangeZeroToOne ? 0f : 1f;
             Matrix4x4 cameraProj = Camera.ProjectionMatrix;
@@ -251,7 +248,7 @@ namespace Glitch
             gd.SubmitCommands(cl);
         }
 
-        private void RenderAllMultiThreaded(GraphicsDevice gd, CommandList cl, SceneContext sc)
+        private void RenderAllMultiThreaded(GraphicsDevice gd, CommandList cl, GraphicsSystem sc)
         {
             float depthClear = gd.IsDepthRangeZeroToOne ? 0f : 1f;
             Matrix4x4 cameraProj = Camera.ProjectionMatrix;
@@ -412,7 +409,7 @@ namespace Glitch
 
         private Matrix4x4 UpdateDirectionalLightMatrices(
             bool useReverseDepth,
-            SceneContext sc,
+            GraphicsSystem sc,
             float near,
             float far,
             uint shadowMapWidth,
@@ -513,7 +510,7 @@ namespace Glitch
         public void Render(
             GraphicsDevice gd,
             CommandList rc,
-            SceneContext sc,
+            GraphicsSystem sc,
             RenderPasses pass,
             BoundingFrustum frustum,
             Vector3 viewPosition,
@@ -617,7 +614,7 @@ namespace Glitch
             _resourceUpdateCL.Dispose();
         }
 
-        internal void CreateAllDeviceObjects(GraphicsDevice gd, CommandList cl, SceneContext sc)
+        internal void CreateAllDeviceObjects(GraphicsDevice gd, CommandList cl, GraphicsSystem sc)
         {
             _cullableStage[0].Clear();
             _octree.GetAllContainedObjects(_cullableStage[0]);
