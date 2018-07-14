@@ -10,7 +10,7 @@ using Glitch.Behaviors;
 
 namespace Glitch.Graphics
 {
-    public class TexturedMesh : ICullRenderable
+    public class MeshRenderer : ICullRenderable
     {
         private readonly string _name;
         private readonly MeshData _meshData;
@@ -49,7 +49,7 @@ namespace Glitch.Graphics
 
         public Transform Transform => _transform;
 
-        public TexturedMesh(string name, MeshData meshData, ImageSharpTexture textureData, ImageSharpTexture alphaTexture, MaterialPropsAndBuffer materialProps)
+        public MeshRenderer(string name, MeshData meshData, ImageSharpTexture textureData, ImageSharpTexture alphaTexture, MaterialPropsAndBuffer materialProps)
         {
             _name = name;
             _meshData = meshData;
@@ -180,7 +180,7 @@ namespace Glitch.Graphics
                 new ResourceLayout[] { projViewLayout, mainSharedLayout, mainPerObjectLayout },
                 sc.MainSceneFramebuffer.OutputDescription);
             _pipeline = StaticResourceCache.GetPipeline(gd.ResourceFactory, ref mainPD);
-            _pipeline.Name = "TexturedMesh Main Pipeline";
+            _pipeline.Name = "MeshRenderer Main Pipeline";
             mainPD.RasterizerState.CullMode = FaceCullMode.Front;
             mainPD.Outputs = sc.MainSceneFramebuffer.OutputDescription;
             _pipelineFrontCull = StaticResourceCache.GetPipeline(gd.ResourceFactory, ref mainPD);

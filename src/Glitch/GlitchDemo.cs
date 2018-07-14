@@ -182,6 +182,13 @@ namespace Glitch
             _scene.LoadSceneAsset(sceneAsset);
             _gs.SetCurrentScene(_scene);
 
+            
+            // AddSphere(new Vector3(0f));	
+
+            // AddSphere(new Vector3(0f, 0f, 25f));	
+ 
+            // AddFloor(new Vector3(0f, -12f, 0f));
+
             // GUI
             // --------------------------------------------------
             _igRenderable = new ImGuiRenderable(_window.Width, _window.Height);
@@ -218,7 +225,7 @@ namespace Glitch
 
                     overrideTextureData = LoadTexture(AssetHelper.GetPath("Models/gray.png"), true);
 
-                    AddTexturedMesh(
+                    AddMeshRenderer(
                         mesh,
                         overrideTextureData,
                         alphaTexture,
@@ -232,32 +239,53 @@ namespace Glitch
         }
         private void AddSphere(Vector3 offset)
         {
-            ObjParser parser = new ObjParser();
-            using (FileStream objStream = File.OpenRead("Assets/Models/sphere.obj"))
-            {
-                ObjFile atriumFile = parser.Parse(objStream);
-                foreach (ObjFile.MeshGroup group in atriumFile.MeshGroups)
-                {
-                    Vector3 scale = new Vector3(0.3f);
-                    ConstructedMeshInfo mesh = atriumFile.GetMesh(group);
+            MeshData mesh = SphereModel.MeshData;
+            
+            MaterialPropsAndBuffer materialProps = null;
+            ImageSharpTexture overrideTextureData = null;
+            ImageSharpTexture alphaTexture = null;
+            Vector3 scale = new Vector3(0.3f);
+
+
+            overrideTextureData = LoadTexture(AssetHelper.GetPath("Models/gray.png"), true);
+
+
+            AddMeshRenderer(
+                mesh,
+                overrideTextureData,
+                alphaTexture,
+                materialProps,
+                offset,
+                Quaternion.Identity,
+                scale,
+                "Sphere");
+
+            // ObjParser parser = new ObjParser();
+            // using (FileStream objStream = File.OpenRead("Assets/Models/sphere.obj"))
+            // {
+            //     ObjFile atriumFile = parser.Parse(objStream);
+            //     foreach (ObjFile.MeshGroup group in atriumFile.MeshGroups)
+            //     {
+            //         Vector3 scale = new Vector3(0.3f);
+            //         ConstructedMeshInfo mesh = atriumFile.GetMesh(group);
                     
-                    MaterialPropsAndBuffer materialProps = null;
-                    ImageSharpTexture overrideTextureData = null;
-                    ImageSharpTexture alphaTexture = null;
+            //         MaterialPropsAndBuffer materialProps = null;
+            //         ImageSharpTexture overrideTextureData = null;
+            //         ImageSharpTexture alphaTexture = null;
 
-                    overrideTextureData = LoadTexture(AssetHelper.GetPath("Models/gray.png"), true);
+            //         overrideTextureData = LoadTexture(AssetHelper.GetPath("Models/gray.png"), true);
 
-                    AddTexturedMesh(
-                        mesh,
-                        overrideTextureData,
-                        alphaTexture,
-                        materialProps,
-                        offset,
-                        Quaternion.Identity,
-                        scale,
-                        group.Name);
-                }
-            }
+            //         AddMeshRenderer(
+            //             mesh,
+            //             overrideTextureData,
+            //             alphaTexture,
+            //             materialProps,
+            //             offset,
+            //             Quaternion.Identity,
+            //             scale,
+            //             group.Name);
+            //     }
+            // }
         }
 
         private ImageSharpTexture LoadTexture(string texturePath, bool mipmap) // Plz don't call this with the same texturePath and different mipmap values.
@@ -271,7 +299,7 @@ namespace Glitch
             return tex;
         }
 
-        private void AddTexturedMesh(
+        private void AddMeshRenderer(
             MeshData meshData,
             ImageSharpTexture texData,
             ImageSharpTexture alphaTexData,
@@ -281,7 +309,7 @@ namespace Glitch
             Vector3 scale,
             string name)
         {
-            TexturedMesh mesh = new TexturedMesh(name, meshData, texData, alphaTexData, materialProps ?? CommonMaterials.Brick);
+            MeshRenderer mesh = new MeshRenderer(name, meshData, texData, alphaTexData, materialProps ?? CommonMaterials.Brick);
             mesh.Transform.Position = position;
             mesh.Transform.Rotation = rotation;
             mesh.Transform.Scale = scale;
