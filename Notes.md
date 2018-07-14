@@ -31,6 +31,30 @@ I've removed a bunch of physics code from the Transform component and will have 
 - Game => Spark
 - Asset System => BiFrost
 
+## MeshRenderer Architecture Notes
+
+MeshRenderer is a `BoundsRenderItem` which is a rendereable item.
+
+ // Serialization Accessors
+public RefOrImmediate<MeshData> Mesh
+public RefOrImmediate<TextureData> Texture
+private void RecreateModel()
+private void RecreateTexture()
+
+public float Opacity
+public bool CastShadows
+private void MakeTransparent()
+private void MakeOpaque()
+
+public BoundingBox Bounds
+public MeshRenderer(RefOrImmediate<MeshData> meshData, RefOrImmediate<TextureData> texture)
+public RenderOrderKey GetRenderOrderKey(Vector3 cameraPosition)
+public IList<string> GetStagesParticipated()
+public void Render(RenderContext rc, string pipelineStage)
+private unsafe void SortTransparentTriangles()
+private ushort[] GetMeshIndices()
+private Vector3[] GetMeshVertexPositions()
+
 ## DotNET Terminal Commands Cheat Sheet
 
 Creating a new library:
