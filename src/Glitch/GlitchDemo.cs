@@ -192,19 +192,24 @@ namespace Glitch
             Vector3 offset = new Vector3(0f);
             var ad = assetSystem.Database;
 
-            var assetID = new AssetID("Textures/Stone.png");
+            var assetID = new AssetID("Textures/Rust.png");
             var assetRef = new AssetRef<ImageSharpTexture>(assetID);
             overrideTextureData = ad.LoadAsset<ImageSharpTexture>(assetRef.ID);
 
-            AddMeshRenderer(
-                mesh,
-                overrideTextureData,
-                alphaTexture,
-                materialProps,
-                offset,
-                Quaternion.Identity,
-                scale,
-                "Sphere");
+            // this does the work of AddMeshRenderer()
+            MeshRenderer mr = new MeshRenderer("Sphere", mesh, overrideTextureData, alphaTexture, materialProps ?? CommonMaterials.Brick);
+            // TODO: scale the component based on the Transform component of it's parent GameObject
+           _scene.AddRenderable(mr);
+
+            // AddMeshRenderer(
+            //     mesh,
+            //     overrideTextureData,
+            //     alphaTexture,
+            //     materialProps,
+            //     offset,
+            //     Quaternion.Identity,
+            //     scale,
+            //     "Sphere");
 
             
             // AddSphere(new Vector3(0f));	
@@ -230,86 +235,6 @@ namespace Glitch
             _scene.AddRenderable(_fsq);
 
             CreateAllObjects();
-        }
-
-        private void AddFloor(Vector3 offset)
-        {
-            ObjParser parser = new ObjParser();
-            using (FileStream objStream = File.OpenRead(AssetHelper.GetPath("Models/floor.obj")))
-            {
-                ObjFile atriumFile = parser.Parse(objStream);
-                foreach (ObjFile.MeshGroup group in atriumFile.MeshGroups)
-                {
-                    Vector3 scale = new Vector3(30f);
-                    ConstructedMeshInfo mesh = atriumFile.GetMesh(group);
-                    
-                    MaterialPropsAndBuffer materialProps = null;
-                    ImageSharpTexture overrideTextureData = null;
-                    ImageSharpTexture alphaTexture = null;
-
-                    overrideTextureData = LoadTexture(AssetHelper.GetPath("Models/gray.png"), true);
-
-                    AddMeshRenderer(
-                        mesh,
-                        overrideTextureData,
-                        alphaTexture,
-                        materialProps,
-                        offset,
-                        Quaternion.Identity,
-                        scale,
-                        group.Name);
-                }
-            }
-        }
-        private void AddSphere(Vector3 offset)
-        {
-            MeshData mesh = SphereModel.MeshData;
-            
-            MaterialPropsAndBuffer materialProps = null;
-            ImageSharpTexture overrideTextureData = null;
-            ImageSharpTexture alphaTexture = null;
-            Vector3 scale = new Vector3(0.3f);
-
-
-            overrideTextureData = LoadTexture(AssetHelper.GetPath("Models/gray.png"), true);
-
-
-            AddMeshRenderer(
-                mesh,
-                overrideTextureData,
-                alphaTexture,
-                materialProps,
-                offset,
-                Quaternion.Identity,
-                scale,
-                "Sphere");
-
-            // ObjParser parser = new ObjParser();
-            // using (FileStream objStream = File.OpenRead("Assets/Models/sphere.obj"))
-            // {
-            //     ObjFile atriumFile = parser.Parse(objStream);
-            //     foreach (ObjFile.MeshGroup group in atriumFile.MeshGroups)
-            //     {
-            //         Vector3 scale = new Vector3(0.3f);
-            //         ConstructedMeshInfo mesh = atriumFile.GetMesh(group);
-                    
-            //         MaterialPropsAndBuffer materialProps = null;
-            //         ImageSharpTexture overrideTextureData = null;
-            //         ImageSharpTexture alphaTexture = null;
-
-            //         overrideTextureData = LoadTexture(AssetHelper.GetPath("Models/gray.png"), true);
-
-            //         AddMeshRenderer(
-            //             mesh,
-            //             overrideTextureData,
-            //             alphaTexture,
-            //             materialProps,
-            //             offset,
-            //             Quaternion.Identity,
-            //             scale,
-            //             group.Name);
-            //     }
-            // }
         }
 
         private ImageSharpTexture LoadTexture(string texturePath, bool mipmap) // Plz don't call this with the same texturePath and different mipmap values.
