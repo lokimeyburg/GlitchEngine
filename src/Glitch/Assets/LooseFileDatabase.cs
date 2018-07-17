@@ -19,7 +19,10 @@ namespace Glitch.Assets
         private string _rootPath;
         private Dictionary<Type, AssetLoader> _assetLoaders = new Dictionary<Type, AssetLoader>()
         {
-            { typeof(ConstructedMeshInfo), new FirstMeshObjLoader() }
+            { typeof(ConstructedMeshInfo), new FirstMeshObjLoader() },
+            { typeof(ImageSharpTexture), new ImageSharpTextureLoader() },
+            { typeof(ObjFile), new ObjFileLoader() },
+            { typeof(MeshData), new FirstMeshObjLoader() }
         };
 
         // Used for untyped loads on an asset

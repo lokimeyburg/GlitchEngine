@@ -182,6 +182,30 @@ namespace Glitch
             _scene.LoadSceneAsset(sceneAsset);
             _gs.SetCurrentScene(_scene);
 
+            // [WIP] Doodley Foo
+            // --------------------------------------------------
+            MeshData mesh = SphereModel.MeshData;
+            MaterialPropsAndBuffer materialProps = null;
+            ImageSharpTexture overrideTextureData = null;
+            ImageSharpTexture alphaTexture = null;
+            Vector3 scale = new Vector3(0.3f);
+            Vector3 offset = new Vector3(0f);
+            var ad = assetSystem.Database;
+
+            var assetID = new AssetID("Textures/Stone.png");
+            var assetRef = new AssetRef<ImageSharpTexture>(assetID);
+            overrideTextureData = ad.LoadAsset<ImageSharpTexture>(assetRef.ID);
+
+            AddMeshRenderer(
+                mesh,
+                overrideTextureData,
+                alphaTexture,
+                materialProps,
+                offset,
+                Quaternion.Identity,
+                scale,
+                "Sphere");
+
             
             // AddSphere(new Vector3(0f));	
 

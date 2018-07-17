@@ -7,10 +7,11 @@ using Veldrid;
 using System.Collections.Generic;
 using Glitch.Graphics;
 using Glitch.Behaviors;
+using Glitch.Assets;
 
 namespace Glitch.Graphics
 {
-    public class MeshRenderer : ICullRenderable
+    public class MeshRenderer : Component, ICullRenderable
     {
         private readonly string _name;
         private readonly MeshData _meshData;
@@ -48,6 +49,23 @@ namespace Glitch.Graphics
         public MaterialProperties MaterialProperties { get => _materialProps.Properties; set { _materialProps.Properties = value; } }
 
         public Transform Transform => _transform;
+
+        private AssetSystem _as;
+
+        
+        public MeshRenderer(string name, RefOrImmediate<MeshData> meshData, AssetRef<ImageSharpTexture> textureData, AssetRef<ImageSharpTexture> alphaTexture, MaterialPropsAndBuffer materialProps)
+        {
+            
+
+            _name = name;
+            _meshData = meshData.Get(_as.Database);
+            // _centeredBounds = meshData.GetBoundingBox();
+            // _objectCenter = _centeredBounds.GetCenter();
+            // _textureData = textureData;
+            // _alphaTextureData = alphaTexture;
+            // _materialProps = materialProps;
+        }
+
 
         public MeshRenderer(string name, MeshData meshData, ImageSharpTexture textureData, ImageSharpTexture alphaTexture, MaterialPropsAndBuffer materialProps)
         {
@@ -337,6 +355,36 @@ namespace Glitch.Graphics
         {
             // return false
             return visibleFrustum.Contains(BoundingBox()) == ContainmentType.Disjoint;
+        }
+
+        protected override void Attached(SystemRegistry registry)
+        {
+            _as = registry.GetSystem<AssetSystem>();
+            // _gs = registry.GetSystem<GraphicsSystem>();
+            // _ad = registry.GetSystem<AssetSystem>().Database;
+            // _texture = Texture.Get(_ad);
+            // _mesh = Mesh.Get(_ad);
+            // _centeredBoundingSphere = _mesh.GetBoundingSphere();
+            // _centeredBoundingBox = _mesh.GetBoundingBox();
+            // _gs.ExecuteOnMainThread(() =>
+            // {
+            //     InitializeContextObjects(_gs.Context, _gs.MaterialCache, _gs.BufferCache);
+            // });
+        }
+
+        protected override void Removed(SystemRegistry registry)
+        {
+            DestroyDeviceObjects();
+        }
+
+        protected override void OnEnabled()
+        {
+            // _gs.AddRenderItem(this, Transform);
+        }
+
+        protected override void OnDisabled()
+        {
+            // _gs.RemoveRenderItem(this);
         }
 
 
