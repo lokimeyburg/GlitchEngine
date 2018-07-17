@@ -16,6 +16,7 @@ My scratchpad of notes, ideas and tasks.
 - [x] Render the Camera by reading the `.scene` file
 - [x] Clean up how the Camera is being added to the scene
 - [ ] [WIP] Render primitive textured meshes as Game Objects
+- [ ] Scale the rendered mesh based on the parent GameObject's Transform component
 - [ ] Render primitive textured meshes by reading the `.scene` file
 - [ ] Delete `RefOrImmediate.cs` if it's no longer being used by now.
 - [x] Rename `EngineEmeddedAssets.cs` to `EngineEmbeddedAssets.cs`
