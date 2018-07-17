@@ -192,7 +192,7 @@ namespace Glitch
             Vector3 offset = new Vector3(0f);
             var ad = assetSystem.Database;
 
-            var assetID = new AssetID("Textures/Rust.png");
+            var assetID = new AssetID("Textures/Stone.png");
             var assetRef = new AssetRef<ImageSharpTexture>(assetID);
             overrideTextureData = ad.LoadAsset<ImageSharpTexture>(assetRef.ID);
 
