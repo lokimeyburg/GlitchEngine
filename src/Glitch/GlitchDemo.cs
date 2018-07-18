@@ -5,7 +5,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Numerics;
 using System.Linq;
-using System.Text; //Remove
+using System.Text;
 using Veldrid.ImageSharp;
 using Glitch.Objects;
 using Veldrid.StartupUtilities;
@@ -175,7 +175,6 @@ namespace Glitch
             // Serialize SceneAsset
             LooseFileDatabase lfd = new LooseFileDatabase("/Assets");
             StringWriter stringwriter = new StringWriter(new StringBuilder());
-            JsonWriter writer = new JsonTextWriter(stringwriter);
             using (StreamWriter file = File.CreateText(@"DebugSceneAsset.json"))
             {
                 JsonSerializer serializer = lfd.DefaultSerializer;

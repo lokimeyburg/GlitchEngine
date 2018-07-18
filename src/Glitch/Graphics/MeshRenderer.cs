@@ -51,11 +51,30 @@ namespace Glitch.Graphics
         private readonly Vector3 _objectCenter;
         private bool _materialPropsOwned = false;
 
-        public MaterialProperties MaterialProperties { get => _materialProps.Properties; set { _materialProps.Properties = value; } }
+        // public MaterialProperties MaterialProperties { get => _materialProps.Properties; set { _materialProps.Properties = value; } }
 
         // public Transform Transform => _transform;
 
         private AssetSystem _as;
+
+        // Serialization Accessors
+        public AssetRef<MeshData> Mesh
+        {
+            get { return _meshAsset; }
+            set
+            {
+                _meshAsset = value;
+            }
+        }
+
+        public AssetRef<ImageSharpTexture> Texture
+        {
+            get { return _textureAsset; }
+            set
+            {
+                _textureAsset = value;
+            }
+        }
 
         [JsonConstructor]
         public MeshRenderer(AssetRef<MeshData> meshAsset, AssetRef<ImageSharpTexture> textureAsset)
