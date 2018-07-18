@@ -4,18 +4,23 @@ using System;
 using Veldrid.ImageSharp;
 using Veldrid.Utilities;
 using Veldrid;
+using Newtonsoft.Json;
 using System.Collections.Generic;
 using Glitch.Graphics;
 using Glitch.Behaviors;
 using Glitch.Assets;
+using Glitch.Objects;
 
 namespace Glitch.Graphics
 {
     public class MeshRenderer : Component, ICullRenderable
     {
-        private readonly string _name;
-        private readonly MeshData _meshData;
-        private readonly ImageSharpTexture _textureData;
+        private string _name;
+        private MeshData _meshData;
+        private AssetRef<MeshData> _meshAsset;
+        private ImageSharpTexture _textureData;
+        private AssetRef<ImageSharpTexture> _textureAsset;
+
         private readonly ImageSharpTexture _alphaTextureData;
         private readonly Transform _transform = new Transform();
 
@@ -48,24 +53,18 @@ namespace Glitch.Graphics
 
         public MaterialProperties MaterialProperties { get => _materialProps.Properties; set { _materialProps.Properties = value; } }
 
-        public Transform Transform => _transform;
+        // public Transform Transform => _transform;
 
         private AssetSystem _as;
 
-        
-        public MeshRenderer(string name, RefOrImmediate<MeshData> meshData, AssetRef<ImageSharpTexture> textureData, AssetRef<ImageSharpTexture> alphaTexture, MaterialPropsAndBuffer materialProps)
+        [JsonConstructor]
+        public MeshRenderer(AssetRef<MeshData> meshAsset, AssetRef<ImageSharpTexture> textureAsset)
         {
-            
-
-            _name = name;
-            _meshData = meshData.Get(_as.Database);
-            // _centeredBounds = meshData.GetBoundingBox();
-            // _objectCenter = _centeredBounds.GetCenter();
-            // _textureData = textureData;
-            // _alphaTextureData = alphaTexture;
-            // _materialProps = materialProps;
+            _name = "TODO: Set random name";
+            _meshAsset = meshAsset;
+            _textureAsset = textureAsset;
+            _materialProps = CommonMaterials.Brick;
         }
-
 
         public MeshRenderer(string name, MeshData meshData, ImageSharpTexture textureData, ImageSharpTexture alphaTexture, MaterialPropsAndBuffer materialProps)
         {
@@ -360,6 +359,9 @@ namespace Glitch.Graphics
         protected override void Attached(SystemRegistry registry)
         {
             _as = registry.GetSystem<AssetSystem>();
+            _meshData = _as.Database.LoadAsset<MeshData>(_meshAsset.ID);
+            _textureData= _as.Database.LoadAsset<ImageSharpTexture>(_textureAsset.ID);
+
             // _gs = registry.GetSystem<GraphicsSystem>();
             // _ad = registry.GetSystem<AssetSystem>().Database;
             // _texture = Texture.Get(_ad);

@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
-using System.Numerics;  
+using System.Numerics;
 using System.Linq;
 using System.Text; //Remove
 using Veldrid.ImageSharp;
@@ -79,14 +79,14 @@ namespace Glitch
             ProjectManifest projectManifest;
             string currentDir = AppContext.BaseDirectory;
             string manifestName = null;
-            
+
             foreach (var file in Directory.EnumerateFiles(currentDir + "Assets"))
             {
                 if (file.EndsWith("manifest"))
                 {
                     if (manifestName != null)
                     {
-                        string errorMessage  = "Error: Multiple project manifests in this directory: " + currentDir;
+                        string errorMessage = "Error: Multiple project manifests in this directory: " + currentDir;
                         Console.WriteLine(errorMessage);
                         throw new System.Exception(errorMessage);
                     }
@@ -136,29 +136,51 @@ namespace Glitch
 
             // [For Debugging] - Custom SceneAsset Serializer
             // --------------------------------------------------
-            // SceneAsset sa = new SceneAsset();
-            // sa.Name = "MainMenu";
-            // // Custom GameObject
-            // GameObject go = new GameObject();
-            // go.Name = "PlayerCamera";
-            // go.Enabled = true;
-            // // Add custom camera to GameObject
-            // Camera camera = new Camera(_gd, _window.Width, _window.Height);
-            // go.AddComponent(camera);
-            // // Add custom skybox to GameObject
-            // Skybox skybox = Skybox.LoadDefaultSkybox(game.SystemRegistry);
-            // go.AddComponent(skybox);
-            // // Add custom GameObject to SceneAsset
-            // SerializedGameObject sgo = new SerializedGameObject(go);
-            // sa.GameObjects = new SerializedGameObject[1];
-            // sa.GameObjects[0] = sgo;
-            // // Serialize SceneAsset (inspect StringWriter in console)
-            // LooseFileDatabase lfd = new LooseFileDatabase("/Assets"); 
-            // JsonSerializer serializer = lfd.DefaultSerializer;
-            // StringBuilder sb = new StringBuilder();
-            // StringWriter sw = new StringWriter(sb);
-            // JsonWriter writer = new JsonTextWriter(sw);
-            // serializer.Serialize(writer, sa);
+            SceneAsset programaticSceneAsset = new SceneAsset();
+            programaticSceneAsset.Name = "MainMenu";
+            // Custom GameObject (for camera & skybox)
+            GameObject go1 = new GameObject();
+            go1.Name = "PlayerCamera";
+            go1.Enabled = true;
+            // Add custom camera to GameObject
+            Camera camera = new Camera();
+            camera.WindowHeight = _window.Height;
+            camera.WindowWidth = _window.Height;
+            go1.AddComponent(camera);
+            // Add custom skybox to GameObject
+            Skybox skybox = Skybox.LoadDefaultSkybox(game.SystemRegistry);
+            go1.AddComponent(skybox);
+            // Custom GameObject (for sphere mesh)
+            GameObject go2 = new GameObject();
+            go2.Name = "My Sphere";
+            go2.Enabled = true;
+            // Add custom sphere MeshRenderer component to GameObject
+            MeshData mesh = SphereModel.MeshData;
+            Vector3 scale = new Vector3(0.3f);
+            Vector3 offset = new Vector3(0f);
+            var ad = assetSystem.Database;
+            var meshAssetID = new AssetID("Internal:SphereModel");
+            var meshAssetRef = new AssetRef<MeshData>(meshAssetID);
+            var textureAssetID = new AssetID("Textures/Stone.png");
+            var textureAssetRef = new AssetRef<ImageSharpTexture>(textureAssetID);
+            var overrideTextureData = ad.LoadAsset<ImageSharpTexture>(textureAssetRef.ID);
+            MeshRenderer meshrenderer = new MeshRenderer(meshAssetRef, textureAssetRef);
+            go2.AddComponent(meshrenderer);
+            // Add custom GameObject to SceneAsset
+            SerializedGameObject sgo1 = new SerializedGameObject(go1);
+            SerializedGameObject sgo2 = new SerializedGameObject(go2);
+            programaticSceneAsset.GameObjects = new SerializedGameObject[2];
+            programaticSceneAsset.GameObjects[0] = sgo2;
+            programaticSceneAsset.GameObjects[1] = sgo1;
+            // Serialize SceneAsset
+            LooseFileDatabase lfd = new LooseFileDatabase("/Assets");
+            StringWriter stringwriter = new StringWriter(new StringBuilder());
+            JsonWriter writer = new JsonTextWriter(stringwriter);
+            using (StreamWriter file = File.CreateText(@"DebugSceneAsset.json"))
+            {
+                JsonSerializer serializer = lfd.DefaultSerializer;
+                serializer.Serialize(file, programaticSceneAsset);
+            }
 
             // Scene Assets
             // --------------------------------------------------
@@ -168,7 +190,7 @@ namespace Glitch
             {
                 var scenes = assetSystem.Database.GetAssetsOfType(typeof(SceneAsset));
                 if (!scenes.Any())
-                {                    
+                {
                     Console.WriteLine("No scenes were available to load.");
                     throw new System.Exception("No scenes were available to load.");
                 }
@@ -178,45 +200,10 @@ namespace Glitch
                 }
             }
 
+            var readSceneFromJson = false;
             sceneAsset = assetSystem.Database.LoadAsset<SceneAsset>(mainSceneID);
-            _scene.LoadSceneAsset(sceneAsset);
+            _scene.LoadSceneAsset(readSceneFromJson ? sceneAsset : programaticSceneAsset);
             _gs.SetCurrentScene(_scene);
-
-            // [WIP] Doodley Foo
-            // --------------------------------------------------
-            MeshData mesh = SphereModel.MeshData;
-            MaterialPropsAndBuffer materialProps = null;
-            ImageSharpTexture overrideTextureData = null;
-            ImageSharpTexture alphaTexture = null;
-            Vector3 scale = new Vector3(0.3f);
-            Vector3 offset = new Vector3(0f);
-            var ad = assetSystem.Database;
-
-            var assetID = new AssetID("Textures/Stone.png");
-            var assetRef = new AssetRef<ImageSharpTexture>(assetID);
-            overrideTextureData = ad.LoadAsset<ImageSharpTexture>(assetRef.ID);
-
-            // this does the work of AddMeshRenderer()
-            MeshRenderer mr = new MeshRenderer("Sphere", mesh, overrideTextureData, alphaTexture, materialProps ?? CommonMaterials.Brick);
-            // TODO: scale the component based on the Transform component of it's parent GameObject
-           _scene.AddRenderable(mr);
-
-            // AddMeshRenderer(
-            //     mesh,
-            //     overrideTextureData,
-            //     alphaTexture,
-            //     materialProps,
-            //     offset,
-            //     Quaternion.Identity,
-            //     scale,
-            //     "Sphere");
-
-            
-            // AddSphere(new Vector3(0f));	
-
-            // AddSphere(new Vector3(0f, 0f, 25f));	
- 
-            // AddFloor(new Vector3(0f, -12f, 0f));
 
             // GUI
             // --------------------------------------------------
@@ -246,23 +233,6 @@ namespace Glitch
             }
 
             return tex;
-        }
-
-        private void AddMeshRenderer(
-            MeshData meshData,
-            ImageSharpTexture texData,
-            ImageSharpTexture alphaTexData,
-            MaterialPropsAndBuffer materialProps,
-            Vector3 position,
-            Quaternion rotation,
-            Vector3 scale,
-            string name)
-        {
-            MeshRenderer mesh = new MeshRenderer(name, meshData, texData, alphaTexData, materialProps ?? CommonMaterials.Brick);
-            mesh.Transform.Position = position;
-            mesh.Transform.Rotation = rotation;
-            mesh.Transform.Scale = scale;
-           _scene.AddRenderable(mesh);
         }
 
         public void Run()

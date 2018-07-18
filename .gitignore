@@ -260,3 +260,6 @@ launchSettings.json
 
 # Generated shaders
 Shaders.Generated
+
+# Generated DebugSceneAsset
+DebugSceneAsset.json
