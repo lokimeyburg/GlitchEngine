@@ -24,6 +24,9 @@ namespace Glitch.Graphics
         private readonly ImageSharpTexture _alphaTextureData;
         private readonly Transform _transform = new Transform();
 
+        [JsonIgnore]
+        public Transform Transform => _transform;
+
         private BoundingBox _centeredBounds;
         private DeviceBuffer _vb;
         private DeviceBuffer _ib;
@@ -48,14 +51,14 @@ namespace Glitch.Graphics
         private readonly DisposeCollector _disposeCollector = new DisposeCollector();
 
         private readonly MaterialPropsAndBuffer _materialProps;
-        private readonly Vector3 _objectCenter;
+        private Vector3 _objectCenter;
         private bool _materialPropsOwned = false;
 
         // public MaterialProperties MaterialProperties { get => _materialProps.Properties; set { _materialProps.Properties = value; } }
 
-        // public Transform Transform => _transform;
-
         private AssetSystem _as;
+
+        
 
         // Serialization Accessors
         public AssetRef<MeshData> Mesh
@@ -97,6 +100,7 @@ namespace Glitch.Graphics
         }
 
         public BoundingBox BoundingBox() {
+            // return _centeredBounds;
             return Veldrid.Utilities.BoundingBox.Transform(_centeredBounds, _transform.GetWorldMatrix());
         }
 
@@ -380,6 +384,8 @@ namespace Glitch.Graphics
             _as = registry.GetSystem<AssetSystem>();
             _meshData = _as.Database.LoadAsset<MeshData>(_meshAsset.ID);
             _textureData= _as.Database.LoadAsset<ImageSharpTexture>(_textureAsset.ID);
+            _centeredBounds = _meshData.GetBoundingBox();
+            _objectCenter = _centeredBounds.GetCenter();
 
             // _gs = registry.GetSystem<GraphicsSystem>();
             // _ad = registry.GetSystem<AssetSystem>().Database;

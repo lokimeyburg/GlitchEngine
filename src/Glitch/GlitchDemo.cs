@@ -145,7 +145,7 @@ namespace Glitch
             // Add custom camera to GameObject
             Camera camera = new Camera();
             camera.WindowHeight = _window.Height;
-            camera.WindowWidth = _window.Height;
+            camera.WindowWidth = _window.Width;
             go1.AddComponent(camera);
             // Add custom skybox to GameObject
             Skybox skybox = Skybox.LoadDefaultSkybox(game.SystemRegistry);
@@ -156,22 +156,26 @@ namespace Glitch
             go2.Enabled = true;
             // Add custom sphere MeshRenderer component to GameObject
             MeshData mesh = SphereModel.MeshData;
-            Vector3 scale = new Vector3(0.3f);
+            Vector3 scale = new Vector3(1f);
             Vector3 offset = new Vector3(0f);
+            Quaternion rotation = Quaternion.Identity;
             var ad = assetSystem.Database;
             var meshAssetID = new AssetID("Internal:SphereModel");
             var meshAssetRef = new AssetRef<MeshData>(meshAssetID);
             var textureAssetID = new AssetID("Textures/Stone.png");
             var textureAssetRef = new AssetRef<ImageSharpTexture>(textureAssetID);
             var overrideTextureData = ad.LoadAsset<ImageSharpTexture>(textureAssetRef.ID);
+            go2.Transform.Position = offset;
+            go2.Transform.Rotation = rotation;
+            go2.Transform.Scale = scale;
             MeshRenderer meshrenderer = new MeshRenderer(meshAssetRef, textureAssetRef);
             go2.AddComponent(meshrenderer);
             // Add custom GameObject to SceneAsset
             SerializedGameObject sgo1 = new SerializedGameObject(go1);
             SerializedGameObject sgo2 = new SerializedGameObject(go2);
             programaticSceneAsset.GameObjects = new SerializedGameObject[2];
-            programaticSceneAsset.GameObjects[0] = sgo2;
-            programaticSceneAsset.GameObjects[1] = sgo1;
+            programaticSceneAsset.GameObjects[0] = sgo1;
+            programaticSceneAsset.GameObjects[1] = sgo2;
             // Serialize SceneAsset
             LooseFileDatabase lfd = new LooseFileDatabase("/Assets");
             StringWriter stringwriter = new StringWriter(new StringBuilder());
@@ -199,9 +203,9 @@ namespace Glitch
                 }
             }
 
-            var readSceneFromJson = false;
+            var readSceneFromProgramaticAsset = true;
             sceneAsset = assetSystem.Database.LoadAsset<SceneAsset>(mainSceneID);
-            _scene.LoadSceneAsset(readSceneFromJson ? sceneAsset : programaticSceneAsset);
+            _scene.LoadSceneAsset(readSceneFromProgramaticAsset ? programaticSceneAsset : sceneAsset);
             _gs.SetCurrentScene(_scene);
 
             // GUI

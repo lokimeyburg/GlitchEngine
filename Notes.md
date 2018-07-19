@@ -19,7 +19,8 @@ My scratchpad of notes, ideas and tasks.
 
 - [x] Render primitive textured meshes as Game Objects
 - [x] Render primitive textured meshes by reading the `.scene` file
-- [ ] Scale the rendered mesh based on the parent GameObject's Transform component
+- [ ] [WIP] Scale the rendered mesh based on the parent GameObject's Transform component
+- [ ] Remove `renderable.cs` and move renderable interfaces to `Glitch.Behaviors`
 - [ ] Add additional properties to the mesh object (alpha texture & material properties)
 
 ### Scene Serializer Workflow

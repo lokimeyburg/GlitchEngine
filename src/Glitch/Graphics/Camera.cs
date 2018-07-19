@@ -150,11 +150,13 @@ namespace Glitch.Graphics
 
         protected override void OnEnabled()
         {
-            // GameObject.Transform.TransformChanged += SetViewMatrix;
+            // GameObject.Transform.TransformChanged += UpdateViewMatrix();
 
             // SetViewMatrix(GameObject.Transform);
             // SetProjectionMatrix();
             // UpdateViewFrustum();
+            UpdatePerspectiveMatrix();
+            UpdateViewMatrix();
         }
 
         protected override void OnDisabled()
@@ -168,7 +170,7 @@ namespace Glitch.Graphics
             GraphicsSystem gs = registry.GetSystem<GraphicsSystem>();
             _backend = gs.GraphicsDeviceBackend.BackendType;
             _useReverseDepth = gs.GraphicsDeviceBackend.IsDepthRangeZeroToOne;
-
+            
             UpdatePerspectiveMatrix();
             UpdateViewMatrix();
         }

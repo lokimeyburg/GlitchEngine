@@ -17,19 +17,19 @@ namespace Glitch
         public delegate void ParentChangedHandler(Transform t, Transform oldParent, Transform newParent);
         public event ParentChangedHandler ParentChanged;
 
-        
+
 
         public Vector3 Position
         {
             get
             {
-                    Vector3 pos = _localPosition;
-                    if (Parent != null)
-                    {
-                        pos = Vector3.Transform(pos, Parent.GetWorldMatrix());
-                    }
+                Vector3 pos = _localPosition;
+                if (Parent != null)
+                {
+                    pos = Vector3.Transform(pos, Parent.GetWorldMatrix());
+                }
 
-                    return pos;
+                return pos;
             }
             set
             {
@@ -210,7 +210,7 @@ namespace Glitch
             }
 
             ParentChanged?.Invoke(this, oldParent, _parent);
-            
+
             TransformChanged?.Invoke(this);
             OnPositionChanged();
 
@@ -249,9 +249,16 @@ namespace Glitch
             {
                 mat *= Parent.GetWorldMatrix();
             }
-
+            
             return mat;
         }
+
+        // public Matrix4x4 GetTransformMatrix()
+        // {
+        //     return Matrix4x4.CreateScale(_localScale)
+        //         * Matrix4x4.CreateFromQuaternion(_localRotation)
+        //         * Matrix4x4.CreateTranslation(LocalPosition);
+        // }
 
         public Vector3 Forward
         {
