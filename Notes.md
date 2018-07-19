@@ -29,7 +29,7 @@ My scratchpad of notes, ideas and tasks.
 
 ### Refactoring
 
-These tasks are low priiorI can get to whenever I feel like it
+These tasks are low priority (get to these whenever blocked by another task)
 
 - [x] Fix the spelling of `EngineSerializationBinder`
 - [x] Rename `EngineEmeddedAssets.cs` to `EngineEmbeddedAssets.cs`
@@ -37,7 +37,7 @@ These tasks are low priiorI can get to whenever I feel like it
 - [ ] Refactor ShaderHelper.LoadBytecode() to use embedded assets instead of loading from a filepath (that may or may not be there depending on how everything is published)
 - [ ] Refactor out "Custom SceneAsset Serializer" in `GlitchDemo.cs:153`
 
-### Phsysics System
+### Physics System
 
 - [ ] I've removed a bunch of physics code from the Transform component and will have to add them back at some point.
 
