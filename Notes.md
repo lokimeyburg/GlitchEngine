@@ -6,7 +6,7 @@ My scratchpad of notes, ideas and tasks.
 
 - [x] Camera
 - [x] Asset System
-- [ ] Mesh Renderer
+- [ ] [WIP] Mesh Renderer
 - [ ] Scene Serializer Workflow
 - [ ] Lighting
 - [ ] Editor Launcher

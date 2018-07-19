@@ -156,7 +156,7 @@ namespace Glitch
             go2.Enabled = true;
             // Add custom sphere MeshRenderer component to GameObject
             MeshData mesh = SphereModel.MeshData;
-            Vector3 scale = new Vector3(1f);
+            Vector3 scale = new Vector3(0.8f);
             Vector3 offset = new Vector3(0f);
             Quaternion rotation = Quaternion.Identity;
             var ad = assetSystem.Database;

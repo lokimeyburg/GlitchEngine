@@ -22,7 +22,7 @@ namespace Glitch.Graphics
         private AssetRef<ImageSharpTexture> _textureAsset;
 
         private readonly ImageSharpTexture _alphaTextureData;
-        private readonly Transform _transform = new Transform();
+        private Transform _transform = new Transform();
 
         [JsonIgnore]
         public Transform Transform => _transform;
@@ -386,6 +386,7 @@ namespace Glitch.Graphics
             _textureData= _as.Database.LoadAsset<ImageSharpTexture>(_textureAsset.ID);
             _centeredBounds = _meshData.GetBoundingBox();
             _objectCenter = _centeredBounds.GetCenter();
+            _transform = GameObject.Transform;
 
             // _gs = registry.GetSystem<GraphicsSystem>();
             // _ad = registry.GetSystem<AssetSystem>().Database;
