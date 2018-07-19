@@ -8,7 +8,7 @@ using Glitch.Graphics;
 
 namespace Glitch.Objects
 {
-    public class ShadowmapDrawer : Renderable
+    public class ShadowmapDrawer : IRenderable
     {
         private readonly Func<Sdl2Window> _windowGetter;
         private readonly DisposeCollector _disposeCollector = new DisposeCollector();
@@ -48,7 +48,7 @@ namespace Glitch.Objects
             _ortho = Matrix4x4.CreateOrthographicOffCenter(0, _windowGetter().Width, _windowGetter().Height, 0, -1, 1);
         }
 
-        public override void CreateDeviceObjects(GraphicsDevice gd, CommandList cl, GraphicsSystem sc)
+        public void CreateDeviceObjects(GraphicsDevice gd, CommandList cl, GraphicsSystem sc)
         {
             ResourceFactory factory = gd.ResourceFactory;
             _vb = factory.CreateBuffer(new BufferDescription(s_quadVerts.SizeInBytes(), BufferUsage.VertexBuffer));
@@ -98,19 +98,21 @@ namespace Glitch.Objects
             _disposeCollector.Add(_vb, _ib, layout, vs, fs, _pipeline, _sizeInfoBuffer, _orthographicBuffer, _resourceSet);
         }
 
-        public override void DestroyDeviceObjects()
+        public void DestroyDeviceObjects()
         {
             _disposeCollector.DisposeAll();
         }
 
-        public override RenderOrderKey GetRenderOrderKey(Vector3 cameraPosition)
+        public RenderOrderKey GetRenderOrderKey(Vector3 cameraPosition)
         {
             return RenderOrderKey.Create(_pipeline.GetHashCode(), 0);
         }
 
-        public override RenderPasses RenderPasses => RenderPasses.Overlay;
+        public RenderPasses RenderPasses() {
+            return Glitch.Graphics.RenderPasses.Overlay;
+        }
 
-        public override void UpdatePerFrameResources(GraphicsDevice gd, CommandList cl, GraphicsSystem sc)
+        public void UpdatePerFrameResources(GraphicsDevice gd, CommandList cl, GraphicsSystem sc)
         {
             if (_si.HasValue)
             {
@@ -125,7 +127,7 @@ namespace Glitch.Objects
             }
         }
 
-        public override void Render(GraphicsDevice gd, CommandList cl, GraphicsSystem sc, RenderPasses renderPass)
+        public void Render(GraphicsDevice gd, CommandList cl, GraphicsSystem sc, RenderPasses renderPass)
         {
             cl.SetVertexBuffer(0, _vb);
             cl.SetIndexBuffer(_ib, IndexFormat.UInt16);
@@ -148,6 +150,11 @@ namespace Glitch.Objects
         {
             public Vector2 Position;
             public Vector2 Size;
+        }
+
+        public void Dispose()
+        {
+
         }
     }
 }

@@ -373,7 +373,7 @@ namespace Glitch
 
             Task.WaitAll(_tasks);
 
-            foreach (Renderable renderable in _allPerFrameRenderablesSet)
+            foreach (IRenderable renderable in _allPerFrameRenderablesSet)
             {
                 renderable.UpdatePerFrameResources(gd, _resourceUpdateCL, sc);
             }
