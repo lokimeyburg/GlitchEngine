@@ -41,8 +41,8 @@ namespace Glitch.Graphics
         private ResourceSet _mainProjViewRS;
         private ResourceSet _mainSharedRS;
         private ResourceSet _mainPerObjectRS;
-        // private ResourceSet _reflectionRS;
-        // private ResourceSet _noReflectionRS;
+        private ResourceSet _reflectionRS;
+        private ResourceSet _noReflectionRS;
         private Pipeline _shadowMapPipeline;
         private ResourceSet[] _shadowMapResourceSets;
 
@@ -206,23 +206,24 @@ namespace Glitch.Graphics
                 new ResourceLayoutElementDescription("ShadowMapFar", ResourceKind.TextureReadOnly, ShaderStages.Fragment),
                 new ResourceLayoutElementDescription("ShadowMapSampler", ResourceKind.Sampler, ShaderStages.Fragment)));
 
-            // ResourceLayout reflectionLayout = StaticResourceCache.GetResourceLayout(gd.ResourceFactory, new ResourceLayoutDescription(
-            //     new ResourceLayoutElementDescription("ReflectionMap", ResourceKind.TextureReadOnly, ShaderStages.Fragment),
-            //     new ResourceLayoutElementDescription("ReflectionSampler", ResourceKind.Sampler, ShaderStages.Fragment),
-            //     new ResourceLayoutElementDescription("ReflectionViewProj", ResourceKind.UniformBuffer, ShaderStages.Vertex)));
-
+            ResourceLayout reflectionLayout = StaticResourceCache.GetResourceLayout(gd.ResourceFactory, new ResourceLayoutDescription(
+                new ResourceLayoutElementDescription("ReflectionMap", ResourceKind.TextureReadOnly, ShaderStages.Fragment),
+                new ResourceLayoutElementDescription("ReflectionSampler", ResourceKind.Sampler, ShaderStages.Fragment),
+                new ResourceLayoutElementDescription("ReflectionViewProj", ResourceKind.UniformBuffer, ShaderStages.Vertex),
+                new ResourceLayoutElementDescription("ClipPlaneInfo", ResourceKind.UniformBuffer, ShaderStages.Fragment)));
+            
             GraphicsPipelineDescription mainPD = new GraphicsPipelineDescription(
                 _alphamapTexture != null ? BlendStateDescription.SingleAlphaBlend : BlendStateDescription.SingleOverrideBlend,
                 gd.IsDepthRangeZeroToOne ? DepthStencilStateDescription.DepthOnlyGreaterEqual : DepthStencilStateDescription.DepthOnlyLessEqual,
                 RasterizerStateDescription.Default,
                 PrimitiveTopology.TriangleList,
                 new ShaderSetDescription(mainVertexLayouts, new[] { mainVS, mainFS }),
-                new ResourceLayout[] { projViewLayout, mainSharedLayout, mainPerObjectLayout },
+                new ResourceLayout[] { projViewLayout, mainSharedLayout, mainPerObjectLayout, reflectionLayout },
                 sc.MainSceneFramebuffer.OutputDescription);
             _pipeline = StaticResourceCache.GetPipeline(gd.ResourceFactory, ref mainPD);
             _pipeline.Name = "MeshRenderer Main Pipeline";
             mainPD.RasterizerState.CullMode = FaceCullMode.Front;
-            mainPD.Outputs = sc.MainSceneFramebuffer.OutputDescription;
+            mainPD.Outputs = sc.ReflectionFramebuffer.OutputDescription;
             _pipelineFrontCull = StaticResourceCache.GetPipeline(gd.ResourceFactory, ref mainPD);
 
             _mainProjViewRS = StaticResourceCache.GetResourceSet(gd.ResourceFactory, new ResourceSetDescription(projViewLayout,
@@ -250,15 +251,17 @@ namespace Glitch.Graphics
                 sc.FarShadowMapView,
                 gd.PointSampler));
 
-            // _reflectionRS = StaticResourceCache.GetResourceSet(gd.ResourceFactory, new ResourceSetDescription(reflectionLayout,
-            //     _alphaMapView, // Doesn't really matter -- just don't bind the actual reflection map since it's being rendered to.
-            //     gd.PointSampler,
-            //     sc.ReflectionViewProjBuffer));
+            _reflectionRS = StaticResourceCache.GetResourceSet(gd.ResourceFactory, new ResourceSetDescription(reflectionLayout,
+                _alphaMapView, // Doesn't really matter -- just don't bind the actual reflection map since it's being rendered to.
+                gd.PointSampler,
+                sc.ReflectionViewProjBuffer,
+                sc.MirrorClipPlaneBuffer));
 
-            // _noReflectionRS = StaticResourceCache.GetResourceSet(gd.ResourceFactory, new ResourceSetDescription(reflectionLayout,
-            //     sc.ReflectionColorView,
-            //     gd.PointSampler,
-            //     sc.ReflectionViewProjBuffer));
+            _noReflectionRS = StaticResourceCache.GetResourceSet(gd.ResourceFactory, new ResourceSetDescription(reflectionLayout,
+                sc.ReflectionColorView,
+                gd.PointSampler,
+                sc.ReflectionViewProjBuffer,
+                sc.NoClipPlaneBuffer));
         }
 
         private ResourceSet[] CreateShadowMapResourceSets(
@@ -363,7 +366,7 @@ namespace Glitch.Graphics
             cl.SetGraphicsResourceSet(0, _mainProjViewRS);
             cl.SetGraphicsResourceSet(1, _mainSharedRS);
             cl.SetGraphicsResourceSet(2, _mainPerObjectRS);
-            // cl.SetGraphicsResourceSet(3, reflectionPass ? _reflectionRS : _noReflectionRS);
+            cl.SetGraphicsResourceSet(3, reflectionPass ? _reflectionRS : _noReflectionRS);
             cl.DrawIndexed((uint)_indexCount, 1, 0, 0, 0);
         }
 

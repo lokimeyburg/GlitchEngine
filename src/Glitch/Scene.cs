@@ -175,34 +175,34 @@ namespace Glitch
             Render(gd, cl, sc, RenderPasses.ShadowMapFar, lightFrustum, lightPos, _renderQueues[0], _cullableStage[0], _renderableStage[0], null, false);
 
             
-            float fbWidth = sc.MainSceneFramebuffer.Width;
-            float fbHeight = sc.MainSceneFramebuffer.Height;
-            // cl.SetFramebuffer(sc.ReflectionFramebuffer);
-
-            // cl.SetViewport(0, new Viewport(0, 0, fbWidth, fbHeight, 0, 1));
-            // cl.SetFullViewports();
-            // cl.SetFullScissorRects();
-            // cl.ClearColorTarget(0, RgbaFloat.Black);
-            // cl.ClearDepthStencil(depthClear);
+            // Reflections
+            cl.SetFramebuffer(sc.ReflectionFramebuffer);
+            float fbWidth = sc.ReflectionFramebuffer.Width;
+            float fbHeight = sc.ReflectionFramebuffer.Height;
+            cl.SetViewport(0, new Viewport(0, 0, fbWidth, fbHeight, 0, 1));
+            cl.SetFullViewports();
+            cl.SetFullScissorRects();
+            cl.ClearColorTarget(0, RgbaFloat.Black);
+            cl.ClearDepthStencil(depthClear);
 
             // Render reflected scene.
-            // Matrix4x4 planeReflectionMatrix = Matrix4x4.CreateReflection(MirrorMesh.Plane);
-            // CameraInfo camInfo = new CameraInfo();
-            // camInfo.CameraLookDirection = Vector3.Normalize(Vector3.Reflect(_camera.LookDirection, MirrorMesh.Plane.Normal));
-            // camInfo.CameraPosition_WorldSpace = Vector3.Transform(_camera.Position, planeReflectionMatrix);
-            // cl.UpdateBuffer(sc.CameraInfoBuffer, 0, ref camInfo);
+            Matrix4x4 planeReflectionMatrix = Matrix4x4.CreateReflection(MirrorMesh.Plane);
+            CameraInfo camInfo = new CameraInfo();
+            camInfo.CameraLookDirection = Vector3.Normalize(Vector3.Reflect(_camera.LookDirection, MirrorMesh.Plane.Normal));
+            camInfo.CameraPosition_WorldSpace = Vector3.Transform(_camera.Position, planeReflectionMatrix);
+            cl.UpdateBuffer(sc.CameraInfoBuffer, 0, ref camInfo);
 
             Matrix4x4 view = sc.Camera.ViewMatrix;
-            // view = planeReflectionMatrix * view;
-            // cl.UpdateBuffer(sc.ViewMatrixBuffer, 0, view);
+            view = planeReflectionMatrix * view;
+            cl.UpdateBuffer(sc.ViewMatrixBuffer, 0, view);
 
-            // Matrix4x4 projection = _camera.ProjectionMatrix;
-            // cl.UpdateBuffer(sc.ReflectionViewProjBuffer, 0, view * projection);
+            Matrix4x4 projection = _camera.ProjectionMatrix;
+            cl.UpdateBuffer(sc.ReflectionViewProjBuffer, 0, view * projection);
 
-            BoundingFrustum cameraFrustum = new BoundingFrustum(view);
-            // Render(gd, cl, sc, RenderPasses.ReflectionMap, cameraFrustum, _camera.Position, _renderQueues[0], _cullableStage[0], _renderableStage[0], null, false);
+            BoundingFrustum cameraFrustum = new BoundingFrustum(view * projection);
+            Render(gd, cl, sc, RenderPasses.ReflectionMap, cameraFrustum, _camera.Position, _renderQueues[0], _cullableStage[0], _renderableStage[0], null, false);
 
-            // cl.GenerateMipmaps(sc.ReflectionColorTexture);
+            cl.GenerateMipmaps(sc.ReflectionColorTexture);
 
             // Main scene
             cl.SetFramebuffer(sc.MainSceneFramebuffer);
@@ -331,31 +331,34 @@ namespace Glitch
             _tasks[3] = Task.Run(() =>
             {
                 // Reflections
-                // cls[4].SetFramebuffer(sc.ReflectionFramebuffer);
-                float scWidth = sc.MainSceneFramebuffer.Width;
-                float scHeight = sc.MainSceneFramebuffer.Height;
-                // cls[4].SetViewport(0, new Viewport(0, 0, scWidth, scHeight, 0, 1));
-                // cls[4].SetFullViewports();
-                // cls[4].SetFullScissorRects();
-                // cls[4].ClearColorTarget(0, RgbaFloat.Black);
-                // cls[4].ClearDepthStencil(depthClear);
+                cls[4].SetFramebuffer(sc.ReflectionFramebuffer);
+                float scWidth = sc.ReflectionFramebuffer.Width;
+                float scHeight = sc.ReflectionFramebuffer.Height;
+                cls[4].SetViewport(0, new Viewport(0, 0, scWidth, scHeight, 0, 1));
+                cls[4].SetFullViewports();
+                cls[4].SetFullScissorRects();
+                cls[4].ClearColorTarget(0, RgbaFloat.Black);
+                cls[4].ClearDepthStencil(depthClear);
 
                 // Render reflected scene.
-                // Matrix4x4 planeReflectionMatrix = Matrix4x4.CreateReflection(MirrorMesh.Plane);
-                // CameraInfo camInfo = new CameraInfo();
-                // camInfo.CameraLookDirection = Vector3.Normalize(Vector3.Reflect(_camera.LookDirection, MirrorMesh.Plane.Normal));
-                // camInfo.CameraPosition_WorldSpace = Vector3.Transform(_camera.Position, planeReflectionMatrix);
-                // cls[4].UpdateBuffer(sc.CameraInfoBuffer, 0, ref camInfo);
+                Matrix4x4 planeReflectionMatrix = Matrix4x4.CreateReflection(MirrorMesh.Plane);
+                CameraInfo camInfo = new CameraInfo();
+                camInfo.CameraLookDirection = Vector3.Normalize(Vector3.Reflect(_camera.LookDirection, MirrorMesh.Plane.Normal));
+                camInfo.CameraPosition_WorldSpace = Vector3.Transform(_camera.Position, planeReflectionMatrix);
+                cls[4].UpdateBuffer(sc.CameraInfoBuffer, 0, ref camInfo);
 
                 Matrix4x4 view = sc.Camera.ViewMatrix;
-                // view = planeReflectionMatrix * view;
-                // cls[4].UpdateBuffer(sc.ViewMatrixBuffer, 0, view);
+                view = planeReflectionMatrix * view;
+                cls[4].UpdateBuffer(sc.ViewMatrixBuffer, 0, view);
 
                 Matrix4x4 projection = _camera.ProjectionMatrix;
+                cls[4].UpdateBuffer(sc.ReflectionViewProjBuffer, 0, view * projection);
 
                 BoundingFrustum cameraFrustum = new BoundingFrustum(view * projection);
                 Render(gd, cls[4], sc, RenderPasses.ReflectionMap, cameraFrustum, _camera.Position, _renderQueues[3], _cullableStage[3], _renderableStage[3], null, true);
 
+                cl.GenerateMipmaps(sc.ReflectionColorTexture);
+                
                 // Main scene
                 cls[4].SetFramebuffer(sc.MainSceneFramebuffer);
                 scWidth = sc.MainSceneFramebuffer.Width;

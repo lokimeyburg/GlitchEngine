@@ -157,7 +157,7 @@ namespace Glitch.Graphics
                 sc.MainSceneFramebuffer.OutputDescription);
 
             _pipeline = factory.CreateGraphicsPipeline(ref pd);
-            pd.Outputs = sc.MainSceneFramebuffer.OutputDescription;
+            pd.Outputs = sc.ReflectionFramebuffer.OutputDescription;
             _reflectionPipeline = factory.CreateGraphicsPipeline(ref pd);
 
             _resourceSet = factory.CreateResourceSet(new ResourceSetDescription(
@@ -205,13 +205,16 @@ namespace Glitch.Graphics
         {
             cl.SetVertexBuffer(0, _vb);
             cl.SetIndexBuffer(_ib, IndexFormat.UInt16);
-            cl.SetPipeline(_pipeline);
+            cl.SetPipeline(renderPass == Glitch.Graphics.RenderPasses.ReflectionMap ? _reflectionPipeline : _pipeline);
             cl.SetGraphicsResourceSet(0, _resourceSet);
             float depth = gd.IsDepthRangeZeroToOne ? 0 : 1;
             cl.SetViewport(0, new Viewport(0, 0, sc.MainSceneColorTexture.Width, sc.MainSceneColorTexture.Height, depth, depth));
             cl.DrawIndexed((uint)s_indices.Length, 1, 0, 0, 0);
         }
 
+        public RenderPasses RenderPasses() { 
+            return Glitch.Graphics.RenderPasses.Standard | Glitch.Graphics.RenderPasses.ReflectionMap;
+        }
         public RenderOrderKey GetRenderOrderKey(Vector3 cameraPosition)
         {
             return new RenderOrderKey(ulong.MaxValue);
@@ -273,10 +276,6 @@ namespace Glitch.Graphics
 
         }
         // END component implementation
-
-        public RenderPasses RenderPasses() { 
-            return Glitch.Graphics.RenderPasses.Standard | Glitch.Graphics.RenderPasses.ReflectionMap;
-        }
 
         private static readonly VertexPosition[] s_vertices = new VertexPosition[]
         {
