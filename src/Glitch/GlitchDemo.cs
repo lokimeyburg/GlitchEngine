@@ -155,27 +155,43 @@ namespace Glitch
             go2.Name = "My Sphere";
             go2.Enabled = true;
             // Add custom sphere MeshRenderer component to GameObject
-            MeshData mesh = SphereModel.MeshData;
-            Vector3 scale = new Vector3(0.8f);
-            Vector3 offset = new Vector3(0f);
-            Quaternion rotation = Quaternion.Identity;
-            var ad = assetSystem.Database;
-            var meshAssetID = new AssetID("Internal:SphereModel");
-            var meshAssetRef = new AssetRef<MeshData>(meshAssetID);
-            var textureAssetID = new AssetID("Textures/Stone.png");
-            var textureAssetRef = new AssetRef<ImageSharpTexture>(textureAssetID);
-            var overrideTextureData = ad.LoadAsset<ImageSharpTexture>(textureAssetRef.ID);
-            go2.Transform.Position = offset;
-            go2.Transform.Rotation = rotation;
-            go2.Transform.Scale = scale;
-            MeshRenderer meshrenderer = new MeshRenderer(meshAssetRef, textureAssetRef);
-            go2.AddComponent(meshrenderer);
+            Vector3 scale2 = new Vector3(0.3f);
+            Vector3 offset2 = new Vector3(0f, -15f, 0f);
+            Quaternion rotation2 = Quaternion.Identity;
+            var meshAssetID2 = new AssetID("Internal:SphereModel");
+            var meshAssetRef2 = new AssetRef<MeshData>(meshAssetID2);
+            var textureAssetID2 = new AssetID("Textures/rust.jpg");
+            var textureAssetRef2 = new AssetRef<ImageSharpTexture>(textureAssetID2);
+            go2.Transform.Position = offset2;
+            go2.Transform.Rotation = rotation2;
+            go2.Transform.Scale = scale2;
+            MeshRenderer meshrenderer2 = new MeshRenderer(meshAssetRef2, textureAssetRef2);
+            go2.AddComponent(meshrenderer2);
+            // Custom GameObject (for plane mesh)
+            GameObject go3 = new GameObject();
+            go3.Name = "My Plane Model";
+            go3.Enabled = true;
+            // Add custom Plane MeshRenderer component to GameObject
+            Vector3 scale3 = new Vector3(5f);
+            Vector3 offset3 = new Vector3(0f, -30f, -30f);
+            Quaternion rotation3 = Quaternion.Identity;
+            var meshAssetID3 = new AssetID("Internal:PlaneModel");
+            var meshAssetRef3 = new AssetRef<MeshData>(meshAssetID3);
+            var textureAssetID3 = new AssetID("Textures/Stone.png");
+            var textureAssetRef3 = new AssetRef<ImageSharpTexture>(textureAssetID3);
+            go3.Transform.Position = offset3;
+            go3.Transform.Rotation = rotation3;
+            go3.Transform.Scale = scale3;
+            MeshRenderer meshrenderer3 = new MeshRenderer(meshAssetRef3, textureAssetRef3);
+            go3.AddComponent(meshrenderer3);
             // Add custom GameObject to SceneAsset
             SerializedGameObject sgo1 = new SerializedGameObject(go1);
             SerializedGameObject sgo2 = new SerializedGameObject(go2);
-            programaticSceneAsset.GameObjects = new SerializedGameObject[2];
+            SerializedGameObject sgo3 = new SerializedGameObject(go3);
+            programaticSceneAsset.GameObjects = new SerializedGameObject[3];
             programaticSceneAsset.GameObjects[0] = sgo1;
             programaticSceneAsset.GameObjects[1] = sgo2;
+            programaticSceneAsset.GameObjects[2] = sgo3;
             // Serialize SceneAsset
             LooseFileDatabase lfd = new LooseFileDatabase("/Assets");
             StringWriter stringwriter = new StringWriter(new StringBuilder());

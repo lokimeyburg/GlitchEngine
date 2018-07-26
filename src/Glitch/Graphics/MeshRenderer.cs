@@ -25,7 +25,7 @@ namespace Glitch.Graphics
         private Transform _transform = new Transform();
 
         [JsonIgnore]
-        public Transform Transform => _transform;
+        public new Transform Transform => _transform;
 
         private BoundingBox _centeredBounds;
         private DeviceBuffer _vb;
@@ -82,7 +82,6 @@ namespace Glitch.Graphics
         [JsonConstructor]
         public MeshRenderer(AssetRef<MeshData> meshAsset, AssetRef<ImageSharpTexture> textureAsset)
         {
-            _name = "TODO: Set random name";
             _meshAsset = meshAsset;
             _textureAsset = textureAsset;
             _materialProps = CommonMaterials.Brick;
@@ -101,7 +100,7 @@ namespace Glitch.Graphics
 
         public BoundingBox BoundingBox() {
             // return _centeredBounds;
-            return Veldrid.Utilities.BoundingBox.Transform(_centeredBounds, _transform.GetWorldMatrix());
+            return Veldrid.Utilities.BoundingBox.Transform(_centeredBounds, Transform.GetWorldMatrix());
         }
 
         public unsafe void CreateDeviceObjects(GraphicsDevice gd, CommandList cl, GraphicsSystem sc)
@@ -303,7 +302,7 @@ namespace Glitch.Graphics
         {
             return RenderOrderKey.Create(
                 _pipeline.GetHashCode(),
-                Vector3.Distance((_objectCenter * _transform.Scale) + _transform.Position, cameraPosition));
+                Vector3.Distance((_objectCenter * _transform.Scale) + Transform.Position, cameraPosition));
         }
 
         public RenderPasses RenderPasses()
@@ -387,13 +386,15 @@ namespace Glitch.Graphics
             _as = registry.GetSystem<AssetSystem>();
             _meshData = _as.Database.LoadAsset<MeshData>(_meshAsset.ID);
             _textureData= _as.Database.LoadAsset<ImageSharpTexture>(_textureAsset.ID);
+            _transform = GameObject.Transform;
             _centeredBounds = _meshData.GetBoundingBox();
             _objectCenter = _centeredBounds.GetCenter();
-            _transform = GameObject.Transform;
+            
+
 
             // _gs = registry.GetSystem<GraphicsSystem>();
             // _ad = registry.GetSystem<AssetSystem>().Database;
-            // _texture = Texture.Get(_ad);
+            // _texstture = Texture.Get(_ad);
             // _mesh = Mesh.Get(_ad);
             // _centeredBoundingSphere = _mesh.GetBoundingSphere();
             // _centeredBoundingBox = _mesh.GetBoundingBox();
