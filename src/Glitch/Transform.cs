@@ -35,8 +35,8 @@ namespace Glitch
             {
                 Vector3 oldPosition = Position;
 
-                Vector3 parentPos = Parent != null ? Parent.Position : Vector3.Zero;
-                _localPosition = value - parentPos;
+                // Vector3 parentPos = Parent != null ? Parent.Position : Vector3.Zero;
+                // _localPosition = value - parentPos;
 
                 OnPositionManuallyChanged(oldPosition);
                 OnPositionChanged();
@@ -253,12 +253,12 @@ namespace Glitch
             return mat;
         }
 
-        // public Matrix4x4 GetTransformMatrix()
-        // {
-        //     return Matrix4x4.CreateScale(_localScale)
-        //         * Matrix4x4.CreateFromQuaternion(_localRotation)
-        //         * Matrix4x4.CreateTranslation(LocalPosition);
-        // }
+        public Matrix4x4 GetTransformMatrix()
+        {
+            return Matrix4x4.CreateScale(_localScale)
+                * Matrix4x4.CreateFromQuaternion(_localRotation)
+                * Matrix4x4.CreateTranslation(LocalPosition);
+        }
 
         public Vector3 Forward
         {

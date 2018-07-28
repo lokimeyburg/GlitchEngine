@@ -103,16 +103,14 @@
   </ItemGroup>
 
   <ItemGroup>
+
     <PackageReference Include="SharpFont.Dependencies" Version="2.6" />
     <PackageReference Include="SharpFont" Version="4.0" />
-    <PackageReference Include="Veldrid.SPIRV" Version="1.0.0-beta2" />
+    <PackageReference Include="Veldrid.SPIRV" Version="1.0.0-beta4" />
     <ProjectReference Include="..\..\ext\veldrid\src\Veldrid\Veldrid.csproj" />
     <ProjectReference Include="..\..\ext\veldrid\src\Veldrid.SDL2\Veldrid.SDL2.csproj" />
     <ProjectReference Include="..\..\ext\veldrid\src\Veldrid.StartupUtilities\Veldrid.StartupUtilities.csproj" />
-    <ProjectReference Include="..\..\ext\veldrid\src\Veldrid.ImageSharp\Veldrid.ImageSharp.csproj">
-      <Name>Veldrid.ImageSharp</Name>
-      <Private>False</Private>
-    </ProjectReference>
+    <ProjectReference Include="..\..\ext\veldrid\src\Veldrid.ImageSharp\Veldrid.ImageSharp.csproj" />
     <ProjectReference Include="..\..\ext\veldrid\src\Veldrid.Utilities\Veldrid.Utilities.csproj" />
     <ProjectReference Include="..\..\ext\veldrid\src\Veldrid.ImGui\Veldrid.ImGui.csproj" />
 

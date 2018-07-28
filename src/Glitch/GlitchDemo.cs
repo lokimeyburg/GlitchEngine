@@ -156,15 +156,15 @@ namespace Glitch
             go2.Enabled = true;
             // Add custom sphere MeshRenderer component to GameObject
             Vector3 scale2 = new Vector3(0.3f);
-            Vector3 offset2 = new Vector3(0f, -15f, 0f);
+            Vector3 offset2 = new Vector3(10f, 10f, 10f);
             Quaternion rotation2 = Quaternion.Identity;
             var meshAssetID2 = new AssetID("Internal:SphereModel");
             var meshAssetRef2 = new AssetRef<MeshData>(meshAssetID2);
             var textureAssetID2 = new AssetID("Textures/rust.jpg");
             var textureAssetRef2 = new AssetRef<ImageSharpTexture>(textureAssetID2);
-            go2.Transform.Position = offset2;
-            go2.Transform.Rotation = rotation2;
-            go2.Transform.Scale = scale2;
+            go2.Transform.LocalPosition = offset2;
+            go2.Transform.LocalRotation = rotation2;
+            go2.Transform.LocalScale = scale2;
             MeshRenderer meshrenderer2 = new MeshRenderer(meshAssetRef2, textureAssetRef2);
             go2.AddComponent(meshrenderer2);
             // Custom GameObject (for plane mesh)
@@ -173,15 +173,15 @@ namespace Glitch
             go3.Enabled = true;
             // Add custom Plane MeshRenderer component to GameObject
             Vector3 scale3 = new Vector3(5f);
-            Vector3 offset3 = new Vector3(0f, -30f, -30f);
+            Vector3 offset3 = new Vector3(-100f, -100f, -100f);
             Quaternion rotation3 = Quaternion.Identity;
             var meshAssetID3 = new AssetID("Internal:PlaneModel");
             var meshAssetRef3 = new AssetRef<MeshData>(meshAssetID3);
             var textureAssetID3 = new AssetID("Textures/Stone.png");
             var textureAssetRef3 = new AssetRef<ImageSharpTexture>(textureAssetID3);
-            go3.Transform.Position = offset3;
-            go3.Transform.Rotation = rotation3;
-            go3.Transform.Scale = scale3;
+            go3.Transform.LocalPosition = offset3;
+            go3.Transform.LocalRotation = rotation3;
+            go3.Transform.LocalScale = scale3;
             MeshRenderer meshrenderer3 = new MeshRenderer(meshAssetRef3, textureAssetRef3);
             go3.AddComponent(meshrenderer3);
             // Add custom GameObject to SceneAsset

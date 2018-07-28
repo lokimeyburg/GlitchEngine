@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using Veldrid.SPIRV;
 using Veldrid;
+using Veldrid.SPIRV;
 
 namespace Glitch.Graphics
 {
@@ -19,7 +19,7 @@ namespace Glitch.Graphics
 #if DEBUG
             debug = true;
 #endif
-            Shader[] shaders = factory.CreateFromSPIRV(
+            Shader[] shaders = factory.CreateFromSpirv(
                 new ShaderDescription(ShaderStages.Vertex, vsBytes, "main", debug),
                 new ShaderDescription(ShaderStages.Fragment, fsBytes, "main", debug),
                 GetOptions(gd));
@@ -33,33 +33,33 @@ namespace Glitch.Graphics
             return (vs, fs);
         }
 
-        private static CompilationOptions GetOptions(
+        private static CrossCompileOptions GetOptions(
             GraphicsDevice gd)
         {
             bool fixClipZ = false;
             bool invertY = false;
             List<SpecializationConstant> specializations = new List<SpecializationConstant>();
-            specializations.Add(SpecializationConstant.Create(102, gd.IsDepthRangeZeroToOne));
+            specializations.Add(new SpecializationConstant(102, gd.IsDepthRangeZeroToOne));
             switch (gd.BackendType)
             {
                 case GraphicsBackend.Direct3D11:
                 case GraphicsBackend.Metal:
-                    specializations.Add(SpecializationConstant.Create(100, false));
+                    specializations.Add(new SpecializationConstant(100, false));
                     break;
                 case GraphicsBackend.Vulkan:
-                    specializations.Add(SpecializationConstant.Create(100, true));
+                    specializations.Add(new SpecializationConstant(100, true));
                     break;
                 case GraphicsBackend.OpenGL:
                 case GraphicsBackend.OpenGLES:
-                    specializations.Add(SpecializationConstant.Create(100, false));
-                    specializations.Add(SpecializationConstant.Create(101, true));
+                    specializations.Add(new SpecializationConstant(100, false));
+                    specializations.Add(new SpecializationConstant(101, true));
                     fixClipZ = !gd.IsDepthRangeZeroToOne;
                     break;
                 default:
                     throw new InvalidOperationException();
             }
 
-            return new CompilationOptions(fixClipZ, invertY, specializations.ToArray());
+            return new CrossCompileOptions(fixClipZ, invertY, specializations.ToArray());
         }
 
         public static byte[] LoadBytecode(GraphicsBackend backend, string setName, ShaderStages stage)
@@ -70,8 +70,6 @@ namespace Glitch.Graphics
             if (backend == GraphicsBackend.Vulkan || backend == GraphicsBackend.Direct3D11)
             {
                 string bytecodeExtension = GetBytecodeExtension(backend);
-                // TODO: This should not be reading from a file path. Instead 1) embed the assets 2) read from the asset database
-                // for reference, checkout EngineEmeddedAssets.cs 
                 string bytecodePath = AssetHelper.GetPath(Path.Combine("Shaders", name + bytecodeExtension));
                 if (File.Exists(bytecodePath))
                 {

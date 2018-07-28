@@ -24,8 +24,8 @@ namespace Glitch.Graphics
         private readonly ImageSharpTexture _alphaTextureData;
         private Transform _transform = new Transform();
 
-        [JsonIgnore]
-        public new Transform Transform => _transform;
+        // [JsonIgnore]
+        // public new Transform Transform => _transform;
 
         private BoundingBox _centeredBounds;
         private DeviceBuffer _vb;
@@ -100,7 +100,7 @@ namespace Glitch.Graphics
 
         public BoundingBox BoundingBox() {
             // return _centeredBounds;
-            return Veldrid.Utilities.BoundingBox.Transform(_centeredBounds, Transform.GetWorldMatrix());
+            return Veldrid.Utilities.BoundingBox.Transform(_centeredBounds, Transform.GetTransformMatrix());
         }
 
         public unsafe void CreateDeviceObjects(GraphicsDevice gd, CommandList cl, GraphicsSystem sc)
@@ -342,7 +342,7 @@ namespace Glitch.Graphics
         public void UpdatePerFrameResources(GraphicsDevice gd, CommandList cl, GraphicsSystem sc)
         {
             WorldAndInverse wai;
-            wai.World = _transform.GetWorldMatrix();
+            wai.World = _transform.GetTransformMatrix();
             wai.InverseWorld = VdUtilities.CalculateInverseTranspose(ref wai.World);
             gd.UpdateBuffer(_worldAndInverseBuffer, 0, ref wai);
         }
