@@ -134,6 +134,8 @@ namespace Glitch.Assets
         public SerializedTransform(Transform transform)
         {
             LocalScale = transform.LocalScale;
+            LocalPosition = transform.GetLocalOrPhysicsEntityPosition();
+            LocalRotation = transform.GetLocalOrPhysicsEntityRotation();
 
             if (transform.Parent != null)
             {

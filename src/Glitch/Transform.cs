@@ -284,6 +284,18 @@ namespace Glitch
             }
         }
 
+        public Vector3 GetLocalOrPhysicsEntityPosition()
+        {
+            return _localPosition;
+            // return (_physicsEntity != null) ? GetInterpolatedPosition() : _localPosition;
+        }
+
+        public Quaternion GetLocalOrPhysicsEntityRotation()
+        {
+            return _localRotation;
+            // return (_physicsEntity != null) ? _physicsEntity.BufferedStates.InterpolatedStates.Orientation : _localRotation;
+        }
+
 
 
         protected override void Attached(SystemRegistry registry)
