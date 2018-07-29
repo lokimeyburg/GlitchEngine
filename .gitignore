@@ -263,3 +263,6 @@ Shaders.Generated
 
 # Generated DebugSceneAsset
 DebugSceneAsset.json
+
+# Generated Game DLLs
+src/Spark/Assets/Managed/Spark.dll
