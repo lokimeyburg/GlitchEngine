@@ -21,8 +21,8 @@ My scratchpad of notes, ideas and tasks.
 - [x] Render primitive textured meshes by reading the `.scene` file
 - [x] Scale the rendered mesh based on the parent GameObject's Transform component
 - [x] Remove `renderable.cs` and move renderable interfaces to `Glitch.Behaviors`
-- [ ] [WIP] Position the rendered mesh based on the parent GameObject's Transform componenet
-- [ ] Add two circles and a floor
+- [ ] Position the rendered mesh based on the parent GameObject's Transform componenet
+- [ ] [WIP] Add two circles and a floor
 - [ ] Add additional properties to the mesh object (alpha texture & material properties)
 
 ### Scene Serializer Workflow
