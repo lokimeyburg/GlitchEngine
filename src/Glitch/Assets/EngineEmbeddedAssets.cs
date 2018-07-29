@@ -37,17 +37,17 @@ namespace Glitch.Assets
         private void RegisterSkyboxTextures()
         {
             Lazy<ImageSharpTexture> skyboxBack = new Lazy<ImageSharpTexture>(
-                () => LoadEmbeddedTexture("Glitch.Assets.Textures.cloudtop.cloudtop_bk.png"));
+                () => LoadEmbeddedTexture("Glitch.Assets.Textures.cloudtop.stormydays_bk.png"));
             Lazy<ImageSharpTexture> skyboxBottom = new Lazy<ImageSharpTexture>(
-                () => LoadEmbeddedTexture("Glitch.Assets.Textures.cloudtop.cloudtop_dn.png"));
+                () => LoadEmbeddedTexture("Glitch.Assets.Textures.cloudtop.stormydays_dn.png"));
             Lazy<ImageSharpTexture> skyboxFront = new Lazy<ImageSharpTexture>(
-                () => LoadEmbeddedTexture("Glitch.Assets.Textures.cloudtop.cloudtop_ft.png"));
+                () => LoadEmbeddedTexture("Glitch.Assets.Textures.cloudtop.stormydays_ft.png"));
             Lazy<ImageSharpTexture> skyboxLeft = new Lazy<ImageSharpTexture>(
-                () => LoadEmbeddedTexture("Glitch.Assets.Textures.cloudtop.cloudtop_lf.png"));
+                () => LoadEmbeddedTexture("Glitch.Assets.Textures.cloudtop.stormydays_lf.png"));
             Lazy<ImageSharpTexture> skyboxRight = new Lazy<ImageSharpTexture>(
-                () => LoadEmbeddedTexture("Glitch.Assets.Textures.cloudtop.cloudtop_rt.png"));
+                () => LoadEmbeddedTexture("Glitch.Assets.Textures.cloudtop.stormydays_rt.png"));
             Lazy<ImageSharpTexture> skyboxTop = new Lazy<ImageSharpTexture>(
-                () => LoadEmbeddedTexture("Glitch.Assets.Textures.cloudtop.cloudtop_up.png"));
+                () => LoadEmbeddedTexture("Glitch.Assets.Textures.cloudtop.stormydays_up.png"));
 
             RegisterAsset(SkyboxBackID, skyboxBack);
             RegisterAsset(SkyboxFrontID, skyboxFront);
