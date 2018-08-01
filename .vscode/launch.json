@@ -9,7 +9,7 @@
             "type": "coreclr",
             "request": "launch",
             "preLaunchTask": "build",
-            "program": "${workspaceFolder}/src/bin/Glitch/netcoreapp2.0/Glitch.dll",
+            "program": "${workspaceFolder}/src/bin/Debug/Glitch/netcoreapp2.0/Glitch.dll",
             "args": [],
             "cwd": "${workspaceFolder}",
             "console": "internalConsole",

@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <OutputType>Library</OutputType>
@@ -40,6 +40,14 @@
         <Name>Veldrid.ImGui</Name>
         <Private>False</Private>
       </ProjectReference>
+      <ProjectReference Include="..\..\ext\veldrid\src\Veldrid.MetalBindings\Veldrid.MetalBindings.csproj">
+        <Name>Veldrid.MetalBindings</Name>
+        <Private>False</Private>
+      </ProjectReference>
+      <ProjectReference Include="..\..\ext\veldrid\src\Veldrid.OpenGLBindings\Veldrid.OpenGLBindings.csproj">
+        <Name>Veldrid.OpenGLBindings</Name>
+        <Private>False</Private>
+      </ProjectReference>
       
     </ItemGroup>
   
@@ -53,7 +61,7 @@
     <ItemGroup>
       <_CopyItems Include="$(AssetDir)\**\*.*" />
     </ItemGroup>
-    <Copy SourceFiles="@(_CopyItems)" DestinationFolder="../bin/Glitch/$(TargetFramework)/Assets/%(RecursiveDir)" />
+    <Copy SourceFiles="@(_CopyItems)" DestinationFolder="../bin/$(Configuration)/Glitch/$(TargetFramework)/Assets/%(RecursiveDir)" />
   </Target>
 
 

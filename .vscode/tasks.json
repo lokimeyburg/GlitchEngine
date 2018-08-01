@@ -9,6 +9,9 @@
                 "build",
                 "${workspaceFolder}/src/Spark/Spark.csproj"
             ],
+            "options": {
+                "configuration": "Debug"
+            },
             "problemMatcher": "$msCompile"
         },
         {
@@ -19,6 +22,9 @@
                 "build",
                 "${workspaceFolder}/src/Glitch/Glitch.csproj",
             ],
+            "options": {
+                "configuration": "Debug"
+            },
             "problemMatcher": "$msCompile"
         }
     ]
