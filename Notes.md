@@ -36,6 +36,7 @@ These tasks are low priority (get to these whenever blocked by another task)
 - [x] Fix the spelling of `EngineSerializationBinder`
 - [x] Rename `EngineEmeddedAssets.cs` to `EngineEmbeddedAssets.cs`
 - [ ] Delete `RefOrImmediate.cs` if it's no longer being used by now.
+- [ ] Improve build process inside Visual Studio (make sure everything ends up under the /Debug folder)
 - [ ] Refactor ShaderHelper.LoadBytecode() to use embedded assets instead of loading from a filepath (that may or may not be there depending on how everything is published)
 - [ ] Refactor out "Custom SceneAsset Serializer" in `GlitchDemo.cs:153`
 
