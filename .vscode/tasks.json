@@ -2,30 +2,32 @@
     "version": "2.0.0",
     "tasks": [
         {
-            "label": "build",
+            "label": "DefaultBuild",
             "command": "dotnet",
             "type": "process",
             "args": [
                 "build",
-                "${workspaceFolder}/src/Spark/Spark.csproj"
+                "${workspaceFolder}/src/Spark/Spark.csproj",
+                "--configuration",
+                "Debug"
             ],
-            "options": {
-                "configuration": "Debug"
-            },
             "problemMatcher": "$msCompile"
         },
         {
-            "label": "build",
+            "label": "DefaultBuild",
             "command": "dotnet",
             "type": "process",
             "args": [
                 "build",
                 "${workspaceFolder}/src/Glitch/Glitch.csproj",
+                "--configuration",
+                "Debug"
             ],
-            "options": {
-                "configuration": "Debug"
-            },
-            "problemMatcher": "$msCompile"
+            "problemMatcher": "$msCompile",
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            }
         }
     ]
 }

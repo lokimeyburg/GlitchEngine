@@ -8,7 +8,7 @@
             "name": "Glitch Engine",
             "type": "coreclr",
             "request": "launch",
-            "preLaunchTask": "build",
+            "preLaunchTask": "DefaultBuild",
             "program": "${workspaceFolder}/src/bin/Debug/Glitch/netcoreapp2.0/Glitch.dll",
             "args": [],
             "cwd": "${workspaceFolder}",
