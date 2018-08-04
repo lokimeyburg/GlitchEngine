@@ -24,7 +24,7 @@ My scratchpad of notes, ideas and tasks.
 - [x] Position the rendered mesh based on the parent GameObject's Transform componenet
 - [ ] [WIP] Add two circles and a floor
 - [ ] Add additional properties to the mesh object (alpha texture & material properties)
-
+ 
 ### Scene Serializer Workflow
 
 - [ ] Have the ability to easily switch between two debug states: serialization/deserialization
@@ -35,6 +35,7 @@ These tasks are low priority (get to these whenever blocked by another task)
 
 - [x] Fix the spelling of `EngineSerializationBinder`
 - [x] Rename `EngineEmeddedAssets.cs` to `EngineEmbeddedAssets.cs`
+- [ ] Move `GraphicsSystem.cs` to `Glitch.Graphics` namespace
 - [ ] Delete `RefOrImmediate.cs` if it's no longer being used by now.
 - [ ] Improve build process inside Visual Studio (make sure everything ends up under the /Debug folder)
 - [ ] Refactor ShaderHelper.LoadBytecode() to use embedded assets instead of loading from a filepath (that may or may not be there depending on how everything is published)
