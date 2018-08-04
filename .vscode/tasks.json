@@ -2,7 +2,7 @@
     "version": "2.0.0",
     "tasks": [
         {
-            "label": "DefaultBuild",
+            "label": "BuildSpark",
             "command": "dotnet",
             "type": "process",
             "args": [
@@ -14,7 +14,7 @@
             "problemMatcher": "$msCompile"
         },
         {
-            "label": "DefaultBuild",
+            "label": "BuildGlitch",
             "command": "dotnet",
             "type": "process",
             "args": [
