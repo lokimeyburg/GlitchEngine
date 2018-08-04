@@ -24,9 +24,6 @@ namespace Glitch.Graphics
         private readonly ImageSharpTexture _alphaTextureData;
         private Transform _transform = new Transform();
 
-        // [JsonIgnore]
-        // public new Transform Transform => _transform;
-
         private BoundingBox _centeredBounds;
         private DeviceBuffer _vb;
         private DeviceBuffer _ib;
