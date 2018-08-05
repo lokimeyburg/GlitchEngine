@@ -22,7 +22,8 @@ My scratchpad of notes, ideas and tasks.
 - [x] Scale the rendered mesh based on the parent GameObject's Transform component
 - [x] Remove `renderable.cs` and move renderable interfaces to `Glitch.Behaviors`
 - [x] Position the rendered mesh based on the parent GameObject's Transform componenet
-- [ ] [WIP] Add two circles and a floor
+- [ ] [WIP] Make the camera component adhere to it's parent's GameObject
+- [ ] Add two circles and a floor
 - [ ] Add additional properties to the mesh object (alpha texture & material properties)
  
 ### Scene Serializer Workflow
@@ -80,3 +81,10 @@ Referencing a package:
 ```
 dotnet add app/app.csproj reference library/library.csproj
 ```
+
+## Notes about meshes randomly not being rendered
+
+- [x] Ensuring both meshes get added to the render tree (`scene.cs:77`)
+- [X] Enabling/disabling multi-threading
+- [x] Perhaps it's getting culled from the render view? Update: Yes, `Scene.CollectVisibleObjects()` is excluding the objects
+- [ ] [WIP] It looks like it might be that the camera fustrum is not being set correctly. Update: it does not seem to be adhering to it's GameObject Transform position.
