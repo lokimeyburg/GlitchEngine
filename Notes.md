@@ -84,6 +84,10 @@ dotnet add app/app.csproj reference library/library.csproj
 
 ## Notes about meshes randomly not being rendered
 
+Update #2: `SceneAsset.cs:22` reproduces the error only if "parallel == true" 
+
+Update: I've isolated the cause of the problem to be related to parallel tasks causing intermittent rendering
+
 - [x] Ensuring both meshes get added to the render tree (`scene.cs:77`)
 - [X] Enabling/disabling multi-threading
 - [x] Perhaps it's getting culled from the render view? Update: Yes, `Scene.CollectVisibleObjects()` is excluding the objects
@@ -109,3 +113,16 @@ dotnet add app/app.csproj reference library/library.csproj
     NearBottomRight: {<23.12735, -162.176, 98.90514>}
     NearTopLeft: {<20.82018, -131.0714, -110.7661>}
     NearTopRight: {<126.8094, -131.0714, -4.776894>}
+
+	I can confirm that the _octree is getting both ICullRenderable objects (circle & plane) while still not rendering anything.
+
+
+	Sphere Bounding Box
+	{Min:<-1, -1, -5.994522>, Max:<1, 1, -4.005478>}
+    Max: {<1, 1, -4.005478>}
+    Min: {<-1, -1, -5.994522>}
+
+	Plane Bounding Box
+	{Min:<-2.5, -1, -7.5>, Max:<2.5, -1, -2.5>}
+    Max: {<2.5, -1, -2.5>}
+    Min: {<-2.5, -1, -7.5>}
