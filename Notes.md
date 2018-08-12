@@ -87,4 +87,25 @@ dotnet add app/app.csproj reference library/library.csproj
 - [x] Ensuring both meshes get added to the render tree (`scene.cs:77`)
 - [X] Enabling/disabling multi-threading
 - [x] Perhaps it's getting culled from the render view? Update: Yes, `Scene.CollectVisibleObjects()` is excluding the objects
-- [ ] [WIP] It looks like it might be that the camera fustrum is not being set correctly. Update: it does not seem to be adhering to it's GameObject Transform position.
+- [x] It looks like it might be that the camera fustrum is not being set correctly. Update: it does not seem to be adhering to it's GameObject Transform position.
+- [x] Confirm that intermittent rendering occurs, while holding the frustum constant
+
+=> Initial Load
+    FarBottomLeft: {<-170.786, 424.329, 14.38985>}
+    FarBottomRight: {<-64.79684, 424.329, 120.3791>}
+    FarTopLeft: {<-67.104, 455.4336, -89.29219>}
+    FarTopRight: {<38.88521, 455.4336, 16.69702>}
+    NearBottomLeft: {<-82.80892, -162.185, -73.58727>}
+    NearBottomRight: {<23.18029, -162.185, 32.40194>}
+    NearTopLeft: {<20.87312, -131.0804, -177.2693>}
+    NearTopRight: {<126.8623, -131.0804, -71.2801>}
+
+=> After going very backwards (+Z)
+    FarBottomLeft: {<-170.839, 424.3381, 80.89304>}
+    FarBottomRight: {<-64.84976, 424.3381, 186.8822>}
+    FarTopLeft: {<-67.15693, 455.4427, -22.78898>}
+    FarTopRight: {<38.83226, 455.4427, 83.20023>}
+    NearBottomLeft: {<-82.86185, -162.176, -7.084068>}
+    NearBottomRight: {<23.12735, -162.176, 98.90514>}
+    NearTopLeft: {<20.82018, -131.0714, -110.7661>}
+    NearTopRight: {<126.8094, -131.0714, -4.776894>}
