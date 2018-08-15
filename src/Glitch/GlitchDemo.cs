@@ -147,6 +147,7 @@ namespace Glitch
             camera.WindowHeight = _window.Height;
             camera.WindowWidth = _window.Width;
             go1.AddComponent(camera);
+            go1.Transform.LocalPosition = new Vector3(0f, 0f, 0f);
             // Add custom skybox to GameObject
             Skybox skybox = Skybox.LoadDefaultSkybox(game.SystemRegistry);
             go1.AddComponent(skybox);
@@ -155,8 +156,8 @@ namespace Glitch
             go2.Name = "My Sphere";
             go2.Enabled = true;
             // Add custom sphere MeshRenderer component to GameObject
-            Vector3 scale2 = new Vector3(0.5f);
-            Vector3 offset2 = new Vector3(1f, 1f, 1f);
+            Vector3 scale2 = new Vector3(1f);
+            Vector3 offset2 = new Vector3(0f, 0f, -5f);
             Quaternion rotation2 = Quaternion.Identity;
             var meshAssetID2 = new AssetID("Internal:SphereModel");
             var meshAssetRef2 = new AssetRef<MeshData>(meshAssetID2);
@@ -173,7 +174,7 @@ namespace Glitch
             go3.Enabled = true;
             // Add custom Plane MeshRenderer component to GameObject
             Vector3 scale3 = new Vector3(5f);
-            Vector3 offset3 = new Vector3(-1f, -1f, -1f);
+            Vector3 offset3 = new Vector3(0f, -1f, -5f);
             Quaternion rotation3 = Quaternion.Identity;
             var meshAssetID3 = new AssetID("Internal:PlaneModel");
             var meshAssetRef3 = new AssetRef<MeshData>(meshAssetID3);
