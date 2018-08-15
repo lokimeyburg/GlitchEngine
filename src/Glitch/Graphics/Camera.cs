@@ -148,9 +148,20 @@ namespace Glitch.Graphics
             CameraLookDirection = _lookDirection
         };
 
+        protected override void Attached(SystemRegistry registry)
+        {
+            GraphicsSystem gs = registry.GetSystem<GraphicsSystem>();
+            _backend = gs.GraphicsDeviceBackend.BackendType;
+            _useReverseDepth = gs.GraphicsDeviceBackend.IsDepthRangeZeroToOne;
+            _position = GameObject.Transform.Position;
+
+            UpdatePerspectiveMatrix();
+            UpdateViewMatrix();
+        }
+
         protected override void OnEnabled()
         {
-            // GameObject.Transform.TransformChanged += UpdateViewMatrix();
+            // GameObject.Transform.TransformChanged += UpdateViewMatrix;
 
             // SetViewMatrix(GameObject.Transform);
             // SetProjectionMatrix();
@@ -163,16 +174,6 @@ namespace Glitch.Graphics
         {
             // GameObject.Transform.TransformChanged -= SetViewMatrix;
             // _gs.Context.WindowResized -= SetProjectionMatrix;
-        }
-
-        protected override void Attached(SystemRegistry registry)
-        {
-            GraphicsSystem gs = registry.GetSystem<GraphicsSystem>();
-            _backend = gs.GraphicsDeviceBackend.BackendType;
-            _useReverseDepth = gs.GraphicsDeviceBackend.IsDepthRangeZeroToOne;
-            
-            UpdatePerspectiveMatrix();
-            UpdateViewMatrix();
         }
 
         protected override void Removed(SystemRegistry registry)

@@ -11,7 +11,7 @@ using Veldrid.Utilities;
 using Veldrid;
 using Glitch.Behaviors;
 using Glitch.Graphics;
-using Glitch.Assets; // refactor Scene to BE apart of .assets?
+using Glitch.Assets;
 
 namespace Glitch
 {
@@ -21,6 +21,7 @@ namespace Glitch
             = new Octree<ICullRenderable>(new BoundingBox(Vector3.One * -50, Vector3.One * 50), 2);
 
         private readonly List<IRenderable> _freeRenderables = new List<IRenderable>();
+        private readonly List<ICullRenderable> _cullRenderables = new List<ICullRenderable>();
         private readonly List<IUpdateable> _updateables = new List<IUpdateable>();
 
         private readonly ConcurrentDictionary<RenderPasses, Func<ICullRenderable, bool>> _filters
@@ -34,7 +35,7 @@ namespace Glitch
 
         public string Name { get; set; }
 
-        public SerializedGameObject[] GameObjects { get; set; }
+        public GameObject[] GameObjects { get; set; }
 
         float _lScale = 1f;
         float _rScale = 1f;
@@ -50,6 +51,8 @@ namespace Glitch
         int _viewWidth;
         int _viewHeight;
 
+        public List<ICullRenderable> foo = new List<ICullRenderable>();
+
         public Scene(GraphicsDevice gd, int viewWidth = 960, int viewHeight = 540)
         {
             _viewWidth = viewWidth;
@@ -62,8 +65,14 @@ namespace Glitch
         }
 
         public void LoadSceneAsset(SceneAsset sa) {
-            // generate game objects and render them if neccessary
+            // generate game objects (and populate the _cullRenderables list) #MultiThread/Tasks
             sa.GenerateGameObjects(this, true);
+
+            // enumerate the newly populated _cullRenderables list and add to the _octree
+            foreach (var cr in _cullRenderables)
+            {
+                _octree.AddItem(cr.BoundingBox(), cr);
+            }
         }
 
         public void SetCamera(Camera camera){
@@ -74,6 +83,7 @@ namespace Glitch
         {
             if (r is ICullRenderable cr)
             {
+                _cullRenderables.Add(cr);
                 _octree.AddItem(cr.BoundingBox(), cr);
             }
             else

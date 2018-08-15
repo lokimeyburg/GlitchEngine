@@ -97,7 +97,7 @@ namespace Glitch.Graphics
 
         public BoundingBox BoundingBox() {
             // return _centeredBounds;
-            return Veldrid.Utilities.BoundingBox.Transform(_centeredBounds, Transform.GetTransformMatrix());
+            return Veldrid.Utilities.BoundingBox.Transform(_centeredBounds, _transform.GetTransformMatrix());
         }
 
         public unsafe void CreateDeviceObjects(GraphicsDevice gd, CommandList cl, GraphicsSystem sc)
@@ -372,11 +372,13 @@ namespace Glitch.Graphics
             DestroyDeviceObjects();
         }
 
+        // TODO: Figure out why this never gets called.
         public bool Cull(ref BoundingFrustum visibleFrustum)
         {
             // return false
-            return visibleFrustum.Contains(BoundingBox()) == ContainmentType.Disjoint;
-        }
+            var foo = visibleFrustum.Contains(BoundingBox()) == ContainmentType.Disjoint;
+            return foo;
+        } 
 
         protected override void Attached(SystemRegistry registry)
         {
@@ -386,7 +388,10 @@ namespace Glitch.Graphics
             _transform = GameObject.Transform;
             _centeredBounds = _meshData.GetBoundingBox();
             _objectCenter = _centeredBounds.GetCenter();
-            
+            // _gs.ExecuteOnMainThread(() =>
+            // {
+            //     InitializeContextObjects(_gs.Context, _gs.MaterialCache, _gs.BufferCache);
+            // });
 
 
             // _gs = registry.GetSystem<GraphicsSystem>();

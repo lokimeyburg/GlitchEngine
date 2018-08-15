@@ -62,7 +62,7 @@ namespace Glitch.Graphics
             int index = _renderables.Count;
             _indices.Add(new RenderItemIndex(item.GetRenderOrderKey(viewPosition), index));
             _renderables.Add(item);
-            Debug.Assert(_renderables.IndexOf(item) == index);
+            // Debug.Assert(_renderables.IndexOf(item) == index);
         }
 
         public void Sort()

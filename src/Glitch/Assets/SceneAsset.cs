@@ -34,12 +34,14 @@ namespace Glitch.Assets
                         go.AddComponent(component);
 
                         // Add the component to the scene's render list
-                        if(component is IRenderable) {
+                        if (component is IRenderable)
+                        {
                             scene.AddRenderable(component as IRenderable);
                         }
 
                         // Add the component to the scene's update list
-                        if(component is IUpdateable) {
+                        if (component is IUpdateable)
+                        {
                             scene.AddUpdateable(component as IUpdateable);
                         }
                     }
