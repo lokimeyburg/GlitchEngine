@@ -173,7 +173,7 @@ namespace Glitch
             go3.Name = "My Plane Model";
             go3.Enabled = true;
             // Add custom Plane MeshRenderer component to GameObject
-            Vector3 scale3 = new Vector3(5f);
+            Vector3 scale3 = new Vector3(10f);
             Vector3 offset3 = new Vector3(0f, -1f, -5f);
             Quaternion rotation3 = Quaternion.Identity;
             var meshAssetID3 = new AssetID("Internal:PlaneModel");
@@ -185,14 +185,32 @@ namespace Glitch
             go3.Transform.LocalScale = scale3;
             MeshRenderer meshrenderer3 = new MeshRenderer(meshAssetRef3, textureAssetRef3);
             go3.AddComponent(meshrenderer3);
+            // Custom GameObject (another sphere mesh)
+            GameObject go4 = new GameObject();
+            go4.Name = "Another Sphere";
+            go4.Enabled = true;
+            Vector3 scale4 = new Vector3(0.5f);
+            Vector3 offset4 = new Vector3(2f, -0.5f, -3f);
+            Quaternion rotation4 = Quaternion.Identity;
+            var meshAssetID4 = new AssetID("Internal:SphereModel");
+            var meshAssetRef4 = new AssetRef<MeshData>(meshAssetID4);
+            var textureAssetID4 = new AssetID("Textures/rust.jpg");
+            var textureAssetRef4 = new AssetRef<ImageSharpTexture>(textureAssetID4);
+            go4.Transform.LocalPosition = offset4;
+            go4.Transform.LocalRotation = rotation4;
+            go4.Transform.LocalScale = scale4;
+            MeshRenderer meshrenderer4 = new MeshRenderer(meshAssetRef4, textureAssetRef4);
+            go4.AddComponent(meshrenderer4);
             // Add custom GameObject to SceneAsset
             SerializedGameObject sgo1 = new SerializedGameObject(go1);
             SerializedGameObject sgo2 = new SerializedGameObject(go2);
             SerializedGameObject sgo3 = new SerializedGameObject(go3);
-            programaticSceneAsset.GameObjects = new SerializedGameObject[3];
+            SerializedGameObject sgo4 = new SerializedGameObject(go4);
+            programaticSceneAsset.GameObjects = new SerializedGameObject[4];
             programaticSceneAsset.GameObjects[0] = sgo1;
             programaticSceneAsset.GameObjects[1] = sgo2;
             programaticSceneAsset.GameObjects[2] = sgo3;
+            programaticSceneAsset.GameObjects[3] = sgo4;
             // Serialize SceneAsset
             LooseFileDatabase lfd = new LooseFileDatabase("/Assets");
             StringWriter stringwriter = new StringWriter(new StringBuilder());
