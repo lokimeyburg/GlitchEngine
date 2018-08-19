@@ -6,7 +6,7 @@ My scratchpad of notes, ideas and tasks.
 
 - [x] Camera
 - [x] Asset System
-- [ ] [WIP] Mesh Renderer
+- [x] Mesh Renderer
 - [ ] Scene Serializer Workflow
 - [ ] Lighting
 - [ ] Editor Launcher
@@ -22,8 +22,8 @@ My scratchpad of notes, ideas and tasks.
 - [x] Scale the rendered mesh based on the parent GameObject's Transform component
 - [x] Remove `renderable.cs` and move renderable interfaces to `Glitch.Behaviors`
 - [x] Position the rendered mesh based on the parent GameObject's Transform componenet
-- [ ] [WIP] Make the camera component adhere to it's parent's GameObject
-- [ ] Add two circles and a floor
+- [x] Make the camera component adhere to it's parent's GameObject
+- [x] Add two circles and a floor
 - [ ] Add additional properties to the mesh object (alpha texture & material properties)
  
 ### Scene Serializer Workflow
@@ -83,6 +83,8 @@ dotnet add app/app.csproj reference library/library.csproj
 ```
 
 ## Notes about meshes randomly not being rendered
+
+Update #3: Bug resolved! Turns out it was a multi-threading issue which was resolved by seperating the creation of game objects (still multi-threaded) and adding cull meshes to the render queue (main thread)
 
 Update #2: `SceneAsset.cs:22` reproduces the error only if "parallel == true" 
 

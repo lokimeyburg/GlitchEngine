@@ -238,7 +238,7 @@ namespace Glitch
                 }
             }
 
-            var readSceneFromProgramaticAsset = true;
+            var readSceneFromProgramaticAsset = false;
             sceneAsset = assetSystem.Database.LoadAsset<SceneAsset>(mainSceneID);
             _scene.LoadSceneAsset(readSceneFromProgramaticAsset ? programaticSceneAsset : sceneAsset);
             _gs.SetCurrentScene(_scene);
