@@ -66,8 +66,8 @@ namespace Glitch
 
         public void LoadSceneAsset(SceneAsset sa) {
             // generate game objects (and populate the _cullRenderables list) #MultiThread/Tasks
-            sa.GenerateGameObjects(this, true);
-
+            // TODO: make this work in parallel. Sometimes the _cullRenderable list isn't complete before this line continues.
+            sa.GenerateGameObjects(this, false); 
             // enumerate the newly populated _cullRenderables list and add to the _octree
             foreach (var cr in _cullRenderables)
             {
@@ -84,7 +84,6 @@ namespace Glitch
             if (r is ICullRenderable cr)
             {
                 _cullRenderables.Add(cr);
-                _octree.AddItem(cr.BoundingBox(), cr);
             }
             else
             {
