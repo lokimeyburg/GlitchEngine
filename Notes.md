@@ -128,3 +128,4 @@ Update: I've isolated the cause of the problem to be related to parallel tasks c
 	{Min:<-2.5, -1, -7.5>, Max:<2.5, -1, -2.5>}
     Max: {<2.5, -1, -2.5>}
     Min: {<-2.5, -1, -7.5>}
+
