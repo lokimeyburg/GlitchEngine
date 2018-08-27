@@ -178,7 +178,7 @@ namespace Glitch
             Quaternion rotation3 = Quaternion.Identity;
             var meshAssetID3 = new AssetID("Internal:PlaneModel");
             var meshAssetRef3 = new AssetRef<MeshData>(meshAssetID3);
-            var textureAssetID3 = new AssetID("Textures/Stone.png");
+            var textureAssetID3 = new AssetID("Textures/Wood.png");
             var textureAssetRef3 = new AssetRef<ImageSharpTexture>(textureAssetID3);
             go3.Transform.LocalPosition = offset3;
             go3.Transform.LocalRotation = rotation3;
