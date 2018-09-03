@@ -26,6 +26,7 @@ namespace Glitch
         private Scene _scene;
         private readonly ImGuiRenderable _igRenderable;
         private readonly GraphicsSystem _gs;
+        private Game _game;
         private bool _windowResized;
         private RenderOrderKeyComparer _renderOrderKeyComparer = new RenderOrderKeyComparer();
         private bool _recreateWindow = true;
@@ -114,21 +115,21 @@ namespace Glitch
 
             // Initialize Game()
             // --------------------------------------------------
-            Game game = new Game();
+            _game = new Game();
 
             // Assembly & Asset System
             // --------------------------------------------------
             AssemblyLoadSystem als = new AssemblyLoadSystem();
             als.LoadFromProjectManifest(projectManifest, AppContext.BaseDirectory);
-            game.SystemRegistry.Register(als);
+            _game.SystemRegistry.Register(als);
 
             AssetSystem assetSystem = new AssetSystem(Path.Combine(AppContext.BaseDirectory, projectManifest.AssetRoot), als.Binder);
-            game.SystemRegistry.Register(assetSystem);
+            _game.SystemRegistry.Register(assetSystem);
 
             // Graphics System
             // --------------------------------------------------
             _gs = new GraphicsSystem(_gd);
-            game.SystemRegistry.Register(_gs);
+            _game.SystemRegistry.Register(_gs);
 
             // Scene
             // --------------------------------------------------
@@ -149,7 +150,7 @@ namespace Glitch
             go1.AddComponent(camera);
             go1.Transform.LocalPosition = new Vector3(0f, 0f, 0f);
             // Add custom skybox to GameObject
-            Skybox skybox = Skybox.LoadDefaultSkybox(game.SystemRegistry);
+            Skybox skybox = Skybox.LoadDefaultSkybox(_game.SystemRegistry);
             go1.AddComponent(skybox);
             // Custom GameObject (for sphere mesh)
             GameObject go2 = new GameObject();
@@ -264,6 +265,14 @@ namespace Glitch
 
         private void MoveObject() {
             Console.WriteLine("Pressed M");
+            var GOQS = _game.SystemRegistry.GetSystem<GameObjectQuerySystem>();
+            var GO = GOQS.FindByName("My Sphere");
+            var scale = GO.Transform.Scale;
+            GO.Transform.Scale =  scale + new Vector3(0.1f); 
+        }
+
+        private void Foo(object sender, System.EventArgs e) {
+            Console.WriteLine("Scale changed");
         }
 
         private ImageSharpTexture LoadTexture(string texturePath, bool mipmap) // Plz don't call this with the same texturePath and different mipmap values.
