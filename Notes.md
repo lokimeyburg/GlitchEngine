@@ -41,6 +41,8 @@ These tasks are low priority (get to these whenever blocked by another task)
 - [ ] Improve build process inside Visual Studio (make sure everything ends up under the /Debug folder)
 - [ ] Refactor ShaderHelper.LoadBytecode() to use embedded assets instead of loading from a filepath (that may or may not be there depending on how everything is published)
 - [ ] Refactor out "Custom SceneAsset Serializer" in `GlitchDemo.cs:153`
+- [ ] Use `Veldrid.ImageSharp` instead of `SixLabors.ImageSharp` in `PngLoader.cs:24`
+- [ ] Remove `Veldird` local reference since we're referencing the NuGet package from now on
 
 ### Physics System
 

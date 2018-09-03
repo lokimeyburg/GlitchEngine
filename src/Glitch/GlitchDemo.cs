@@ -262,6 +262,10 @@ namespace Glitch
             CreateAllObjects();
         }
 
+        private void MoveObject() {
+            Console.WriteLine("Pressed M");
+        }
+
         private ImageSharpTexture LoadTexture(string texturePath, bool mipmap) // Plz don't call this with the same texturePath and different mipmap values.
         {
             if (!_textures.TryGetValue(texturePath, out ImageSharpTexture tex))
@@ -430,9 +434,9 @@ namespace Glitch
                 ToggleFullscreenState();
             }
 
-            if (InputTracker.GetKey(Key.M))
+            if (InputTracker.GetKeyDown(Key.M))
             {
-                Console.WriteLine("Pressed M");
+                MoveObject();
             }
 
             if (InputTracker.GetKeyDown(Key.Keypad6))
