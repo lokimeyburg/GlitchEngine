@@ -21,7 +21,7 @@ namespace Glitch.Assets
 
         public override ImageSharpTexture Load(Stream s)
         {
-            // return new ImageSharpTexture(s.);
+            // TODO: use Veldrid.ImageSharp instead of SixLabors.ImageSharp
             return new ImageSharpTexture(Image.Load(s));
         }
     }

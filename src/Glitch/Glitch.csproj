@@ -7,8 +7,6 @@
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <AssetsDir>$(MSBuildThisFileDirectory)Assets</AssetsDir>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
-    <!-- <DisableImplicitFrameworkReferences>true</DisableImplicitFrameworkReferences> -->
-    <!-- <EnableDefaultCompileItems>false</EnableDefaultCompileItems> -->
   </PropertyGroup>
 
   <ItemGroup>
@@ -86,12 +84,14 @@
     <PackageReference Include="SharpFont.Dependencies" Version="2.6" />
     <PackageReference Include="SharpFont" Version="4.0" />
     <PackageReference Include="Veldrid.SPIRV" Version="1.0.0-beta4" />
-    <ProjectReference Include="..\..\ext\veldrid\src\Veldrid\Veldrid.csproj" />
-    <ProjectReference Include="..\..\ext\veldrid\src\Veldrid.SDL2\Veldrid.SDL2.csproj" />
-    <ProjectReference Include="..\..\ext\veldrid\src\Veldrid.StartupUtilities\Veldrid.StartupUtilities.csproj" />
-    <ProjectReference Include="..\..\ext\veldrid\src\Veldrid.ImageSharp\Veldrid.ImageSharp.csproj" />
-    <ProjectReference Include="..\..\ext\veldrid\src\Veldrid.Utilities\Veldrid.Utilities.csproj" />
-    <ProjectReference Include="..\..\ext\veldrid\src\Veldrid.ImGui\Veldrid.ImGui.csproj" />
+    <PackageReference Include="Veldrid" Version="4.4.0-beta1" />
+    <PackageReference Include="Veldrid.SDL2" Version="4.4.0-beta1" />
+    <PackageReference Include="Veldrid.StartupUtilities" Version="4.4.0-beta1" />
+    <PackageReference Include="Veldrid.ImageSharp" Version="4.4.0-beta1" />
+    <PackageReference Include="Veldrid.Utilities" Version="4.4.0-beta1" />
+    <PackageReference Include="Veldrid.ImGui" Version="4.4.0-beta1" />
+
+    <PackageReference Include="SixLabors.ImageSharp" Version="1.0.0-beta0004" />
 
     <PackageReference Include="Newtonsoft.Json" Version="11.0.2" />
     <PackageReference Include="System.Collections.Immutable" Version="1.2.0" />

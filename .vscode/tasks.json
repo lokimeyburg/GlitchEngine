@@ -9,7 +9,9 @@
                 "build",
                 "${workspaceFolder}/src/Spark/Spark.csproj",
                 "--configuration",
-                "Debug"
+                "Debug",
+                "--no-restore",
+                "--no-dependencies"
             ],
             "problemMatcher": "$msCompile"
         },
@@ -21,7 +23,8 @@
                 "build",
                 "${workspaceFolder}/src/Glitch/Glitch.csproj",
                 "--configuration",
-                "Debug"
+                "Debug",
+                "--no-restore"
             ],
             "problemMatcher": "$msCompile",
             "group": {

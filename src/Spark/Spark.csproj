@@ -16,7 +16,7 @@
         <Name>Glitch</Name>
         <Private>False</Private>
       </ProjectReference>
-      <ProjectReference Include="..\..\ext\veldrid\src\Veldrid\Veldrid.csproj">
+      <!-- <ProjectReference Include="..\..\ext\veldrid\src\Veldrid\Veldrid.csproj">
         <Name>Veldrid</Name>
         <Private>False</Private>
       </ProjectReference>
@@ -47,7 +47,7 @@
       <ProjectReference Include="..\..\ext\veldrid\src\Veldrid.OpenGLBindings\Veldrid.OpenGLBindings.csproj">
         <Name>Veldrid.OpenGLBindings</Name>
         <Private>False</Private>
-      </ProjectReference>
+      </ProjectReference> -->
       
     </ItemGroup>
   

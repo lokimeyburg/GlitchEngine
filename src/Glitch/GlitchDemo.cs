@@ -430,6 +430,11 @@ namespace Glitch
                 ToggleFullscreenState();
             }
 
+            if (InputTracker.GetKey(Key.M))
+            {
+                Console.WriteLine("Pressed M");
+            }
+
             if (InputTracker.GetKeyDown(Key.Keypad6))
             {
                 _window.X += 10;
