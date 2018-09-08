@@ -43,6 +43,7 @@ These tasks are low priority (get to these whenever blocked by another task)
 - [ ] Refactor out "Custom SceneAsset Serializer" in `GlitchDemo.cs:153`
 - [ ] Use `Veldrid.ImageSharp` instead of `SixLabors.ImageSharp` in `PngLoader.cs:24`
 - [ ] Remove `Veldird` local reference since we're referencing the NuGet package from now on
+- [ ] Determine why `cull` never gets called for a `MeshRenderer`
 
 ### Physics System
 
