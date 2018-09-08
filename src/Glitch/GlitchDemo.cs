@@ -263,7 +263,7 @@ namespace Glitch
             CreateAllObjects();
         }
 
-        private void MoveObject() {
+        private void MakeObjectBigger() {
             Console.WriteLine("Pressed M");
             var GOQS = _game.SystemRegistry.GetSystem<GameObjectQuerySystem>();
             var GO = GOQS.FindByName("My Sphere");
@@ -271,8 +271,12 @@ namespace Glitch
             GO.Transform.Scale =  scale + new Vector3(0.1f); 
         }
 
-        private void Foo(object sender, System.EventArgs e) {
-            Console.WriteLine("Scale changed");
+        private void MakeObjectSmaller() {
+            Console.WriteLine("Pressed N");
+            var GOQS = _game.SystemRegistry.GetSystem<GameObjectQuerySystem>();
+            var GO = GOQS.FindByName("My Sphere");
+            var scale = GO.Transform.Scale;
+            GO.Transform.Scale =  scale - new Vector3(0.1f); 
         }
 
         private ImageSharpTexture LoadTexture(string texturePath, bool mipmap) // Plz don't call this with the same texturePath and different mipmap values.
@@ -445,7 +449,12 @@ namespace Glitch
 
             if (InputTracker.GetKeyDown(Key.M))
             {
-                MoveObject();
+                MakeObjectBigger();
+            }
+
+            if (InputTracker.GetKeyDown(Key.N))
+            {
+                MakeObjectSmaller();
             }
 
             if (InputTracker.GetKeyDown(Key.Keypad6))

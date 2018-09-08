@@ -378,7 +378,7 @@ namespace Glitch.Graphics
             // return false
             var foo = visibleFrustum.Contains(BoundingBox()) == ContainmentType.Disjoint;
             return foo;
-        } 
+        }
 
         protected override void Attached(SystemRegistry registry)
         {
@@ -388,6 +388,7 @@ namespace Glitch.Graphics
             _transform = GameObject.Transform;
             _centeredBounds = _meshData.GetBoundingBox();
             _objectCenter = _centeredBounds.GetCenter();
+
             // _gs.ExecuteOnMainThread(() =>
             // {
             //     InitializeContextObjects(_gs.Context, _gs.MaterialCache, _gs.BufferCache);
@@ -413,7 +414,11 @@ namespace Glitch.Graphics
 
         protected override void OnEnabled()
         {
-            // _gs.AddRenderItem(this, Transform);
+            this.GameObject.Transform.TransformChanged += SetTransform;
+        }
+
+        private void SetTransform(Transform t){
+            _transform = t;
         }
 
         protected override void OnDisabled()
