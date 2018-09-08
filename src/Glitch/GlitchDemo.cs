@@ -279,6 +279,22 @@ namespace Glitch
             GO.Transform.Scale =  scale - new Vector3(0.1f); 
         }
 
+        private void MoveObjectRight() {
+            Console.WriteLine("Pressed K");
+            var GOQS = _game.SystemRegistry.GetSystem<GameObjectQuerySystem>();
+            var GO = GOQS.FindByName("My Sphere");
+            var scale = GO.Transform.Scale;
+            GO.Transform.LocalPosition =  GO.Transform.Position + new Vector3(0.1f, 0f, 0f);
+        }
+
+        private void MoveObjectLeft() {
+            Console.WriteLine("Pressed J");
+            var GOQS = _game.SystemRegistry.GetSystem<GameObjectQuerySystem>();
+            var GO = GOQS.FindByName("My Sphere");
+            var scale = GO.Transform.Scale;
+            GO.Transform.LocalPosition =  GO.Transform.Position + new Vector3(-0.1f, 0f, 0f);
+        }
+
         private ImageSharpTexture LoadTexture(string texturePath, bool mipmap) // Plz don't call this with the same texturePath and different mipmap values.
         {
             if (!_textures.TryGetValue(texturePath, out ImageSharpTexture tex))
@@ -455,6 +471,16 @@ namespace Glitch
             if (InputTracker.GetKeyDown(Key.N))
             {
                 MakeObjectSmaller();
+            }
+
+            if(InputTracker.GetKeyDown(Key.K))
+            {
+                MoveObjectRight();
+            }
+
+            if(InputTracker.GetKeyDown(Key.J))
+            {
+                MoveObjectLeft();
             }
 
             if (InputTracker.GetKeyDown(Key.Keypad6))
