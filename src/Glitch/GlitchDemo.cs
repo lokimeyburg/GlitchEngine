@@ -345,6 +345,8 @@ namespace Glitch
             _fta.AddTime(deltaSeconds);
             _scene.Update(deltaSeconds);
 
+
+            string openPopup = null;
             if (ImGui.BeginMainMenuBar())
             {
                 if (ImGui.BeginMenu("Settings"))
@@ -452,10 +454,49 @@ namespace Glitch
 
                     ImGui.EndMenu();
                 }
+                
+                if (ImGui.MenuItem("Open Project"))
+                {
+                    openPopup = "OpenProjectPopup";
+                }
 
                 ImGui.Text(_fta.CurrentAverageFramesPerSecond.ToString("000.0 fps / ") + _fta.CurrentAverageFrameTimeMilliseconds.ToString("#00.00 ms"));
 
                 ImGui.EndMainMenuBar();
+            }
+
+            
+
+            if (openPopup != null)
+            {
+                ImGui.OpenPopup($"###{openPopup}");
+            }
+
+            if (ImGui.BeginPopup("###OpenProjectPopup"))
+            {
+                ImGui.Text("Path to project root:");
+                // if (openPopup != null)
+                // {
+                //     ImGui.SetKeyboardFocusHere();
+                // }
+                // if (ImGui.InputText(string.Empty, _filenameInputBuffer.Buffer, _filenameInputBuffer.Length, InputTextFlags.EnterReturnsTrue, null))
+                // {
+                //     // LoadProject(_filenameInputBuffer.ToString());
+                //     ImGui.CloseCurrentPopup();
+                // }
+                ImGui.SameLine();
+                if (ImGui.Button("Open"))
+                {
+                    // LoadProject(_filenameInputBuffer.ToString());
+                    ImGui.CloseCurrentPopup();
+                }
+
+                if (ImGui.Button("Close"))
+                {
+                    ImGui.CloseCurrentPopup();
+                }
+
+                ImGui.EndPopup();
             }
 
             if (InputTracker.GetKeyDown(Key.F11))
