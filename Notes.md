@@ -30,6 +30,14 @@ My scratchpad of notes, ideas and tasks.
 
 - [ ] Have the ability to easily switch between two debug states: serialization/deserialization
 
+### Editor
+
+- [ ] Create Editor project and hook up a basic imgui renderer
+- [ ] MainMenuBar (File, View, GameObject, Project, Game, Debug)
+- [ ] Scene Window
+- [ ] Project Assets Window
+- [ ] Game Object Inspector Window
+
 ### Refactoring
 
 These tasks are low priority (get to these whenever blocked by another task)
