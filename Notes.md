@@ -34,9 +34,9 @@ My scratchpad of notes, ideas and tasks.
 
 - [ ] Create Editor project and hook up a basic imgui renderer
 - [ ] MainMenuBar (File, View, GameObject, Project, Game, Debug)
-- [ ] Scene Window
+- [ ] Scene Hierarchy Window
 - [ ] Project Assets Window
-- [ ] Game Object Inspector Window
+- [ ] Game Object Inspector ("Viewer") Window
 
 ### Refactoring
 
