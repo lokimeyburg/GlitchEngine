@@ -3,6 +3,54 @@
   <PropertyGroup>
     <OutputType>Exe</OutputType>
     <TargetFramework>netcoreapp2.1</TargetFramework>
+    <RootNamespace>Editor</RootNamespace>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <AssetsDir>$(MSBuildThisFileDirectory)Assets</AssetsDir>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
   </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Include="EditorUtility.cs" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <EmbeddedResource Include="Editor\Assets\GLSL\arrow-pointer-vertex.glsl" />
+    <EmbeddedResource Include="Editor\Assets\GLSL\arrow-pointer-frag.glsl" />
+    <EmbeddedResource Include="Editor\Assets\HLSL\arrow-pointer-frag.hlsl" />
+    <EmbeddedResource Include="Editor\Assets\HLSL\arrow-pointer-vertex.hlsl" />
+    <EmbeddedResource Include="Editor\Assets\HLSL\unlit-vertex.hlsl" />
+    <EmbeddedResource Include="Editor\Assets\HLSL\unlit-frag.hlsl" />
+
+    <PackageReference Include="Veldrid.ImGui" Version="4.4.0-beta1" />
+    <PackageReference Include="Veldrid.Assets" Version="4.4.0-beta1" />
+    <PackageReference Include="SharpFont" Version="4.0" />
+
+    <PackageReference Include="Veldrid.SPIRV" Version="1.0.0-beta4" />
+    
+    <PackageReference Include="Veldrid.SDL2" Version="4.4.0-beta1" />
+    <PackageReference Include="Veldrid.StartupUtilities" Version="4.4.0-beta1" />
+    <PackageReference Include="Veldrid.ImageSharp" Version="4.4.0-beta1" />
+    <PackageReference Include="Veldrid.Utilities" Version="4.4.0-beta1" />
+    
+
+    <PackageReference Include="SixLabors.ImageSharp" Version="1.0.0-beta0004" />
+
+    <PackageReference Include="Newtonsoft.Json" Version="11.0.2" />
+    <PackageReference Include="System.Collections.Immutable" Version="1.2.0" />
+    <PackageReference Include="System.Collections.Generic.MultiValueDictionary" Version="0.1.0-e160604-1" />
+    <PackageReference Include="System.Console" Version="4.3.0" />
+    <PackageReference Include="System.Diagnostics.Debug" Version="4.3.0" />
+    <PackageReference Include="System.Diagnostics.Process" Version="4.3.0" />
+    <PackageReference Include="System.Globalization" Version="4.3.0" />
+    <PackageReference Include="System.Linq" Version="4.3.0" />
+    <PackageReference Include="System.Numerics.Vectors" Version="4.4.0" />
+    <PackageReference Include="System.Runtime.Extensions" Version="4.3.0" />
+    <PackageReference Include="System.Runtime.InteropServices" Version="4.3.0" />
+    <PackageReference Include="System.Runtime.Loader" Version="4.3.0" />
+    <PackageReference Include="System.Threading" Version="4.3.0" />
+    <PackageReference Include="System.Threading.Thread" Version="4.3.0" />
+  </ItemGroup>
+
 
 </Project>

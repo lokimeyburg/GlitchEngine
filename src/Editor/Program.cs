@@ -6,7 +6,7 @@ namespace Editor
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            new Editor().Run();
         }
     }
 }
