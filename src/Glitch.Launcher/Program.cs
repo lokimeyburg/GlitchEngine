@@ -1,12 +1,12 @@
 ﻿using System;
 
-namespace Editor
+namespace Glitch.Launcher
 {
     class Program
     {
         static void Main(string[] args)
         {
-            new Editor().Run();
+            Console.WriteLine("Hello World!");
         }
     }
 }

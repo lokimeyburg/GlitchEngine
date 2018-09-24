@@ -1,0 +1,113 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>netcoreapp2.1</TargetFramework>
+    <RootNamespace>Glitch</RootNamespace>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <AssetsDir>$(MSBuildThisFileDirectory)Assets</AssetsDir>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Content Include="Assets\Textures\**">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Link>Assets\Textures\%(RecursiveDir)\%(FileName)%(Extension)</Link>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Assets\Shaders\**">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Link>Assets\Shaders\%(RecursiveDir)\%(FileName)%(Extension)</Link>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\HLSL\imgui-frag.hlsl" />
+    <EmbeddedResource Include="Assets\HLSL\imgui-vertex.hlsl" />
+    <EmbeddedResource Include="Assets\HLSL\lit-frag.hlsl" />
+    <EmbeddedResource Include="Assets\HLSL\shadow-frag.hlsl" />
+    <EmbeddedResource Include="Assets\HLSL\shadow-vertex.hlsl" />
+    <EmbeddedResource Include="Assets\HLSL\shadowmap-frag.hlsl" />
+    <EmbeddedResource Include="Assets\HLSL\shadowmap-vertex.hlsl" />
+    <EmbeddedResource Include="Assets\HLSL\simple-2d-frag.hlsl" />
+    <EmbeddedResource Include="Assets\HLSL\simple-2d-vertex.hlsl" />
+    <EmbeddedResource Include="Assets\HLSL\skybox-frag.hlsl" />
+    <EmbeddedResource Include="Assets\HLSL\skybox-vertex.hlsl" />
+    <EmbeddedResource Include="Assets\HLSL\textured-vertex.hlsl" />
+    <EmbeddedResource Include="Assets\Models\Sphere.obj" />
+    <EmbeddedResource Include="Assets\GLSL\imgui-frag.glsl" />
+    <EmbeddedResource Include="Assets\GLSL\imgui-vertex.glsl" />
+    <EmbeddedResource Include="Assets\GLSL\lit-frag.glsl" />
+    <EmbeddedResource Include="Assets\GLSL\skybox-frag.glsl" />
+    <EmbeddedResource Include="Assets\GLSL\skybox-vertex.glsl" />
+    <EmbeddedResource Include="Assets\GLSL\textured-vertex.glsl" />
+    <EmbeddedResource Include="Assets\GLSL\shadow-frag.glsl" />
+    <EmbeddedResource Include="Assets\GLSL\shadow-vertex.glsl" />
+    <EmbeddedResource Include="Assets\GLSL\shadowmap-frag.glsl" />
+    <EmbeddedResource Include="Assets\GLSL\shadowmap-vertex.glsl" />
+    <EmbeddedResource Include="Assets\GLSL\simple-2d-frag.glsl" />
+    <EmbeddedResource Include="Assets\GLSL\simple-2d-vertex.glsl" />
+    <EmbeddedResource Include="Assets\GLSL\geometry-frag.glsl" />
+    <EmbeddedResource Include="Assets\GLSL\geometry-vertex.glsl" />
+    <EmbeddedResource Include="Assets\Textures\cloudtop\stormydays_bk.png" />
+    <EmbeddedResource Include="Assets\Textures\cloudtop\stormydays_dn.png" />
+    <EmbeddedResource Include="Assets\Textures\cloudtop\stormydays_ft.png" />
+    <EmbeddedResource Include="Assets\Textures\cloudtop\stormydays_lf.png" />
+    <EmbeddedResource Include="Assets\Textures\cloudtop\stormydays_rt.png" />
+    <EmbeddedResource Include="Assets\Textures\cloudtop\stormydays_up.png" />
+    <EmbeddedResource Include="Assets\HLSL\billboard-geometry.hlsl" />
+    <EmbeddedResource Include="Assets\HLSL\particle-fragment.hlsl" />
+    <EmbeddedResource Include="Assets\HLSL\passthrough-vertex.hlsl" />
+    <EmbeddedResource Include="Assets\GLSL\billboard-geometry.glsl" />
+    <EmbeddedResource Include="Assets\GLSL\particle-fragment.glsl" />
+    <EmbeddedResource Include="Assets\GLSL\passthrough-vertex.glsl" />
+    <EmbeddedResource Include="Assets\GLSL\text-fragment.glsl" />
+    <EmbeddedResource Include="Assets\GLSL\text-vertex.glsl" />
+    <EmbeddedResource Include="Assets\HLSL\text-fragment.hlsl" />
+    <EmbeddedResource Include="Assets\HLSL\text-vertex.hlsl" />
+    <EmbeddedResource Include="Assets\HLSL\shadow-transparent-frag.hlsl" />
+    <EmbeddedResource Include="Assets\GLSL\shadow-transparent-frag.glsl" />
+    <EmbeddedResource Include="Assets\HLSL\shadow-transparent-vertex.hlsl" />
+    <EmbeddedResource Include="Assets\GLSL\shadow-transparent-vertex.glsl" />
+    <Content Include="$(MSBuildThisFileDirectory)..\..\ext\veldrid\src\Veldrid.SDL2\native\win-x64\SDL2.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="$(MSBuildThisFileDirectory)..\..\ext\veldrid\src\Veldrid.SDL2\native\osx-x64\libsdl2.dylib">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+
+    <PackageReference Include="SharpFont.Dependencies" Version="2.6" />
+    <PackageReference Include="SharpFont" Version="4.0" />
+    <PackageReference Include="Veldrid.SPIRV" Version="1.0.0-beta4" />
+    <PackageReference Include="Veldrid" Version="4.4.0-beta1" />
+    <PackageReference Include="Veldrid.SDL2" Version="4.4.0-beta1" />
+    <PackageReference Include="Veldrid.StartupUtilities" Version="4.4.0-beta1" />
+    <PackageReference Include="Veldrid.ImageSharp" Version="4.4.0-beta1" />
+    <PackageReference Include="Veldrid.Utilities" Version="4.4.0-beta1" />
+    <PackageReference Include="Veldrid.ImGui" Version="4.4.0-beta1" />
+
+    <PackageReference Include="SixLabors.ImageSharp" Version="1.0.0-beta0004" />
+
+    <PackageReference Include="Newtonsoft.Json" Version="11.0.2" />
+    <PackageReference Include="System.Collections.Immutable" Version="1.2.0" />
+    <PackageReference Include="System.Collections.Generic.MultiValueDictionary" Version="0.1.0-e160604-1" />
+    <PackageReference Include="System.Console" Version="4.3.0" />
+    <PackageReference Include="System.Diagnostics.Debug" Version="4.3.0" />
+    <PackageReference Include="System.Diagnostics.Process" Version="4.3.0" />
+    <PackageReference Include="System.Globalization" Version="4.3.0" />
+    <PackageReference Include="System.Linq" Version="4.3.0" />
+    <PackageReference Include="System.Numerics.Vectors" Version="4.4.0" />
+    <PackageReference Include="System.Runtime.Extensions" Version="4.3.0" />
+    <PackageReference Include="System.Runtime.InteropServices" Version="4.3.0" />
+    <PackageReference Include="System.Runtime.Loader" Version="4.3.0" />
+    <PackageReference Include="System.Threading" Version="4.3.0" />
+    <PackageReference Include="System.Threading.Thread" Version="4.3.0" />
+  </ItemGroup>
+
+
+</Project>
