@@ -1,5 +1,13 @@
 # Glitch Game Engine
 
+```
+`  ________.__  .__  __         .__     
+ /  _____/|  | |__|/  |_  ____ |  |__  
+/   \  ___|  | |  \   __\/ ___\|  |  \ 
+\    \_\  \  |_|  ||  | \  \___|   Y  \
+ \______  /____/__||__|  \___  >___|  /
+        \/                   \/     \/ 
+```
 
 This is the home of _Glitch_, my small and simple game engine. Glitch is written in C# and built on .NET Core which means it can run on Mac, Windows and Linux. 
 
