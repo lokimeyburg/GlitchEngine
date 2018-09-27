@@ -3,39 +3,15 @@
   <PropertyGroup>
     <OutputType>Exe</OutputType>
     <TargetFramework>netcoreapp2.1</TargetFramework>
-    <RootNamespace>Glitch</RootNamespace>
+    <RootNamespace>Glitch.Launcher</RootNamespace>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-    <AssetsDir>$(MSBuildThisFileDirectory)Assets</AssetsDir>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
   </PropertyGroup>
 
-  <ItemGroup>
-    <Content Include="Assets\Textures\**">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      <Link>Assets\Textures\%(RecursiveDir)\%(FileName)%(Extension)</Link>
-    </Content>
-  </ItemGroup>
+
 
   <ItemGroup>
-    <Content Include="Assets\Shaders\**">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      <Link>Assets\Shaders\%(RecursiveDir)\%(FileName)%(Extension)</Link>
-    </Content>
-  </ItemGroup>
-
-  <ItemGroup>
-
-    <Content Include="$(MSBuildThisFileDirectory)..\..\ext\veldrid\src\Veldrid.SDL2\native\win-x64\SDL2.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="$(MSBuildThisFileDirectory)..\..\ext\veldrid\src\Veldrid.SDL2\native\osx-x64\libsdl2.dylib">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-  </ItemGroup>
-
-  <ItemGroup>
-
-    <ProjectReference Include="Glitch" Version="4.4.0-beta1" />
+    <ProjectReference Include="../Glitch/Glitch.csproj" />
   </ItemGroup>
 
 
