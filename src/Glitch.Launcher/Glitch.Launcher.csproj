@@ -6,14 +6,13 @@
     <RootNamespace>Glitch.Launcher</RootNamespace>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    <DisableImplicitFrameworkReferences>true</DisableImplicitFrameworkReferences>
+    <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
   </PropertyGroup>
 
-
-
   <ItemGroup>
-    <ProjectReference Include="../Glitch/Glitch.csproj" />
+    <ProjectReference Include="..\Glitch\Glitch.csproj" />
   </ItemGroup>
-
 
   <ItemGroup>
     <Compile Include="Program.cs" />
