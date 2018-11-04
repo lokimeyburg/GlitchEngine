@@ -5,7 +5,7 @@ using Glitch.Graphics;
 
 namespace Glitch.Objects
 {
-    internal class ScreenDuplicator : IRenderable
+    public class ScreenDuplicator : IRenderable
     {
         private DisposeCollector _disposeCollector;
         private Pipeline _pipeline;

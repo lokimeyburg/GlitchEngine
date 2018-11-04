@@ -16,6 +16,7 @@
 
   <ItemGroup>
     <Compile Include="Program.cs" />
+    <Compile Include="Launcher.cs" />
     <PackageReference Include="Veldrid.ImGui" Version="4.4.0-beta1" />
     <PackageReference Include="Veldrid" Version="4.4.0-beta1" />
 

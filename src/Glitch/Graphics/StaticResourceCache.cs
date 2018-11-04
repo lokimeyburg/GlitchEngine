@@ -6,7 +6,7 @@ using Veldrid;
 namespace Glitch.Graphics
 {
     // Non-thread-safe cache for resources.
-    internal static class StaticResourceCache
+    public static class StaticResourceCache
     {
         private static readonly Dictionary<GraphicsPipelineDescription, Pipeline> s_pipelines
             = new Dictionary<GraphicsPipelineDescription, Pipeline>();

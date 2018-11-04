@@ -610,7 +610,7 @@ namespace Glitch
             return cr => (cr.RenderPasses() & rp) == rp;
         }
 
-        internal void DestroyAllDeviceObjects()
+        public void DestroyAllDeviceObjects()
         {
             _cullableStage[0].Clear();
             _octree.GetAllContainedObjects(_cullableStage[0]);
@@ -626,7 +626,7 @@ namespace Glitch
             _resourceUpdateCL.Dispose();
         }
 
-        internal void CreateAllDeviceObjects(GraphicsDevice gd, CommandList cl, GraphicsSystem sc)
+        public void CreateAllDeviceObjects(GraphicsDevice gd, CommandList cl, GraphicsSystem sc)
         {
             _cullableStage[0].Clear();
             _octree.GetAllContainedObjects(_cullableStage[0]);

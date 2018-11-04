@@ -61,7 +61,7 @@ namespace Glitch
         public GraphicsDevice GraphicsDeviceBackend { get; private set; }
 
         public DirectionalLight DirectionalLight { get; } = new DirectionalLight();
-        public TextureSampleCount MainSceneSampleCount { get; internal set; }
+        public TextureSampleCount MainSceneSampleCount { get; set; }
 
         public DeviceBuffer MirrorClipPlaneBuffer { get; private set; }
         public DeviceBuffer NoClipPlaneBuffer { get; private set; }
@@ -171,7 +171,7 @@ namespace Glitch
             cl.UpdateBuffer(CameraInfoBuffer, 0, Camera.GetCameraInfo());
         }
 
-        internal void RecreateWindowSizedResources(GraphicsDevice gd, CommandList cl)
+        public void RecreateWindowSizedResources(GraphicsDevice gd, CommandList cl)
         {
             MainSceneColorTexture?.Dispose();
             MainSceneDepthTexture?.Dispose();
