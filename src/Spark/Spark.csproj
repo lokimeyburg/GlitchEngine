@@ -61,7 +61,7 @@
     <ItemGroup>
       <_CopyItems Include="$(AssetDir)\**\*.*" />
     </ItemGroup>
-    <Copy SourceFiles="@(_CopyItems)" DestinationFolder="../bin/$(Configuration)/Glitch/$(TargetFramework)/Assets/%(RecursiveDir)" />
+    <Copy SourceFiles="@(_CopyItems)" DestinationFolder="../bin/$(Configuration)/Glitch.Launcher/$(TargetFramework)/Assets/%(RecursiveDir)" />
   </Target>
 
 
